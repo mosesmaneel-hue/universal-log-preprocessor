@@ -18,6 +18,7 @@ DATABASE_NAME = os.getenv("LOGS_DB_PATH", DEFAULT_DB_PATH)
 
 def get_connection():
     db_path = os.getenv("LOGS_DB_PATH", DATABASE_NAME)
+    os.makedirs(os.path.dirname(os.path.abspath(db_path)), exist_ok=True)
     connection = sqlite3.connect(db_path)
     connection.row_factory = sqlite3.Row
     return connection

@@ -1,4 +1,11 @@
+import sys
 import os
+
+# Ensure backend directory is in sys.path for root invocations (e.g. Render / uvicorn backend.main:app)
+_backend_dir = os.path.dirname(os.path.abspath(__file__))
+if _backend_dir not in sys.path:
+    sys.path.insert(0, _backend_dir)
+
 from typing import Optional, List
 
 import uuid
@@ -14,7 +21,11 @@ from database.settings import (
     get_retention_days
 )
 
-# Ensure settings table is initialized
+# Ensure database tables (quarantine, processed, alerts, settings) are fully initialized on startup
+from database.db import init_database
+from database.alerts import init_alerts_table
+init_database()
+init_alerts_table()
 init_settings_table()
 
 

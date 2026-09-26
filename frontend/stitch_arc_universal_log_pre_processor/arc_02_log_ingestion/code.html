@@ -1,0 +1,945 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Universal Log Pre-Processing Framework - Log Ingestion</title>
+<!-- Tailwind CSS v3 CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Lucide Icons CDN -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<style data-purpose="custom-theme">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+      border-radius: 4px;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-[#f3f5f9] text-[#1e293b] flex h-screen overflow-hidden text-[13px] antialiased">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-white"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- BEGIN: TopGlobalHeader -->
+<header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between flex-shrink-0 z-10 shadow-sm">
+<!-- Left Header: Platform Title -->
+<div>
+<h1 class="text-base font-bold text-[#0f172a] tracking-tight">Universal Log Pre-Processing Framework</h1>
+<p class="text-[11px] text-slate-500 font-medium leading-none mt-0.5">Learn Once. Process Forever.</p>
+</div>
+<!-- Right Header: Global Search, System Status, Notification & User Profile -->
+<div class="flex items-center gap-4">
+<!-- Search Bar -->
+<div class="relative w-72">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+<input class="w-full bg-[#f8fafc] border border-slate-200 text-xs rounded-lg pl-9 pr-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-slate-700 placeholder-slate-400 shadow-inner" placeholder="Search logs, sources, formats..." type="text">
+</div>
+<!-- System Status Pill -->
+<div class="flex items-center gap-2 bg-[#ecfdf5] border border-[#a7f3d0] px-3 py-1.5 rounded-lg">
+<span class="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse"></span>
+<div>
+<div class="text-[11px] font-bold text-[#065f46] leading-none">System Healthy</div>
+<div class="text-[9px] text-[#059669] leading-none mt-0.5">All services operational</div>
+</div>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-100 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bell" aria-hidden="true" class="lucide lucide-bell w-4 h-4"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- User Profile Pill -->
+<div class="flex items-center gap-2 pl-2 border-l border-slate-200">
+<div class="w-8 h-8 rounded-full bg-[#0a1936] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-700">Administrator</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3.5 h-3.5 text-slate-400"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+</header>
+<!-- END: TopGlobalHeader -->
+<!-- BEGIN: MainWorkspace -->
+<main class="flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar bg-[#f3f5f9]">
+<!-- Workspace Header Bar -->
+<div class="flex items-start justify-between">
+<div>
+<!-- Breadcrumb -->
+<div class="flex items-center gap-1.5 text-xs text-slate-400 font-medium mb-1">
+<span class="">Dashboard</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400"><path d="m9 18 6-6-6-6"></path></svg>
+<span class="text-slate-700 font-semibold">Log Ingestion</span>
+</div>
+<h2 class="text-xl font-bold text-[#0f172a]">Log Ingestion</h2>
+<p class="text-xs text-slate-500 font-normal mt-0.5">
+            Ingest logs from multiple sources and formats. Start processing with automatic format detection.
+          </p>
+</div>
+<!-- Live Data Notice Badge -->
+
+</div>
+<!-- Stat Cards Grid (5 Metrics) -->
+<section class="grid grid-cols-5 gap-4" data-purpose="metrics-summary">
+<!-- 1. Total Sources -->
+<div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#eff6ff] flex items-center justify-center text-[#2563eb]">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text w-5 h-5"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+</div>
+<div class="text-xs text-slate-500 font-medium">Total Sources</div>
+</div>
+<div class="mt-3">
+<div class="text-2xl font-black text-slate-800 tracking-tight">12</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+2</span>
+<span class="text-slate-400 font-normal text-[10.5px]">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- 2. Logs Ingested (24h) -->
+<div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#ecfdf5] flex items-center justify-center text-[#059669]">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layers" aria-hidden="true" class="lucide lucide-layers w-5 h-5"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg>
+</div>
+<div class="text-xs text-slate-500 font-medium">Logs Ingested (24h)</div>
+</div>
+<div class="mt-3">
+<div id="kpiIngestTotal" class="text-2xl font-black text-slate-800 tracking-tight">—</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+12%</span>
+<span class="text-slate-400 font-normal text-[10.5px]">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- 3. Ingestion Rate -->
+<div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#eff6ff] flex items-center justify-center text-[#0284c7]">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock w-5 h-5"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+</div>
+<div class="text-xs text-slate-500 font-medium">Ingestion Rate</div>
+</div>
+<div class="mt-3">
+<div class="text-2xl font-black text-slate-800 tracking-tight">8,240 <span class="text-sm font-semibold text-slate-500">/ min</span></div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+18%</span>
+<span class="text-slate-400 font-normal text-[10.5px]">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- 4. Successful Ingestion -->
+<div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#ecfdf5] flex items-center justify-center text-[#16a34a]">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-square" aria-hidden="true" class="lucide lucide-check-square w-5 h-5"><path d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"></path><path d="m9 11 3 3L22 4"></path></svg>
+</div>
+<div class="text-xs text-slate-500 font-medium">Successful Ingestion</div>
+</div>
+<div class="mt-3">
+<div id="kpiIngestSuccess" class="text-2xl font-black text-slate-800 tracking-tight">—</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+0.6%</span>
+<span class="text-slate-400 font-normal text-[10.5px]">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- 5. Ingestion Errors -->
+<div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#fef2f2] flex items-center justify-center text-[#ef4444]">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" aria-hidden="true" class="lucide lucide-alert-circle w-5 h-5"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+</div>
+<div class="text-xs text-slate-500 font-medium">Ingestion Errors</div>
+</div>
+<div class="mt-3">
+<div id="kpiIngestErrors" class="text-2xl font-black text-slate-800 tracking-tight">—</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-red-500 mt-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+5%</span>
+<span class="text-slate-400 font-normal text-[10.5px]">vs. last 24h</span>
+</div>
+</div>
+</div>
+</section>
+<!-- BEGIN: InteractiveWorkspaceMiddle -->
+<div class="grid grid-cols-12 gap-5">
+<!-- Left 8-Cols: Add New Log Source Form -->
+<div class="col-span-8 bg-white rounded-xl border border-slate-200/80 p-5 shadow-sm">
+<h3 class="text-sm font-bold text-slate-800 mb-4">Add New Log Source</h3>
+<!-- Source Protocol Tabs -->
+<div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-[#fff7ed] text-[#ea580c] text-xs font-semibold rounded-lg border border-[#fdba74]/50 shadow-sm">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-up" aria-hidden="true" class="lucide lucide-file-up w-3.5 h-3.5"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M12 12v6"></path><path d="m15 15-3-3-3 3"></path></svg>
+<span class="">File Upload</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-lg hover:bg-slate-50 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="server" aria-hidden="true" class="lucide lucide-server w-3.5 h-3.5"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+<span class="">Syslog (UDP/TCP)</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-lg hover:bg-slate-50 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="code-xml" aria-hidden="true" class="lucide lucide-code-xml w-3.5 h-3.5"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
+<span class="">API / Webhook</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-lg hover:bg-slate-50 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cloud" aria-hidden="true" class="lucide lucide-cloud w-3.5 h-3.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+<span class="">Cloud Platform</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-lg hover:bg-slate-50 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bot" aria-hidden="true" class="lucide lucide-bot w-3.5 h-3.5"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+<span class="">Agent / Collector</span>
+</button>
+</div>
+<!-- Configuration Area (Drag & Drop + Right Side Options) -->
+<div class="grid grid-cols-12 gap-5 mt-4">
+<!-- Upload Box (7 Cols) -->
+<div class="col-span-7 border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center text-center bg-slate-50/50 hover:bg-slate-50 hover:border-slate-300 transition-colors group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-[#2563eb] mb-3 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cloud-upload" aria-hidden="true" class="lucide lucide-cloud-upload w-8 h-8 text-blue-500"><path d="M12 13v8"></path><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="m8 17 4-4 4 4"></path></svg>
+</div>
+<p class="font-bold text-slate-800 text-sm">Drag and drop log files here</p>
+<span class="text-xs text-slate-400 my-1 font-medium">or</span>
+<input
+    id="logFileInput"
+    type="file"
+    accept=".log,.txt,.json,.csv,.xml,.gz,.zip"
+    class="hidden"
+>
+
+<button
+    id="browseFilesButton"
+    type="button"
+    class="bg-[#f97316] hover:bg-[#ea580c] text-white px-5 py-2 rounded-lg text-xs font-bold shadow-md shadow-orange-500/20 transition-colors"
+>
+    Browse Files
+</button><p class="text-[11px] text-slate-400 mt-4 leading-relaxed">
+                Supported formats: .log, .txt, .json, .csv, .xml, .gz, .zip (Max 1 GB)
+              </p>
+</div>
+<!-- Ingestion Options (5 Cols) -->
+<div class="col-span-5 flex flex-col justify-between space-y-3">
+<div>
+<h4 class="text-xs font-bold text-slate-800 mb-3">Ingestion Options</h4>
+<!-- Source Name -->
+<div class="mb-3">
+<label class="block text-[11px] font-semibold text-slate-600 mb-1">Source Name</label>
+<input class="w-full text-xs rounded-lg border-slate-200 bg-white px-3 py-1.5 text-slate-800 placeholder-slate-400 focus:border-orange-500 focus:ring-orange-500" placeholder="e.g. Firewall-01" type="text">
+</div>
+<!-- Source Type Dropdown -->
+<div class="mb-3">
+<label class="block text-[11px] font-semibold text-slate-600 mb-1">Source Type</label>
+<div class="relative">
+<select class="w-full text-xs rounded-lg border-slate-200 bg-white px-3 py-1.5 pr-8 text-slate-500 focus:border-orange-500 focus:ring-orange-500 appearance-none">
+<option>Select source type</option>
+<option>Syslog Daemon</option>
+<option>Application Logs</option>
+<option>Web Server</option>
+</select>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+<!-- Format (Optional) Dropdown -->
+<div class="mb-3">
+<label class="block text-[11px] font-semibold text-slate-600 mb-1">Format (Optional)</label>
+<div class="relative">
+<select class="w-full text-xs rounded-lg border-slate-200 bg-white px-3 py-1.5 pr-8 text-slate-600 focus:border-orange-500 focus:ring-orange-500 appearance-none">
+<option>Auto-detect</option>
+<option>Syslog (RFC 5424)</option>
+<option>JSON</option>
+<option>CSV</option>
+</select>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+<!-- Continuous Monitoring Toggle -->
+<div class="flex items-start gap-2.5 mt-2">
+<label class="relative inline-flex items-center cursor-pointer mt-0.5">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-7 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+<div>
+<div class="text-[11px] font-bold text-slate-700 leading-tight">Enable continuous monitoring</div>
+<div class="text-[9.5px] text-slate-400 leading-tight">Automatically ingest new files from this location</div>
+</div>
+</div>
+</div>
+<!-- Start Ingestion CTA Button -->
+<button class="w-full bg-[#f97316] hover:bg-[#ea580c] text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" aria-hidden="true" class="lucide lucide-play w-3.5 h-3.5 fill-current"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+<span class="">Start Ingestion</span>
+</button>
+<div
+    id="ingestionResult"
+    class="hidden mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs"
+></div>
+</div>
+</div>
+</div>
+<!-- Right 4-Cols: Supported Formats & Ingestion Instructions -->
+<div class="col-span-4 flex flex-col gap-4">
+<!-- Supported Formats Card -->
+<div class="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-xs font-bold text-slate-800">Supported Formats</h3>
+<a class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="#">
+<span class="">View All Formats</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<!-- Formats Matrix -->
+<div class="grid grid-cols-3 gap-2">
+<!-- Syslog -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-blue-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="network" aria-hidden="true" class="lucide lucide-network w-3.5 h-3.5"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">Syslog</div>
+<div class="text-[8.5px] text-slate-400 truncate">RFC 3164 / 5424</div>
+</div>
+</div>
+<!-- JSON -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-emerald-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="braces" aria-hidden="true" class="lucide lucide-braces w-3.5 h-3.5"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"></path><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">JSON</div>
+<div class="text-[8.5px] text-slate-400 truncate">Structured</div>
+</div>
+</div>
+<!-- XML -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-purple-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-code" aria-hidden="true" class="lucide lucide-file-code w-3.5 h-3.5"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 12.5 8 15l2 2.5"></path><path d="m14 12.5 2 2.5-2 2.5"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">XML</div>
+<div class="text-[8.5px] text-slate-400 truncate">Structured</div>
+</div>
+</div>
+<!-- CSV -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-amber-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="table" aria-hidden="true" class="lucide lucide-table w-3.5 h-3.5"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">CSV</div>
+<div class="text-[8.5px] text-slate-400 truncate">Tabular</div>
+</div>
+</div>
+<!-- CEF -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-red-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-octagon" aria-hidden="true" class="lucide lucide-alert-octagon w-3.5 h-3.5"><path d="M12 16h.01"></path><path d="M12 8v4"></path><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">CEF</div>
+<div class="text-[8.5px] text-slate-400 truncate">Common Event Format</div>
+</div>
+</div>
+<!-- LEEF -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-sky-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield" aria-hidden="true" class="lucide lucide-shield w-3.5 h-3.5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">LEEF</div>
+<div class="text-[8.5px] text-slate-400 truncate">Log Event Extended</div>
+</div>
+</div>
+<!-- Custom -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-slate-500 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders" aria-hidden="true" class="lucide lucide-sliders w-3.5 h-3.5"><path d="M10 8h4"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M17 16h4"></path><path d="M19 12V3"></path><path d="M19 21v-5"></path><path d="M3 14h4"></path><path d="M5 10V3"></path><path d="M5 21v-7"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">Custom</div>
+<div class="text-[8.5px] text-slate-400 truncate">Vendor Specific</div>
+</div>
+</div>
+<!-- Compressed -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-rose-400 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="archive" aria-hidden="true" class="lucide lucide-archive w-3.5 h-3.5"><rect width="20" height="5" x="2" y="3" rx="1"></rect><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"></path><path d="M10 12h4"></path></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">Compressed</div>
+<div class="text-[8.5px] text-slate-400 truncate">.gz, .zip</div>
+</div>
+</div>
+<!-- Others -->
+<div class="border border-slate-100 rounded-lg p-2 flex items-center gap-2 bg-[#f8fafc]/60">
+<div class="w-7 h-7 rounded bg-indigo-400 text-white flex items-center justify-center text-xs">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="more-horizontal" aria-hidden="true" class="lucide lucide-more-horizontal w-3.5 h-3.5"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+</div>
+<div class="overflow-hidden">
+<div class="text-[11px] font-bold text-slate-800 leading-tight truncate">Others</div>
+<div class="text-[8.5px] text-slate-400 truncate">Auto-detect</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ingestion Instructions Card -->
+<div class="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-xs font-bold text-slate-800">Ingestion Instructions</h3>
+<a class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="#">
+<span class="">View Docs</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<div class="space-y-2.5">
+<div class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-xs text-slate-600">Select the source type or upload log files</span>
+</div>
+<div class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-xs text-slate-600">Configure ingestion options</span>
+</div>
+<div class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-xs text-slate-600">Start ingestion</span>
+</div>
+<div class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-xs text-slate-600">Logs will be automatically sent for format detection</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: InteractiveWorkspaceMiddle -->
+<!-- BEGIN: BottomSplitTables -->
+<div class="grid grid-cols-12 gap-5 pb-4">
+<!-- Bottom Left (7 Cols): Ingestion History Table -->
+<div class="col-span-7 bg-white rounded-xl border border-slate-200/80 p-5 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xs font-bold text-slate-800">Ingestion History</h3>
+<a class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="#">
+<span class="">View All</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="text-slate-500 font-semibold border-b border-slate-100 pb-2">
+<th class="py-2 font-medium">Time</th>
+<th class="py-2 font-medium">Source Name</th>
+<th class="py-2 font-medium">Source Type</th>
+<th class="py-2 font-medium">Format</th>
+<th class="py-2 font-medium">Events Ingested</th>
+<th class="py-2 font-medium">Status</th>
+<th class="py-2 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-50 text-slate-700 font-normal">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">18:24:01</td>
+<td class="py-2.5 font-semibold text-slate-800">Firewall-01</td>
+<td class="py-2.5 text-slate-500">Syslog</td>
+<td class="py-2.5 text-slate-500">Syslog</td>
+<td class="py-2.5 font-mono text-slate-600">152,430</td>
+<td class="py-2.5">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#dcfce7] text-[#15803d]">Success</span>
+</td>
+<td class="py-2.5 text-right">
+<button class="text-slate-400 hover:text-slate-600 font-bold px-1">â€¢â€¢â€¢</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">18:20:15</td>
+<td class="py-2.5 font-semibold text-slate-800">App-Server</td>
+<td class="py-2.5 text-slate-500">File Upload</td>
+<td class="py-2.5 text-slate-500">JSON</td>
+<td class="py-2.5 font-mono text-slate-600">320,450</td>
+<td class="py-2.5">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#dcfce7] text-[#15803d]">Success</span>
+</td>
+<td class="py-2.5 text-right">
+<button class="text-slate-400 hover:text-slate-600 font-bold px-1">â€¢â€¢â€¢</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">17:58:42</td>
+<td class="py-2.5 font-semibold text-slate-800">VPN-Gateway</td>
+<td class="py-2.5 text-slate-500">Syslog</td>
+<td class="py-2.5 text-slate-500">CEF</td>
+<td class="py-2.5 font-mono text-slate-600">98,210</td>
+<td class="py-2.5">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#dcfce7] text-[#15803d]">Success</span>
+</td>
+<td class="py-2.5 text-right">
+<button class="text-slate-400 hover:text-slate-600 font-bold px-1">â€¢â€¢â€¢</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">16:41:03</td>
+<td class="py-2.5 font-semibold text-slate-800">Web-Server</td>
+<td class="py-2.5 text-slate-500">API</td>
+<td class="py-2.5 text-slate-500">Nginx (Custom)</td>
+<td class="py-2.5 font-mono text-slate-600">76,340</td>
+<td class="py-2.5">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#dcfce7] text-[#15803d]">Success</span>
+</td>
+<td class="py-2.5 text-right">
+<button class="text-slate-400 hover:text-slate-600 font-bold px-1">â€¢â€¢â€¢</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">15:32:17</td>
+<td class="py-2.5 font-semibold text-slate-800">DB-Server</td>
+<td class="py-2.5 text-slate-500">File Upload</td>
+<td class="py-2.5 text-slate-500">CSV</td>
+<td class="py-2.5 font-mono text-slate-600">210,980</td>
+<td class="py-2.5">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#fee2e2] text-[#b91c1c]">Failed</span>
+</td>
+<td class="py-2.5 text-right">
+<button class="text-slate-400 hover:text-slate-600 font-bold px-1">â€¢â€¢â€¢</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">14:18:56</td>
+<td class="py-2.5 font-semibold text-slate-800">IDS</td>
+<td class="py-2.5 text-slate-500">Agent</td>
+<td class="py-2.5 text-slate-500">LEEF</td>
+<td class="py-2.5 font-mono text-slate-600">198,320</td>
+<td class="py-2.5">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#dcfce7] text-[#15803d]">Success</span>
+</td>
+<td class="py-2.5 text-right">
+<button class="text-slate-400 hover:text-slate-600 font-bold px-1">â€¢â€¢â€¢</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Bottom Right (5 Cols): Recent Ingestion Events -->
+<div class="col-span-5 bg-white rounded-xl border border-slate-200/80 p-5 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xs font-bold text-slate-800">Recent Ingestion Events</h3>
+<a class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="#">
+<span class="">View All</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="text-slate-500 font-semibold border-b border-slate-100 pb-2">
+<th class="py-2 font-medium w-16">Time</th>
+<th class="py-2 font-medium w-44">Event</th>
+<th class="py-2 font-medium">Details</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-50 text-slate-700 font-normal">
+<!-- Event 1 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">18:24:01</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2 w-4 h-4 text-emerald-600"><circle cx="12" cy="12" r="10"></circle><path d="m16 9-5.5 5.5L8 12"></path></svg>
+<span class="font-medium text-slate-700">File ingested</span>
+</div>
+</td>
+<td class="py-2.5 text-slate-600 truncate text-[11px]">
+                    firewall_logs_2209.log (152,430 events)
+                  </td>
+</tr>
+<!-- Event 2 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">18:22:10</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="info" aria-hidden="true" class="lucide lucide-info w-4 h-4 text-blue-600"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+<span class="font-medium text-slate-700">Ingestion started</span>
+</div>
+</td>
+<td class="py-2.5 text-slate-600 truncate text-[11px]">
+                    App-Server (JSON)
+                  </td>
+</tr>
+<!-- Event 3 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">18:20:15</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2 w-4 h-4 text-emerald-600"><circle cx="12" cy="12" r="10"></circle><path d="m16 9-5.5 5.5L8 12"></path></svg>
+<span class="font-medium text-slate-700">Ingestion completed</span>
+</div>
+</td>
+<td class="py-2.5 text-slate-600 truncate text-[11px]">
+                    320,450 events ingested
+                  </td>
+</tr>
+<!-- Event 4 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">17:58:42</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle w-4 h-4 text-amber-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+<span class="font-medium text-slate-700">Minor parsing issues</span>
+</div>
+</td>
+<td class="py-2.5 text-slate-600 truncate text-[11px]">
+                    12 lines skipped (invalid format)
+                  </td>
+</tr>
+<!-- Event 5 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">17:41:09</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-down-circle" aria-hidden="true" class="lucide lucide-arrow-down-circle w-4 h-4 text-blue-600"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="m8 12 4 4 4-4"></path></svg>
+<span class="font-medium text-slate-700">Source connected</span>
+</div>
+</td>
+<td class="py-2.5 text-slate-600 truncate text-[11px]">
+                    VPN-Gateway (192.168.1.10)
+                  </td>
+</tr>
+<!-- Event 6 -->
+<tr class="hover:bg-slate-50/50">
+<td class="py-2.5 text-slate-600 font-mono text-[11px]">16:55:31</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" class="lucide lucide-x-circle w-4 h-4 text-red-500"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+<span class="font-medium text-slate-700">Ingestion failed</span>
+</div>
+</td>
+<td class="py-2.5 text-slate-600 truncate text-[11px]">
+                    db_logs.csv (invalid structure)
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- END: BottomSplitTables -->
+</main>
+<!-- END: MainWorkspace -->
+</div>
+<!-- END: MainContentWrapper -->
+<!-- BEGIN: ScriptInitialization -->
+<script data-purpose="icon-renderer">
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+<!-- END: ScriptInitialization -->
+
+<script>
+// ============================================================
+// LOG INGESTION — File upload + API integration
+// ============================================================
+(function () {
+    const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+    let selectedFile = null;
+    let selectedContent = null;
+
+    // ── Wire up the file input ───────────────────────────────
+    const fileInput     = document.getElementById("logFileInput");
+    const browseBtn     = document.getElementById("browseFilesButton");
+    const resultBox     = document.getElementById("ingestionResult");
+
+    // Find "Start Ingestion" button robustly
+    const startBtn = Array.from(document.querySelectorAll("button"))
+        .find(b => /start\s+ingestion/i.test(b.innerText || b.textContent));
+
+    if (!fileInput) {
+        console.error("logFileInput not found — check HTML");
+        return;
+    }
+
+    if (browseBtn) {
+        browseBtn.addEventListener("click", () => fileInput.click());
+    }
+
+    fileInput.addEventListener("change", async () => {
+        if (!fileInput.files.length) return;
+        selectedFile    = fileInput.files[0];
+        selectedContent = await selectedFile.text();
+
+        // Update browse button label
+        if (browseBtn) browseBtn.textContent = "📄 " + selectedFile.name;
+
+        // Show file info in result box immediately
+        if (resultBox) {
+            resultBox.classList.remove("hidden");
+            resultBox.innerHTML = `
+                <div class="text-xs text-slate-600 space-y-1">
+                    <div><span class="font-semibold text-slate-500 w-28 inline-block">File selected:</span>
+                         <span class="font-medium text-slate-800">${selectedFile.name}</span></div>
+                    <div><span class="font-semibold text-slate-500 w-28 inline-block">Size:</span>
+                         <span>${(selectedFile.size / 1024).toFixed(1)} KB</span></div>
+                    <div class="text-slate-400 italic">Click Start Ingestion to process →</div>
+                </div>`;
+        }
+    });
+
+    if (startBtn) {
+        startBtn.addEventListener("click", async () => {
+            if (!selectedContent) {
+                showResult("error", "Please select a log file first.", {});
+                return;
+            }
+
+            startBtn.disabled = true;
+            startBtn.textContent = "⏳ Processing…";
+
+            try {
+                const res = await fetch(`${API_BASE}/process`, {
+                    method:  "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body:    JSON.stringify({ raw_log: selectedContent })
+                });
+
+                const result = await res.json();
+
+                if (result.status === "processed") {
+                    showResult("success", "Log processed successfully", result);
+                } else if (result.status === "quarantined") {
+                    showResult("quarantine", "Log was quarantined", result);
+                } else {
+                    showResult("error", "Unexpected response from backend", result);
+                }
+            } catch (err) {
+                showResult("error", "Cannot connect to backend (port 8000). Is FastAPI running?", {});
+                console.error(err);
+            } finally {
+                startBtn.disabled = false;
+                startBtn.textContent = "▶ Start Ingestion";
+            }
+        });
+    }
+
+    function showResult(type, headline, result) {
+        if (!resultBox) return;
+        resultBox.classList.remove("hidden");
+
+        const norm       = result.normalized   || {};
+        const detection  = result.detection    || {};
+        const validation = result.validation  || {};
+
+        const colors = {
+            success:    { hdr:"text-emerald-700", bg:"bg-emerald-50 border-emerald-200", icon:"fa-circle-check text-emerald-600" },
+            quarantine: { hdr:"text-amber-700",   bg:"bg-amber-50 border-amber-200",    icon:"fa-triangle-exclamation text-amber-600" },
+            error:      { hdr:"text-rose-700",    bg:"bg-rose-50 border-rose-200",      icon:"fa-circle-xmark text-rose-600" }
+        }[type] || { hdr:"text-slate-700", bg:"bg-slate-50 border-slate-200", icon:"fa-info text-slate-600" };
+
+        const rows = [
+            ["File",            selectedFile?.name || "—"],
+            ["Status",          result.status ? result.status.toUpperCase() : type.toUpperCase()],
+            ["Total Lines",     result.total_lines || null],
+            ["Processed",       result.processed_count !== undefined ? `${result.processed_count} logs saved` : null],
+            ["Quarantined",     result.quarantined_count !== undefined && result.quarantined_count > 0 ? `${result.quarantined_count} logs` : null],
+            ["Format Detected", detection.format || "—"],
+            ["Confidence",      detection.confidence ? (detection.confidence * 100).toFixed(1) + "%" : "—"],
+            ["Parser",          norm.parser || result.parsed?.parser || detection.format ? `${detection.format?.toLowerCase()}_parser` : "—"],
+            ["Event ID",        norm.event_id || "—"],
+            ["Validation",      validation.valid === false ? "Failed" : "Passed"],
+            ["Processing Time", result.processing_time_ms ? `${result.processing_time_ms} ms` : null],
+            ["Reason",          result.reason || (type === "quarantine" ? "Validation failed" : null)]
+        ].filter(([, v]) => v && v !== "—");
+
+        let actionButtons = "";
+        if (type === "success") {
+            actionButtons = `
+                <div class="mt-4 pt-3 border-t border-emerald-200/80 flex flex-wrap items-center gap-3">
+                    <a href="../arc_07_event_viewer/code.html" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-all">
+                        <i class="fa-solid fa-table-list text-[11px]"></i>
+                        <span>View in Event Viewer →</span>
+                    </a>
+                    <a href="../arc_10_analytics/code.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold shadow-sm transition-all">
+                        <i class="fa-solid fa-chart-pie text-[11px] text-purple-600"></i>
+                        <span>View in Analytics →</span>
+                    </a>
+                </div>`;
+        } else if (type === "quarantine") {
+            actionButtons = `
+                <div class="mt-4 pt-3 border-t border-amber-200/80 flex flex-wrap items-center gap-3">
+                    <a href="../arc_09_quarantine/code.html" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-all">
+                        <i class="fa-solid fa-shield-halved text-[11px]"></i>
+                        <span>View in Quarantine →</span>
+                    </a>
+                </div>`;
+        }
+
+        resultBox.innerHTML = `
+            <div class="border rounded-xl p-4.5 ${colors.bg} shadow-sm">
+                <div class="font-bold text-sm ${colors.hdr} mb-3 flex items-center gap-2">
+                    <i class="fa-solid ${colors.icon} text-base"></i>
+                    <span>${headline}</span>
+                </div>
+                <div class="space-y-1.5 text-xs text-slate-700">
+                    ${rows.map(([k,v]) => `
+                        <div class="flex gap-2">
+                            <span class="font-semibold text-slate-500 w-32 flex-shrink-0">${k}:</span>
+                            <span class="font-mono text-slate-800 break-all">${v}</span>
+                        </div>`).join("")}
+                </div>
+                ${actionButtons}
+            </div>`;
+    }
+})();
+</script>
+
+<script>
+(function() {
+    async function loadStats() {
+        try {
+            const res = await fetch(`${API_BASE}/stats`);
+            if (!res.ok) return;
+            const d = await res.json();
+            const p = d.processed_logs || 0;
+            const q = d.quarantined_logs || 0;
+            const total = p + q;
+            const rate = total > 0 ? ((p / total) * 100).toFixed(1) + "%" : "0.0%";
+
+            const elTotal = document.getElementById("kpiIngestTotal");
+            const elRate = document.getElementById("kpiIngestSuccess");
+            const elErr = document.getElementById("kpiIngestErrors");
+
+            if (elTotal) elTotal.textContent = total.toLocaleString();
+            if (elRate) elRate.textContent = rate;
+            if (elErr) elErr.textContent = q.toLocaleString();
+        } catch(e) {}
+    }
+    document.addEventListener("DOMContentLoaded", loadStats);
+})();
+</script>
+
+</body></html>

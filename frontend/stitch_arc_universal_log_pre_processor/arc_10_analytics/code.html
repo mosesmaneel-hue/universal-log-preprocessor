@@ -1,0 +1,875 @@
+﻿<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ARC Universal Log Pre-Processing Framework - Analytics</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandNavy: '#07162c',
+            brandDark: '#0b1d3a',
+            brandSidebarActive: '#f97316',
+            brandBg: '#f1f5f9',
+            brandBlue: '#2563eb'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            serifLogo: ['"Times New Roman"', 'Cinzel', 'Baskerville', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for clean SVG renders and scrollbars -->
+<style data-purpose="custom-styling">
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    /* Donut chart stroke dashes */
+    .donut-segment {
+      transform-origin: center;
+      transition: stroke-dasharray 0.3s ease;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-row overflow-x-hidden font-sans select-none">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-white"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-y-auto" data-purpose="dashboard-main">
+<!-- Top Application Header -->
+<header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shadow-sm sticky top-0 z-20" data-purpose="top-header">
+<!-- Title & Subtitle -->
+<div>
+<h1 class="text-base font-bold text-slate-900 tracking-tight leading-tight">Universal Log Pre-Processing Framework</h1>
+<p class="text-xs text-blue-600 font-medium">Learn Once. Process Forever.</p>
+</div>
+<!-- Search Bar -->
+<div class="w-96 relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<input class="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white text-slate-700 placeholder-slate-400" placeholder="Search logs, sources, formats, parsers, analytics..." type="text"/>
+</div>
+<!-- Right Header Status & User Profile -->
+<div class="flex items-center gap-4">
+<!-- System Health Pill -->
+<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<div class="leading-none text-left">
+<span class="font-semibold block text-[11px]">System Healthy</span>
+<span class="text-[9px] text-emerald-600">All services operational</span>
+</div>
+</div>
+<!-- Notification Bell -->
+<div class="relative cursor-pointer p-1.5 text-slate-500 hover:text-slate-700">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-2 cursor-pointer pl-2 border-l border-slate-200">
+<div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold text-xs shadow">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-800">Administrator</span>
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+</header>
+<!-- Sub Header & Breadcrumbs -->
+<div class="p-6 pb-2">
+<div class="flex items-center justify-between">
+<div>
+<!-- Breadcrumb path -->
+<div class="flex items-center gap-1.5 text-xs font-medium text-slate-500 mb-1">
+<span class="hover:underline cursor-pointer">Dashboard</span>
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-blue-600 font-semibold">Analytics</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Analytics</h2>
+<p class="text-xs text-slate-500 mt-0.5">Gain insights from your logs with powerful visualizations and real-time analytics.</p>
+</div>
+<!-- Controls: Date Range & Export -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-white border border-slate-300 px-3 py-1.5 rounded-lg shadow-sm text-xs text-slate-700 font-medium">
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>16 Sep 2026 - 22 Sep 2026</span>
+<svg class="w-3 h-3 text-slate-400 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<button class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition-colors">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Export Report</span>
+</button>
+</div>
+</div>
+<!-- BEGIN: 5 KPI Cards Row -->
+<section class="grid grid-cols-5 gap-3.5 mt-5" data-purpose="kpi-cards">
+<!-- KPI 1: Total Logs Processed -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-blue-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<div class="text-[11px] font-medium text-slate-500 leading-none">Total Logs Processed</div>
+<div class="text-xl font-bold text-slate-900 mt-1" id="an-total-logs">—</div>
+<div class="flex items-center text-[10px] text-emerald-600 font-semibold mt-1">
+<svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 10l7-7m0 0l7 7m-7-7v18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+<span>+18%</span>
+<span class="text-slate-400 font-normal ml-1">vs. previous week</span>
+</div>
+</div>
+</div>
+<!-- KPI 2: Parsed Successfully -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</div>
+<div>
+<div class="text-[11px] font-medium text-slate-500 leading-none">Parsed Successfully</div>
+<div class="text-xl font-bold text-slate-900 mt-1" id="an-parsed-logs">—</div>
+<div class="text-[10px] text-slate-500 font-medium mt-1"><span class="text-emerald-600 font-bold" id="an-success-rate">—</span> success rate
+            </div>
+</div>
+</div>
+<!-- KPI 3: Detected Anomalies -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<div class="text-[11px] font-medium text-slate-500 leading-none">Detected Anomalies</div>
+<div class="text-xl font-bold text-slate-900 mt-1" id="an-quarantine-logs">—</div>
+<div class="flex items-center text-[10px] text-red-500 font-semibold mt-1">
+<svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 10l7-7m0 0l7 7m-7-7v18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+<span>+12%</span>
+<span class="text-slate-400 font-normal ml-1">vs. previous week</span>
+</div>
+</div>
+</div>
+<!-- KPI 4: Avg. Processing Time -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-purple-600 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<div class="text-[11px] font-medium text-slate-500 leading-none">Avg. Processing Time</div>
+<div class="text-xl font-bold text-slate-900 mt-1" id="an-avg-time">1.8 ms</div>
+<div class="flex items-center text-[10px] text-emerald-600 font-semibold mt-1">
+<svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+<span>-28%</span>
+<span class="text-slate-400 font-normal ml-1">vs. previous week</span>
+</div>
+</div>
+</div>
+<!-- KPI 5: Blocked Threats -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-rose-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<div class="text-[11px] font-medium text-slate-500 leading-none">Active Formats</div>
+<div class="text-xl font-bold text-slate-900 mt-1" id="an-formats-count">—</div>
+<div class="flex items-center text-[10px] text-emerald-600 font-semibold mt-1">
+<svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 10l7-7m0 0l7 7m-7-7v18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+<span>+45%</span>
+<span class="text-slate-400 font-normal ml-1">vs. previous week</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: 5 KPI Cards Row -->
+<!-- BEGIN: Mid Section - Charts (Area Chart + 2 Donut Charts) -->
+<section class="grid grid-cols-12 gap-4 mt-4" data-purpose="charts-row">
+<!-- Log Volume Trend Area Chart (col 5) -->
+<div class="col-span-6 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-sm font-bold text-slate-900">Log Volume Trend</h3>
+<div class="flex items-center gap-3">
+<!-- Chart Legend -->
+<div class="flex items-center gap-3 text-[10px] font-medium text-slate-600">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Total Logs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Parsed</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Failed</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Anomalies</span>
+</div>
+<select class="text-[11px] py-0.5 px-2 bg-slate-50 border border-slate-200 rounded text-slate-700 font-medium focus:outline-none">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+</div>
+<!-- Honest Unavailable State: Time-Series Not Configured -->
+<div class="w-full h-44 flex flex-col items-center justify-center text-center p-4">
+  <svg class="w-8 h-8 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+  <div class="text-xs font-semibold text-slate-700">Time-Series Telemetry Unavailable</div>
+  <div class="text-[11px] text-slate-400 mt-1 max-w-sm leading-relaxed">
+    Backend does not currently provide historical hourly time-series aggregation. Real-time counters, log formats, and processed events are operational.
+  </div>
+</div>
+</div>
+<!-- Logs by Source Donut Chart (col 3) -->
+<div class="col-span-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-sm font-bold text-slate-900">Logs by Format</h3>
+</div>
+<div id="an-format-donut-container" class="flex items-center justify-between gap-2 mt-2">
+  <div class="text-xs text-slate-400 text-center py-6 w-full">Loading format distribution&hellip;</div>
+</div>
+</div>
+<!-- Event Level Distribution Donut Chart (col 3) -->
+<div class="col-span-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-sm font-bold text-slate-900">Event Level Distribution</h3>
+</div>
+<div id="an-level-donut-container" class="flex items-center justify-between gap-3 mt-2">
+  <div class="text-xs text-slate-400 text-center py-6 w-full">Loading level distribution&hellip;</div>
+</div>
+</div>
+</section>
+<!-- END: Mid Section -->
+<!-- BEGIN: Bottom Section - Tables, Maps & Action Panels -->
+<section class="grid grid-cols-12 gap-4 mt-4 pb-8" data-purpose="bottom-detailed-analytics">
+<!-- Top Event Types Table (Col 5) -->
+<div class="col-span-5 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="text-sm font-bold text-slate-900 mb-3">Top Event Types</h3>
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-[11px] text-slate-400 border-b border-slate-100">
+<th class="font-medium pb-2 w-6">#</th>
+<th class="font-medium pb-2">Event Type</th>
+<th class="font-medium pb-2 text-right">Count</th>
+<th class="font-medium pb-2 text-right w-16">Percentage</th>
+<th class="font-medium pb-2 w-28 pl-3"></th>
+</tr>
+</thead>
+<tbody id="an-event-types-body" class="divide-y divide-slate-50 text-[11px]">
+<tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">Loading event types&hellip;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Geographic Distribution & Insights (Col 4) -->
+<div class="col-span-4 flex flex-col gap-4">
+<!-- Geographic Distribution Map Card -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<h3 class="text-sm font-bold text-slate-900 mb-2">Geographic Distribution</h3>
+<div class="flex items-center gap-2">
+<!-- World Map Simplified Silhouette Graphic -->
+<div class="w-48 h-28 relative flex items-center justify-center">
+<svg class="w-full h-full text-blue-200" fill="currentColor" viewbox="0 0 200 120">
+<!-- North America -->
+<path d="M20,25 Q35,15 50,22 Q60,35 55,45 Q40,55 35,45 Q20,38 20,25 Z" opacity="0.8"></path>
+<!-- South America -->
+<path d="M45,60 Q55,60 52,80 Q45,100 38,85 Q36,68 45,60 Z" opacity="0.75"></path>
+<!-- Europe -->
+<path d="M90,20 Q105,18 110,28 Q100,38 90,32 Z" opacity="0.85"></path>
+<!-- Africa -->
+<path d="M92,42 Q108,42 112,60 Q105,80 95,75 Q85,55 92,42 Z" opacity="0.75"></path>
+<!-- Asia & India -->
+<path d="M115,22 Q150,15 165,30 Q160,50 145,55 Q135,45 125,50 Z" opacity="0.9"></path>
+<!-- Highlighted India & Specific regions with darker blue -->
+<circle cx="128" cy="48" fill="#1d4ed8" r="4.5"></circle>
+<circle cx="45" cy="30" fill="#3b82f6" r="3.5"></circle>
+<circle cx="98" cy="26" fill="#3b82f6" r="3"></circle>
+<!-- Australia -->
+<path d="M150,75 Q165,72 168,85 Q155,92 148,85 Z" opacity="0.75"></path>
+</svg>
+</div>
+<!-- Country Distribution Stats -->
+<div class="flex-1 space-y-1.5 text-[11px]">
+<div class="flex items-center justify-between">
+<span class="text-slate-600">India</span>
+<span class="font-bold text-slate-800">38%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">United States</span>
+<span class="font-bold text-slate-800">22%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">Germany</span>
+<span class="font-bold text-slate-800">8%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">Singapore</span>
+<span class="font-bold text-slate-800">6%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">United Kingdom</span>
+<span class="font-bold text-slate-800">5%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">Others</span>
+<span class="font-bold text-slate-800">21%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Insights Card -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex-1">
+<h3 class="text-sm font-bold text-slate-900 mb-2.5">Insights</h3>
+<div class="space-y-2 text-[11px] text-slate-700">
+<div class="flex items-start gap-2">
+<span class="text-emerald-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</span>
+<span>Log volume increased by <strong class="text-slate-900">18%</strong> compared to last week.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-amber-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span>Authentication failures are <strong class="text-slate-900">2.3x higher</strong> on 21 Sep.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-blue-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span>Most logs are from Firewall-01 and App-Server (<strong class="text-slate-900">46%</strong>).</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-purple-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+</span>
+<span>Unusual spike in error events detected at <strong class="text-slate-900">14:00 on 19 Sep</strong>.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-emerald-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</span>
+<span><strong class="text-slate-900">3,210</strong> potential threats were blocked by detection rules.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Heatmap & Recommended Actions (Col 3) -->
+<div class="col-span-3 flex flex-col gap-4">
+<!-- Timeline Heatmap Card -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+<h3 class="text-sm font-bold text-slate-900 mb-2">Timeline Heatmap <span class="text-xs font-normal text-slate-400">(Unavailable)</span></h3>
+<div class="flex flex-col">
+<!-- Heatmap Grid -->
+<div class="flex items-center">
+<!-- Days column -->
+<div class="flex flex-col justify-between text-[9px] text-slate-400 pr-1.5 h-28 leading-none">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+<!-- Heatmap Blocks Grid (7 rows x 12 cols) -->
+<div class="flex-1 grid grid-cols-12 gap-0.5 h-28">
+<!-- Mon -->
+<div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div>
+<!-- Tue -->
+<div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div>
+<!-- Wed -->
+<div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div>
+<!-- Thu -->
+<div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-800 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div>
+<!-- Fri -->
+<div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-700 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div>
+<!-- Sat -->
+<div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-600 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div>
+<!-- Sun -->
+<div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-500 rounded-xs"></div><div class="bg-blue-400 rounded-xs"></div><div class="bg-blue-300 rounded-xs"></div><div class="bg-blue-200 rounded-xs"></div><div class="bg-blue-100 rounded-xs"></div>
+</div>
+</div>
+<!-- Timeline Hours Labels -->
+<div class="flex justify-between text-[9px] text-slate-400 mt-1.5 pl-6 pr-1">
+<span>00:00</span>
+<span>06:00</span>
+<span>12:00</span>
+<span>18:00</span>
+<span>24:00</span>
+</div>
+</div>
+</div>
+<!-- Recommended Actions Card -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex-1">
+<h3 class="text-sm font-bold text-slate-900 mb-2.5">Recommended Actions</h3>
+<div class="space-y-2 text-[11px] text-slate-700">
+<div class="flex items-center gap-2 hover:text-blue-600 cursor-pointer">
+<span class="text-blue-600 flex-shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span>Investigate spike in authentication failures</span>
+</div>
+<div class="flex items-center gap-2 hover:text-blue-600 cursor-pointer">
+<span class="text-blue-600 flex-shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span>Review error logs from Web-Server</span>
+</div>
+<div class="flex items-center gap-2 hover:text-blue-600 cursor-pointer">
+<span class="text-blue-600 flex-shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span>Update parser for new log format (App-Server)</span>
+</div>
+<div class="flex items-center gap-2 hover:text-blue-600 cursor-pointer">
+<span class="text-emerald-600 flex-shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</span>
+<span>Fine-tune detection rules for reduced false positives.</span>
+</div>
+<div class="flex items-center gap-2 hover:text-blue-600 cursor-pointer">
+<span class="text-blue-600 flex-shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<span>Generate weekly analytics report</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Bottom Section -->
+</div>
+</main>
+<!-- END: Main Content Area -->
+
+<script>
+// ============================================================
+// ANALYTICS - Live API Integration
+// ============================================================
+const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+
+async function loadAnalyticsData() {
+    try {
+        const [statsRes, summaryRes] = await Promise.all([
+            fetch(`${API_BASE}/stats`),
+            fetch(`${API_BASE}/summary`)
+        ]);
+
+        if (!statsRes.ok || !summaryRes.ok) throw new Error("API error");
+
+        const stats = await statsRes.json();
+        const summary = await summaryRes.json();
+        const s = summary.summary || {};
+
+        const processed = stats.processed_logs || 0;
+        const quarantined = stats.quarantined_logs || 0;
+        const total = processed + quarantined;
+        const successRate = total > 0 ? ((processed / total) * 100).toFixed(1) : "0.0";
+
+        // Update KPI cards - find elements by label text
+        document.querySelectorAll('.text-\\[11px\\].font-medium.text-slate-500.leading-none').forEach(label => {
+            const txt = label.textContent.trim();
+            // Sibling value element (usually the next element with a big number)
+            const card = label.closest('.bg-white, .bg-gradient-to-br');
+            if (!card) return;
+            const numEl = card.querySelector('.text-2xl, .text-xl, .text-lg, .font-bold:not(.text-\\[11px\\])');
+            if (!numEl) return;
+
+            if (txt.includes('Total Logs')) numEl.textContent = total.toLocaleString();
+            else if (txt.includes('Quarantine')) numEl.textContent = quarantined.toLocaleString();
+        });
+
+        // Update success rate text
+        document.querySelectorAll('.text-emerald-600.font-bold').forEach(el => {
+            if (el.parentElement?.textContent.includes('success rate')) {
+                el.textContent = successRate + "%";
+            }
+        });
+
+        // Update format breakdown bar chart labels if present
+        const formats = stats.formats || {};
+        const sortedFormats = Object.entries(formats).sort((a,b) => b[1] - a[1]);
+
+        // Find format bar elements - update any bar widths we can
+        const barRows = document.querySelectorAll('[class*="bg-blue"][style*="width"], [class*="bg-emerald"][style*="width"], [class*="bg-purple"][style*="width"]');
+        barRows.forEach((bar, i) => {
+            if (sortedFormats[i]) {
+                const pct = processed > 0 ? (sortedFormats[i][1] / processed * 100).toFixed(1) : 0;
+                bar.style.width = pct + "%";
+            }
+        });
+
+        // Inject format breakdown table if there's a format-stats-body element
+        const fmtTable = document.getElementById("format-stats-body");
+        if (fmtTable) {
+            fmtTable.innerHTML = sortedFormats.map(([fmt, count]) => {
+                const pct = processed > 0 ? (count / processed * 100).toFixed(1) : 0;
+                return `<tr>
+                    <td class="py-2 px-3 font-medium text-slate-800">${fmt}</td>
+                    <td class="py-2 px-3 text-slate-600">${count.toLocaleString()}</td>
+                    <td class="py-2 px-3 text-slate-500">${pct}%</td>
+                </tr>`;
+            }).join("");
+        }
+
+        // Update top-level format totals displayed anywhere
+        sortedFormats.forEach(([fmt, count]) => {
+            const pct = processed > 0 ? (count / processed * 100).toFixed(1) : 0;
+            document.querySelectorAll('.text-slate-600, .text-slate-700').forEach(el => {
+                if (el.textContent.trim() === fmt && el.nextElementSibling) {
+                    el.nextElementSibling.textContent = pct + "%";
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Analytics: Failed to load data:", error);
+    }
+}
+
+// Fix navigation links
+document.querySelectorAll('a[href="#"], a[href=""]').forEach(a => {
+    const txt = a.querySelector('span')?.textContent.trim() || a.textContent.trim();
+    const map = {
+        "Dashboard": "../arc_01_dashboard/code.html",
+        "Log Ingestion": "../arc_02_log_ingestion/code.html",
+        "Source Management": "../arc_03_source_management/code.html",
+        "Format Detection": "../arc_04_format_detection/code.html",
+        "Parser Registry": "../arc_05_parser_registry/code.html",
+        "Normalization / Schema": "../arc_06_normalization_schema/code.html",
+        "Event Viewer": "../arc_07_event_viewer/code.html",
+        "AI Assistant": "../arc_08_ai_assistant/code.html",
+        "Quarantine": "../arc_09_quarantine/code.html",
+        "Audit Logs": "../arc_11_audit_logs/code.html",
+        "Alerts": "../arc_12_alerts/code.html",
+        "Settings": "../arc_13_settings/code.html",
+        "Documentation": "../arc_14_documentation/code.html"
+    };
+    if (map[txt]) a.href = map[txt];
+});
+
+loadAnalyticsData();
+</script>
+
+<script>
+(function(){
+    "use strict";
+    const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+
+    function setTxt(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = (val !== null && val !== undefined) ? String(val) : "—";
+    }
+
+    async function loadAnalytics() {
+        try {
+            const [statsRes, summaryRes, logsRes] = await Promise.all([
+                fetch(API + "/stats").then(r => r.json()),
+                fetch(API + "/summary").then(r => r.json()),
+                fetch(API + "/processed?limit=200").then(r => r.json())
+            ]);
+
+            const stats = statsRes || {};
+            const summary = (summaryRes && summaryRes.summary) || {};
+            const rawLogs = Array.isArray(logsRes) ? logsRes : (logsRes.logs || logsRes.items || []);
+
+            const processed   = stats.processed_logs || summary.processed_logs || rawLogs.length || 0;
+            const quarantined = stats.quarantined_logs || summary.quarantined_logs || 0;
+            const total       = processed + quarantined;
+            const rate        = total > 0 ? ((processed / total) * 100).toFixed(1) : "0.0";
+            const formatsObj  = stats.formats || {};
+            const formatKeys  = Object.keys(formatsObj);
+
+            // Update KPI cards
+            setTxt("an-total-logs", total.toLocaleString());
+            setTxt("an-parsed-logs", processed.toLocaleString());
+            setTxt("an-success-rate", rate + "%");
+            setTxt("an-quarantine-logs", quarantined.toLocaleString());
+            setTxt("an-formats-count", formatKeys.length ? `${formatKeys.length} Formats` : "—");
+
+            // ── Render Format Donut ──────────────────────────────
+            renderFormatDonut(formatsObj, processed);
+
+            // ── Render Level Donut ───────────────────────────────
+            renderLevelDonut(rawLogs);
+
+            // ── Render Top Event Types ───────────────────────────
+            renderTopEventTypes(rawLogs);
+
+        } catch (err) {
+            console.error("Failed to load analytics data:", err);
+        }
+    }
+
+    function renderFormatDonut(formatsObj, totalCount) {
+        const container = document.getElementById("an-format-donut-container");
+        if (!container) return;
+
+        const palette = ["#2563eb", "#10b981", "#f97316", "#8b5cf6", "#06b6d4", "#f43f5e", "#38bdf8", "#94a3b8"];
+        const entries = Object.entries(formatsObj).map(([name, count]) => ({
+            name, count, pct: totalCount > 0 ? (count / totalCount) * 100 : 0
+        })).sort((a,b) => b.count - a.count);
+
+        if (!entries.length) {
+            container.innerHTML = '<div class="text-xs text-slate-400 text-center py-4 w-full">No format data available</div>';
+            return;
+        }
+
+        const C = 238.761;
+        let cumPct = 0;
+        const circles = entries.map((e, idx) => {
+            const color = palette[idx % palette.length];
+            const dash = (e.pct / 100) * C;
+            const offset = (cumPct / 100) * C;
+            cumPct += e.pct;
+            return `<circle cx="50" cy="50" r="38" fill="transparent"
+                   stroke="${color}" stroke-width="14"
+                   stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}"
+                   stroke-dashoffset="-${offset.toFixed(2)}"></circle>`;
+        }).join("");
+
+        const legend = entries.map((e, idx) => {
+            const color = palette[idx % palette.length];
+            return `<div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5 truncate max-w-[100px]">
+                    <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${color}"></span>
+                    <span class="truncate">${e.name}</span>
+                </span>
+                <span class="font-semibold text-slate-800">${Math.round(e.pct)}%</span>
+            </div>`;
+        }).join("");
+
+        container.innerHTML = `
+            <div class="relative w-32 h-32 flex-shrink-0">
+                <svg class="w-full h-full transform -rotate-90 overflow-visible" viewBox="0 0 100 100">
+                    ${circles}
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                    <span class="text-sm font-bold text-slate-900 leading-tight">${totalCount}</span>
+                    <span class="text-[9px] text-slate-500 font-medium">Logs</span>
+                </div>
+            </div>
+            <div class="flex-1 space-y-1 text-[10px] text-slate-600 pl-1">
+                ${legend}
+            </div>
+        `;
+    }
+
+    function renderLevelDonut(logs) {
+        const container = document.getElementById("an-level-donut-container");
+        if (!container) return;
+
+        let info = 0, warn = 0, err = 0;
+        logs.forEach(l => {
+            const norm = l.normalized_data || {};
+            const lvl = String(l.severity_level || norm.severity_level || norm.severity || norm.log_level || norm.level || l.severity || "CLEAN").toUpperCase();
+            if (["CRITICAL", "HIGH", "ERROR", "FATAL"].includes(lvl)) err++;
+            else if (["MEDIUM", "WARN", "WARNING"].includes(lvl)) warn++;
+            else info++;
+        });
+
+        const total = (info + warn + err) || 1;
+        const levels = [
+            { name: "Clean / Low", count: info, color: "#10b981", pct: (info / total) * 100 },
+            { name: "Medium", count: warn, color: "#f59e0b", pct: (warn / total) * 100 },
+            { name: "Critical / High", count: err, color: "#ef4444", pct: (err / total) * 100 }
+        ];
+
+        const C = 238.761;
+        let cumPct = 0;
+        const circles = levels.map(e => {
+            const dash = (e.pct / 100) * C;
+            const offset = (cumPct / 100) * C;
+            cumPct += e.pct;
+            return `<circle cx="50" cy="50" r="38" fill="transparent"
+                   stroke="${e.color}" stroke-width="14"
+                   stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}"
+                   stroke-dashoffset="-${offset.toFixed(2)}"></circle>`;
+        }).join("");
+
+        const legend = levels.map(e => `
+            <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${e.color}"></span>
+                    <span>${e.name}</span>
+                </span>
+                <span class="font-semibold text-slate-800">${Math.round(e.pct)}%</span>
+            </div>
+        `).join("");
+
+        container.innerHTML = `
+            <div class="relative w-32 h-32 flex-shrink-0">
+                <svg class="w-full h-full transform -rotate-90 overflow-visible" viewBox="0 0 100 100">
+                    ${circles}
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                    <span class="text-sm font-bold text-slate-900 leading-tight">${logs.length}</span>
+                    <span class="text-[9px] text-slate-500 font-medium">Events</span>
+                </div>
+            </div>
+            <div class="flex-1 space-y-1 text-[10px] text-slate-600 pl-1">
+                ${legend}
+            </div>
+        `;
+    }
+
+    function renderTopEventTypes(logs) {
+        const tbody = document.getElementById("an-event-types-body");
+        if (!tbody) return;
+
+        const counts = {};
+        logs.forEach(l => {
+            const norm = l.normalized_data || {};
+            const parsed = l.parsed_data || {};
+            const act = norm.action || norm.event_type || parsed.action || parsed.event_type || l.source_format || "Log Event";
+            counts[act] = (counts[act] || 0) + 1;
+        });
+
+        const total = logs.length || 1;
+        const colors = ["bg-blue-500", "bg-emerald-500", "bg-orange-500", "bg-purple-500", "bg-cyan-500", "bg-rose-400"];
+        const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0, 10);
+
+        if (!sorted.length) {
+            tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">No event data available</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = sorted.map(([name, count], i) => {
+            const pct = ((count / total) * 100).toFixed(1);
+            const color = colors[i % colors.length];
+            return `
+                <tr>
+                    <td class="py-1.5 text-slate-400">${i + 1}</td>
+                    <td class="py-1.5 font-medium text-slate-800">${name}</td>
+                    <td class="py-1.5 text-right text-slate-600">${count.toLocaleString()}</td>
+                    <td class="py-1.5 text-right font-semibold text-slate-700">${pct}%</td>
+                    <td class="py-1.5 pl-3">
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div class="${color} h-full rounded-full" style="width: ${pct}%"></div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", loadAnalytics);
+})();
+</script>
+</body></html>

@@ -1,0 +1,58 @@
+# ============================================================
+# Universal Log Pre-Processing Framework - .gitignore
+# ============================================================
+
+# Environment variables & secrets
+.env
+.env.*
+.env.local
+.env.production
+!.env.example
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Database files (DO NOT COMMIT SQLite databases to git)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+logs.db
+backend/logs.db
+backend/logs_production.db
+backend/logs_development_backup.db
+backend/logs_backup.db
+backend/logs_preserved_47_3.db
+
+# Node / Frontend build artifacts (if applicable)
+node_modules/
+dist/
+build/
+.vercel/
+
+# Logs & Temporary files
+*.log
+test_logs/
+scratch/
+test.log
+
+# IDE & OS metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

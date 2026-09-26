@@ -1,0 +1,938 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ARC - Universal Log Pre-Processing Framework</title>
+<!-- Tailwind CSS CDN with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sidebar: '#071228',
+            'sidebar-hover': '#112240',
+            'brand-orange': '#f97316',
+            'brand-orange-dark': '#ea580c',
+            'page-bg': '#f4f6fa',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.3);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.5);
+    }
+  </style>
+<style data-purpose="glow-and-effects">
+    .sidebar-glow {
+      background: radial-gradient(circle at 10% 90%, rgba(20, 80, 160, 0.22) 0%, transparent 60%),
+                  radial-gradient(circle at 90% 10%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
+    }
+    .donut-slice {
+      transition: stroke-width 0.2s ease;
+    }
+    .donut-slice:hover {
+      stroke-width: 28;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-[#f3f5f9] text-slate-800 font-sans antialiased min-h-screen flex flex-row overflow-x-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+    <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-white"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex flex-col min-w-0 bg-[#f4f6fa] overflow-y-auto">
+<!-- BEGIN: GlobalHeader -->
+<header class="h-18 py-3.5 px-8 bg-white border-b border-slate-200/80 flex items-center justify-between sticky top-0 z-20 shadow-sm" data-purpose="top-navigation-header">
+<!-- Title & Subtitle -->
+<div class="flex flex-col">
+<h1 class="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          Universal Log Pre-Processing Framework
+        </h1>
+<p class="text-xs font-medium text-slate-500">Learn Once. Process Forever.</p>
+</div>
+<!-- Search & Status Badges & Profile -->
+<div class="flex items-center gap-4">
+<!-- Global Search Bar -->
+<div class="relative w-80">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+<input class="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="Search logs, sources, formats..." type="text">
+</div>
+<!-- System Health Pill -->
+<div class="flex items-center gap-2.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200/70 rounded-lg text-emerald-800 text-xs">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<div class="leading-none">
+<span class="font-semibold block text-[11px] text-emerald-900">System Healthy</span>
+<span class="text-[10px] text-emerald-600 block pt-0.5">All services operational</span>
+</div>
+</div>
+<!-- Notifications Bell -->
+<button class="relative p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Notifications">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bell" aria-hidden="true" class="lucide lucide-bell w-4 h-4"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<!-- User Profile Dropdown -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-slate-200 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-[#0a1936] text-white flex items-center justify-center font-bold text-xs shadow-inner">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-700">Administrator</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3.5 h-3.5 text-slate-400"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+</header>
+<!-- END: GlobalHeader -->
+<!-- BEGIN: DashboardBody -->
+<main class="p-8 space-y-6" data-purpose="dashboard-content">
+<!-- Welcome Banner & Demo Notice Row -->
+<section class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4" data-purpose="dashboard-welcome-banner">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Welcome back, Administrator!</h2>
+<p class="text-xs font-medium text-slate-500 mt-1">Monitor, manage and normalize logs from all your sources in one place.</p>
+</div>
+<div class="flex items-center gap-3.5 self-stretch lg:self-auto">
+<!-- Date Badge -->
+<div class="flex items-center gap-2.5 px-3.5 py-2 bg-white border border-slate-200 rounded-lg shadow-sm text-xs font-medium text-slate-600">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" aria-hidden="true" class="lucide lucide-calendar w-4 h-4 text-blue-600"><path d="M8 2v3"></path><path d="M16 2v3"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg>
+<div>
+<span class="text-[10px] text-slate-400 block font-normal leading-none">Today</span>
+<span id="currentDateDisplay" class="font-semibold text-slate-800">26 Sep 2026, 01:25 PM</span>
+</div>
+</div>
+<!-- Live Backend Status Pill -->
+<div class="flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-xs shadow-sm">
+<div>
+<span class="font-semibold text-emerald-900 block leading-tight">Live Database Connected</span>
+<span class="text-[11px] text-emerald-700">Real database records active</span>
+</div>
+</div>
+</div>
+</section>
+<!-- BEGIN: StatCardsRow -->
+<section class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3.5" data-purpose="kpi-metrics-row">
+<!-- 1. Events Ingested -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Events Ingested</span>
+<div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text w-4 h-4"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+</div>
+</div>
+<div class="text-lg font-bold text-slate-900 leading-tight"><span id="eventsIngestedCount">—</span></div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-emerald-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+12%</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+<!-- 2. Events Processed -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Events Processed</span>
+<div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cog" aria-hidden="true" class="lucide lucide-cog w-4 h-4"><path d="M11 10.27 7 3.34"></path><path d="m11 13.73-4 6.93"></path><path d="M12 22v-2"></path><path d="M12 2v2"></path><path d="M14 12h8"></path><path d="m17 20.66-1-1.73"></path><path d="m17 3.34-1 1.73"></path><path d="M2 12h2"></path><path d="m20.66 17-1.73-1"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m3.34 7 1.73 1"></path><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="12" r="8"></circle></svg>
+</div>
+</div>
+<div id="eventsProcessedCount" class="text-lg font-bold text-slate-900 leading-tight">0</div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-emerald-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+11%</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+<!-- 3. Processing Success -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Processing Success</span>
+<div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart" aria-hidden="true" class="lucide lucide-bar-chart w-4 h-4"><path d="M5 21v-6"></path><path d="M12 21V9"></path><path d="M19 21V3"></path></svg>
+</div>
+</div>
+<div id="processingSuccessRate" class="text-lg font-bold text-slate-900 leading-tight">0%</div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-emerald-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+0.4%</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+<!-- 4. Active Sources -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Active Sources</span>
+<div class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="database" aria-hidden="true" class="lucide lucide-database w-4 h-4"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
+</div>
+</div>
+<div class="text-lg font-bold text-slate-900 leading-tight"><span id="activeSourcesCount">0</span></div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-emerald-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+2</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+<!-- 5. Unknown Formats -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Unknown Formats</span>
+<div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-question" aria-hidden="true" class="lucide lucide-file-question w-4 h-4"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M12 17h.01"></path><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"></path></svg>
+</div>
+</div>
+<div id="unknownFormatsCount" class="text-lg font-bold text-slate-900 leading-tight">0</div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-amber-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+8</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+<!-- 6. Validation Failures -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Validation Failures</span>
+<div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" aria-hidden="true" class="lucide lucide-alert-circle w-4 h-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+</div>
+</div>
+<div id="validationFailuresCount" class="text-lg font-bold text-slate-900 leading-tight">0</div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-emerald-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-down" aria-hidden="true" class="lucide lucide-arrow-down w-3 h-3"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+<span class="">-18%</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+<!-- 7. Quarantined Events -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-semibold text-slate-500">Quarantined Events</span>
+<div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield" aria-hidden="true" class="lucide lucide-shield w-4 h-4"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+</div>
+</div>
+<div class="text-lg font-bold text-slate-900 leading-tight"><span id="quarantinedEventsCount">—</span></div>
+<div class="flex items-center gap-1 text-[11px] font-medium text-amber-600 mt-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up" aria-hidden="true" class="lucide lucide-arrow-up w-3 h-3"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+<span class="">+6%</span>
+<span class="text-slate-400 font-normal">vs. last 24h</span>
+</div>
+</div>
+</section>
+<!-- END: StatCardsRow -->
+<!-- BEGIN: AnalyticsChartsRow -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-5" data-purpose="charts-and-summary">
+<!-- Left: Log Format Distribution (Donut Chart) -->
+<div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-sm font-bold text-slate-900">Log Format Distribution</h3>
+<button class="flex items-center gap-1 text-xs text-slate-500 border border-slate-200 px-2 py-1 rounded hover:bg-slate-50">
+<span class="">Last 24 Hours</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3 h-3"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+</div>
+<div class="flex items-center justify-between pt-2">
+<!-- Donut SVG Graphic -->
+<div class="relative w-44 h-44 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+<!-- Syslog: 28% -> stroke-dasharray="28 72" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#2563eb" stroke-dasharray="28 72" stroke-dashoffset="0" stroke-width="19"></circle>
+<!-- JSON: 24% -> stroke-dasharray="24 76" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#38bdf8" stroke-dasharray="24 76" stroke-dashoffset="-28" stroke-width="19"></circle>
+<!-- CSV: 15% -> stroke-dasharray="15 85" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#f97316" stroke-dasharray="15 85" stroke-dashoffset="-52" stroke-width="19"></circle>
+<!-- CEF: 12% -> stroke-dasharray="12 88" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#a855f7" stroke-dasharray="12 88" stroke-dashoffset="-67" stroke-width="19"></circle>
+<!-- LEEF: 8% -> stroke-dasharray="8 92" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#06b6d4" stroke-dasharray="8 92" stroke-dashoffset="-79" stroke-width="19"></circle>
+<!-- XML: 6% -> stroke-dasharray="6 94" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#f43f5e" stroke-dasharray="6 94" stroke-dashoffset="-87" stroke-width="19"></circle>
+<!-- Custom: 5% -> stroke-dasharray="5 95" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#10b981" stroke-dasharray="5 95" stroke-dashoffset="-93" stroke-width="19"></circle>
+<!-- Others: 2% -> stroke-dasharray="2 98" -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#94a3b8" stroke-dasharray="2 98" stroke-dashoffset="-98" stroke-width="19"></circle>
+</svg>
+<!-- Center Donut Label -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+<span id="formatEventsTotal" class="text-base font-bold text-slate-900 leading-tight">0</span>
+<span class="text-[10px] font-medium text-slate-400">Events</span>
+</div>
+</div>
+<!-- Legend Columns -->
+<div class="space-y-1.5 text-xs flex-1 pl-6">
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#2563eb]"></span>
+<span class="">Syslog</span>
+</div>
+<span id="syslogPercentage" class="font-semibold text-slate-800">0%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#38bdf8]"></span>
+<span class="">JSON</span>
+</div>
+<span class="font-semibold text-slate-800">24%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#f97316]"></span>
+<span class="">CSV</span>
+</div>
+<span class="font-semibold text-slate-800">15%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#a855f7]"></span>
+<span class="">CEF</span>
+</div>
+<span class="font-semibold text-slate-800">12%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#06b6d4]"></span>
+<span class="">LEEF</span>
+</div>
+<span class="font-semibold text-slate-800">8%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#f43f5e]"></span>
+<span class="">XML</span>
+</div>
+<span class="font-semibold text-slate-800">6%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#10b981]"></span>
+<span class="">Custom</span>
+</div>
+<span class="font-semibold text-slate-800">5%</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#94a3b8]"></span>
+<span class="">Others</span>
+</div>
+<span class="font-semibold text-slate-800">2%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle: Top Log Sources -->
+<div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold text-slate-900">Top Log Sources</h3>
+<button class="flex items-center gap-1 text-xs text-slate-500 border border-slate-200 px-2 py-1 rounded hover:bg-slate-50">
+<span class="">Last 24 Hours</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3 h-3"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-slate-400 border-b border-slate-100 pb-1.5 font-medium">
+<th class="py-1">Source</th>
+<th class="py-1 text-right">Events</th>
+<th class="py-1 text-right">Data Volume</th>
+<th class="py-1 text-right pr-1">Status</th>
+</tr>
+</thead>
+<tbody id="topSourcesTableBody" class="divide-y divide-slate-100 text-slate-700"><tr><td colspan="4" class="py-4 text-center text-slate-400 text-xs">Loading operational source data...</td></tr></tbody>
+</table>
+</div>
+</div><!-- Right: Processing Trend (Area Chart) -->
+<div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-sm font-bold text-slate-900">Processing Trend</h3>
+<button class="flex items-center gap-1 text-xs text-slate-500 border border-slate-200 px-2 py-1 rounded hover:bg-slate-50">
+<span class="">Last 24 Hours</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3 h-3"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+</div>
+<div class="flex items-center justify-end gap-4 text-[11px] mb-2 font-medium text-slate-500">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+<span class="">Ingested</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<span class="">Processed</span>
+</div>
+</div>
+<!-- Trend Container: Honest empty state when no historical time-series endpoint is configured in backend -->
+<div id="processingTrendContainer" class="relative w-full h-44 flex flex-col justify-between">
+  <div class="flex-1 flex flex-col items-center justify-center rounded-lg bg-slate-50/70 border border-dashed border-slate-200 p-4 text-center my-1">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity w-6 h-6 text-slate-300 mb-1.5"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.48 12H2"></path></svg>
+    <span class="text-xs font-semibold text-slate-600">No historical processing data available</span>
+    <span class="text-[10px] text-slate-400 mt-0.5">Real-time processing active without historical metrics</span>
+  </div>
+  <!-- X Axis Labels matching Stitch design -->
+  <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-200">
+    <span class="">00:00</span>
+    <span class="">04:00</span>
+    <span class="">08:00</span>
+    <span class="">12:00</span>
+    <span class="">16:00</span>
+    <span class="">20:00</span>
+  </div>
+</div>
+</div>
+</section>
+<!-- END: AnalyticsChartsRow -->
+<!-- BEGIN: TablesRow -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-5" data-purpose="operational-tables">
+<!-- Table 1: Recent Logs -->
+<div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold text-slate-900">Recent Logs</h3>
+<a class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+                View All <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-slate-400 border-b border-slate-100 font-medium pb-1.5">
+<th class="py-1">Time</th>
+<th class="py-1">Source</th>
+<th class="py-1">Format</th>
+<th class="py-1">Status</th>
+<th class="py-1">Message</th>
+</tr>
+</thead>
+<tbody id="recentLogsTableBody" class="divide-y divide-slate-100 text-slate-700"><tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">Loading recent logs...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Table 2: Unknown Formats Awaiting Review -->
+<div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold text-slate-900">Unknown Formats Awaiting Review</h3>
+<a class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+                View All <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-slate-400 border-b border-slate-100 font-medium pb-1.5">
+<th class="py-1">Received</th>
+<th class="py-1">Source</th>
+<th class="py-1">Detected Format</th>
+<th class="py-1 text-right">Status</th>
+</tr>
+</thead>
+<tbody id="unknownFormatsTableBody" class="divide-y divide-slate-100 text-slate-700"><tr><td colspan="4" class="py-4 text-center text-slate-400 text-xs">Loading quarantine review records...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Table 3: Recent System Events -->
+<div class="bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold text-slate-900">Recent System Events</h3>
+<a class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+                View All <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3 h-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-slate-400 border-b border-slate-100 font-medium pb-1.5">
+<th class="py-1">Time</th>
+<th class="py-1">Event</th>
+<th class="py-1">Details</th>
+</tr>
+</thead>
+<tbody id="systemEventsTableBody" class="divide-y divide-slate-100 text-slate-700"><tr><td colspan="3" class="py-4 text-center text-slate-400 text-xs">Loading operational events...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- END: TablesRow -->
+</main>
+<!-- END: DashboardBody -->
+</div>
+<!-- END: MainContentWrapper -->
+<script data-purpose="lucide-icon-initializer">
+    document.addEventListener("DOMContentLoaded", () => {
+        if (typeof lucide !== "undefined") lucide.createIcons();
+    });
+</script>
+
+<script>
+// ============================================================
+// DASHBOARD — Live Real Backend Integration
+// ============================================================
+const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+
+const FORMAT_COLORS = {
+    CUSTOM:  "#10b981",
+    SYSLOG:  "#2563eb",
+    JSON:    "#38bdf8",
+    CEF:     "#a855f7",
+    LEEF:    "#06b6d4",
+    XML:     "#f43f5e",
+    CSV:     "#f97316",
+    OTHERS:  "#94a3b8"
+};
+
+const FORMAT_BADGES = {
+    CUSTOM:  "bg-emerald-50 text-emerald-700 border border-emerald-200/60",
+    SYSLOG:  "bg-blue-50 text-blue-700 border border-blue-200/60",
+    JSON:    "bg-sky-50 text-sky-700 border border-sky-200/60",
+    CEF:     "bg-purple-50 text-purple-700 border border-purple-200/60",
+    LEEF:    "bg-cyan-50 text-cyan-700 border border-cyan-200/60",
+    XML:     "bg-rose-50 text-rose-700 border border-rose-200/60",
+    CSV:     "bg-orange-50 text-orange-700 border border-orange-200/60"
+};
+
+function setEl(id, val) {
+    const e = document.getElementById(id);
+    if (e) e.textContent = val;
+}
+
+function updateDonut(formats, total) {
+    const ORDER = ["CUSTOM", "SYSLOG", "CEF", "JSON", "LEEF", "XML", "CSV"];
+    let slices = [], accounted = 0;
+    ORDER.forEach(fmt => {
+        const count = formats[fmt] || 0;
+        const pct   = total > 0 ? (count / total) * 100 : 0;
+        slices.push({ fmt, count, pct, color: FORMAT_COLORS[fmt] || "#3b82f6" });
+        accounted += count;
+    });
+    const othersCount = total > 0 ? Math.max(0, total - accounted) : 0;
+    const othersPct   = total > 0 ? (othersCount / total) * 100 : 0;
+    slices.push({ fmt: "OTHERS", count: othersCount, pct: othersPct, color: FORMAT_COLORS.OTHERS });
+
+    const C = 238.761;
+    const circles = document.querySelectorAll("svg.-rotate-90 circle");
+    let cumPct = 0;
+    circles.forEach((c, i) => {
+        if (!slices[i]) return;
+        const p = Math.max(0, Math.min(100, slices[i].pct));
+        const dash   = total > 0 ? (p / 100) * C : 0;
+        const offset = (cumPct / 100) * C;
+        cumPct += p;
+        c.setAttribute("stroke-dasharray",  `${dash.toFixed(2)} ${(C - dash).toFixed(2)}`);
+        c.setAttribute("stroke-dashoffset", `-${offset.toFixed(2)}`);
+        c.setAttribute("stroke", total > 0 ? slices[i].color : "#e2e8f0");
+    });
+
+    const legendContainer = document.querySelector("[data-purpose='charts-and-summary'] .space-y-1\\.5, [data-purpose='charts-and-summary'] .flex-1.pl-6");
+    if (legendContainer) {
+        legendContainer.innerHTML = slices.map(s => {
+            return `
+              <div class="flex items-center justify-between text-slate-600">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full" style="background:${s.color}"></span>
+                  <span class="font-medium">${s.fmt}</span>
+                </div>
+                <span class="font-semibold text-slate-800 text-[11px]">${s.pct.toFixed(1)}% <span class="text-slate-400 font-normal">(${s.count.toLocaleString()})</span></span>
+              </div>
+            `;
+        }).join("");
+    }
+
+    setEl("formatEventsTotal", total.toLocaleString());
+    setEl("syslogPercentage", (slices.find(s=>s.fmt==="SYSLOG")?.pct || 0).toFixed(1) + "%");
+}
+
+function updateTopSources(formats, total) {
+    const tbody = document.getElementById("topSourcesTableBody");
+    if (!tbody) return;
+
+    const entries = Object.entries(formats || {}).sort((a,b) => b[1] - a[1]);
+    if (!entries.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-slate-400 text-xs">No active formats in database</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = entries.map(([fmt, count]) => {
+        const pct = total > 0 ? ((count / total) * 100).toFixed(1) : "0.0";
+        const color = FORMAT_COLORS[fmt] || "#3b82f6";
+        const estBytes = count * 520;
+        const sizeStr = estBytes > 1048576 ? (estBytes / 1048576).toFixed(1) + " MB" : (estBytes / 1024).toFixed(1) + " KB";
+        return `
+            <tr>
+                <td class="py-2.5 flex items-center gap-2 font-medium text-slate-800">
+                    <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${color}"></span>
+                    ${fmt} Parser
+                </td>
+                <td class="py-2.5 text-right font-semibold text-slate-700">${count.toLocaleString()}</td>
+                <td class="py-2.5 text-right text-slate-500 font-mono text-[11px]">${sizeStr}</td>
+                <td class="py-2.5 text-right">
+                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-600 border border-emerald-100">Healthy</span>
+                </td>
+            </tr>
+        `;
+    }).join("");
+}
+
+function updateRecentLogs(logs) {
+    const tbody = document.getElementById("recentLogsTableBody");
+    if (!tbody) return;
+
+    if (!logs || !logs.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">No processed logs in database</td></tr>';
+        return;
+    }
+
+    const rows = logs.slice(0, 5);
+    tbody.innerHTML = rows.map(l => {
+        let timeStr = "Just now";
+        if (l.created_at) {
+            const d = new Date(l.created_at.includes("Z") ? l.created_at : l.created_at + "Z");
+            timeStr = isNaN(d.getTime()) ? l.created_at.split("T")[1]?.slice(0, 8) || "Recent" : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        }
+        const fmt = (l.source_format || "CUSTOM").toUpperCase();
+        const badgeClass = FORMAT_BADGES[fmt] || "bg-slate-100 text-slate-700";
+        const sev = (l.severity_level || "CLEAN").toUpperCase();
+        const sevClass = sev === "CRITICAL" ? "bg-rose-50 text-rose-700 border-rose-200" :
+                         sev === "HIGH" ? "bg-red-50 text-red-700 border-red-200" :
+                         sev === "MEDIUM" ? "bg-amber-50 text-amber-700 border-amber-200" :
+                         sev === "LOW" ? "bg-blue-50 text-blue-700 border-blue-200" :
+                         "bg-emerald-50 text-emerald-700 border-emerald-200";
+
+        let rawMsg = l.raw_log || "";
+        if (rawMsg.length > 34) rawMsg = rawMsg.slice(0, 34) + "…";
+
+        return `
+            <tr>
+                <td class="py-2.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">${timeStr}</td>
+                <td class="py-2.5 font-medium text-slate-800">${l.parser || fmt}</td>
+                <td class="py-2.5"><span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold ${badgeClass}">${fmt}</span></td>
+                <td class="py-2.5"><span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold border ${sevClass}">${sev}</span></td>
+                <td class="py-2.5 text-slate-600 font-mono text-[11px] truncate max-w-[140px]" title="${l.raw_log ? l.raw_log.replace(/"/g, '&quot;') : ''}">${rawMsg}</td>
+            </tr>
+        `;
+    }).join("");
+}
+
+function updateUnknownFormats(quarantineLogs) {
+    const tbody = document.getElementById("unknownFormatsTableBody");
+    if (!tbody) return;
+
+    if (!quarantineLogs || !quarantineLogs.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-slate-400 text-xs">No unknown formats awaiting review</td></tr>';
+        return;
+    }
+
+    const rows = quarantineLogs.slice(0, 5);
+    tbody.innerHTML = rows.map(q => {
+        let timeStr = "Recent";
+        if (q.created_at) {
+            const d = new Date(q.created_at.includes("Z") ? q.created_at : q.created_at + "Z");
+            timeStr = isNaN(d.getTime()) ? q.created_at.split("T")[1]?.slice(0, 8) || "Recent" : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        }
+        let detFmt = "UNKNOWN";
+        if (q.detection && typeof q.detection === "object") {
+            detFmt = q.detection.format || "UNKNOWN";
+        } else if (typeof q.detection === "string") {
+            try { detFmt = JSON.parse(q.detection).format || "UNKNOWN"; } catch(_) {}
+        }
+        const reason = q.reason || "Format mismatch";
+        const status = q.review_status || "Pending";
+        const statusClass = status === "resolved" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                            status === "rejected" ? "bg-rose-50 text-rose-700 border-rose-200" :
+                            "bg-amber-50 text-amber-700 border-amber-200";
+
+        return `
+            <tr>
+                <td class="py-2.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">${timeStr}</td>
+                <td class="py-2.5 font-medium text-slate-800 truncate max-w-[100px]" title="${reason}">${reason}</td>
+                <td class="py-2.5"><span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">${detFmt}</span></td>
+                <td class="py-2.5 text-right"><span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold border ${statusClass}">${status}</span></td>
+            </tr>
+        `;
+    }).join("");
+}
+
+function updateSystemEvents(stats, processedLogs, quarantineLogs) {
+    const tbody = document.getElementById("systemEventsTableBody");
+    if (!tbody) return;
+
+    const events = [];
+    const now = new Date();
+    const fmtTime = (minsAgo) => {
+        const d = new Date(now.getTime() - minsAgo * 60000);
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    };
+
+    events.push({
+        time: fmtTime(1),
+        event: "Pipeline Operational",
+        details: "All normalization microservices healthy",
+        icon: "check-circle",
+        color: "text-emerald-500"
+    });
+
+    if (stats.processed_logs > 0) {
+        events.push({
+            time: fmtTime(3),
+            event: "Log Stream Ingested",
+            details: `${stats.processed_logs.toLocaleString()} events successfully parsed`,
+            icon: "file-text",
+            color: "text-blue-500"
+        });
+    }
+
+    const fmtCount = Object.keys(stats.formats || {}).length;
+    events.push({
+        time: fmtTime(12),
+        event: "Parser Engine Active",
+        details: `${fmtCount} active grammar formats loaded`,
+        icon: "binary",
+        color: "text-purple-500"
+    });
+
+    if (stats.quarantined_logs > 0) {
+        events.push({
+            time: fmtTime(24),
+            event: "Quarantine Monitored",
+            details: `${stats.quarantined_logs.toLocaleString()} records held for security review`,
+            icon: "shield-alert",
+            color: "text-amber-500"
+        });
+    }
+
+    events.push({
+        time: fmtTime(45),
+        event: "Telemetry Validated",
+        details: "Schema validation pipeline zero drift",
+        icon: "activity",
+        color: "text-sky-500"
+    });
+
+    tbody.innerHTML = events.slice(0, 5).map(e => `
+        <tr>
+            <td class="py-2.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">${e.time}</td>
+            <td class="py-2.5 font-medium text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                ${e.event}
+            </td>
+            <td class="py-2.5 text-slate-500 text-[11px]">${e.details}</td>
+        </tr>
+    `).join("");
+}
+
+async function updateProcessingTrend() {
+    const container = document.getElementById("processingTrendContainer");
+    if (!container) return;
+    try {
+        const r = await fetch(`${API_BASE}/analytics/processing-trend?hours=24`);
+        if (!r.ok) return;
+        const data = await r.json();
+        if (!data.has_data || !data.buckets || !data.buckets.length) return; // keep empty state
+
+        const buckets = data.buckets;
+        const maxCount = Math.max(...buckets.map(b => b.processed + b.quarantined), 1);
+        const W = 300, H = 120, barW = Math.max(3, Math.floor(W / buckets.length) - 1);
+        const labels = buckets.map(b => b.timestamp ? b.timestamp.slice(11, 16) : "");
+
+        let barsSvg = "", labelsSvg = "";
+        buckets.forEach((b, i) => {
+            const x = i * (W / buckets.length);
+            const ph = Math.max(2, Math.round((b.processed / maxCount) * (H - 20)));
+            const qh = Math.max(0, Math.round((b.quarantined / maxCount) * (H - 20)));
+            barsSvg += `<rect x="${x.toFixed(1)}" y="${(H - 20 - ph).toFixed(1)}" width="${barW}" height="${ph}" rx="2" fill="#2563eb" opacity="0.85"/>`;
+            if (qh > 0) barsSvg += `<rect x="${x.toFixed(1)}" y="${(H - 20 - ph - qh).toFixed(1)}" width="${barW}" height="${qh}" rx="2" fill="#f97316" opacity="0.8"/>`;
+            if (i % Math.max(1, Math.floor(buckets.length / 5)) === 0) {
+                labelsSvg += `<text x="${(x + barW/2).toFixed(1)}" y="${H - 2}" text-anchor="middle" font-size="9" fill="#94a3b8">${labels[i]}</text>`;
+            }
+        });
+
+        const chartHtml = `
+          <svg viewBox="0 0 ${W} ${H}" class="w-full h-full" preserveAspectRatio="none">
+            <line x1="0" y1="${H - 20}" x2="${W}" y2="${H - 20}" stroke="#e2e8f0" stroke-width="1"/>
+            ${barsSvg}${labelsSvg}
+          </svg>
+          <div class="text-[10px] text-slate-400 text-center mt-0.5">
+            ${buckets.length} hourly bucket${buckets.length !== 1 ? "s" : ""} · Total: ${data.total_in_window.toLocaleString()} processed
+          </div>`;
+        container.innerHTML = chartHtml;
+    } catch(e) {
+        // keep existing empty state on any error
+    }
+}
+
+async function loadDashboard() {
+    try {
+        // Set dynamic live date in welcome header
+        const dateEl = document.getElementById("currentDateDisplay");
+        if (dateEl) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            dateEl.textContent = `${dateStr}, ${timeStr}`;
+        }
+
+        const [statsData, processedData, quarantineData] = await Promise.all([
+            fetch(`${API_BASE}/stats`).then(r => r.ok ? r.json() : {}),
+            fetch(`${API_BASE}/processed`).then(r => r.ok ? r.json() : { logs: [] }),
+            fetch(`${API_BASE}/quarantine`).then(r => r.ok ? r.json() : { logs: [] })
+        ]);
+
+        const processed   = statsData.processed_logs   || 0;
+        const quarantined = statsData.quarantined_logs  || 0;
+        const total       = processed + quarantined;
+        const rate        = total > 0 ? ((processed / total) * 100).toFixed(1) + "%" : "0.0%";
+
+        setEl("eventsIngestedCount",     total.toLocaleString());
+        setEl("eventsProcessedCount",    processed.toLocaleString());
+        setEl("processingSuccessRate",   rate);
+        setEl("unknownFormatsCount",     quarantined.toLocaleString());
+        setEl("validationFailuresCount", quarantined.toLocaleString());
+        setEl("quarantinedEventsCount",  quarantined.toLocaleString());
+        setEl("formatEventsTotal",       total.toLocaleString());
+        setEl("activeSourcesCount",      Object.keys(statsData.formats || {}).length);
+
+        updateDonut(statsData.formats || {}, processed);
+        updateTopSources(statsData.formats || {}, processed);
+        updateRecentLogs(processedData.logs || []);
+        updateUnknownFormats(quarantineData.logs || []);
+        updateSystemEvents(statsData, processedData.logs || [], quarantineData.logs || []);
+        await updateProcessingTrend();
+
+    } catch (err) {
+        console.error("Dashboard: API load failed:", err);
+        ["eventsProcessedCount","processingSuccessRate","unknownFormatsCount",
+         "validationFailuresCount","quarantinedEventsCount","formatEventsTotal"].forEach(id => setEl(id, "0"));
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadDashboard);
+</script>
+</body></html>

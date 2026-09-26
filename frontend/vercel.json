@@ -1,0 +1,6 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html" }
+  ]
+}

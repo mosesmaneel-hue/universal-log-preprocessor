@@ -1,0 +1,10 @@
+# ============================================================
+# Universal Log Pre-Processing Framework - Production Dependencies
+# ============================================================
+fastapi>=0.110.0,<1.0.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0,<3.0.0
+tzdata>=2024.1
+typing_extensions>=4.9.0
+anyio>=4.0.0
+starlette>=0.36.0

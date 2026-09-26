@@ -1,0 +1,1001 @@
+﻿<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ARC - Parser Registry</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#f97316',
+              'orange-light': '#ffedd5',
+              dark: '#081226',
+              navy: '#0b192e',
+              slate: '#13233a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-[#f4f7fb] text-slate-800 font-sans antialiased min-h-screen flex text-[13px]">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-white"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex flex-col min-w-0 bg-[#f4f7fb]">
+<!-- BEGIN: GlobalHeader -->
+<header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20">
+<!-- Title & Tagline -->
+<div>
+<h1 class="font-bold text-slate-900 text-sm leading-tight">Universal Log Pre-Processing Framework</h1>
+<p class="text-[11px] text-slate-500">Learn Once. Process Forever.</p>
+</div>
+<!-- Search & System Status & Profile -->
+<div class="flex items-center gap-4">
+<!-- Global Search Bar -->
+<div class="relative w-80">
+<i class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-lucide="search"></i>
+<input class="w-full bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Search logs, sources, formats, parsers..." type="text"/>
+</div>
+<!-- System Healthy Pill -->
+<div class="flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<div class="text-[11px] leading-tight">
+<span class="font-semibold text-emerald-800">System Healthy</span>
+<span class="text-emerald-600 ml-1 text-[10px]">All services operational</span>
+</div>
+</div>
+<!-- Bell Notification Icon -->
+<button class="relative p-2 rounded-full hover:bg-slate-100 text-slate-600 transition">
+<i class="w-4 h-4" data-lucide="bell"></i>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<!-- User Profile -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-slate-200 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-800">Administrator</span>
+<i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-down"></i>
+</div>
+</div>
+</header>
+<!-- END: GlobalHeader -->
+<!-- Main Body Container -->
+<main class="p-6 space-y-5 overflow-y-auto">
+<!-- BEGIN: PageHeader -->
+<section class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 text-[11px] text-slate-400 mb-0.5">
+<span>Dashboard</span>
+<i class="w-3 h-3 text-slate-300" data-lucide="chevron-right"></i>
+<span class="text-blue-600 font-medium">Parser Registry</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Parser Registry</h2>
+<p class="text-xs text-slate-500 mt-0.5">Manage, version and deploy parsers for known and newly approved formats.</p>
+</div>
+<!-- Live Data Notice Badge -->
+<div class="bg-orange-50 border border-orange-200 px-4 py-2 rounded-lg text-right">
+<div class="text-xs font-bold text-orange-600">Live Data</div>
+<div class="text-[11px] text-orange-500">Connected to FastAPI backend.</div>
+</div>
+</section>
+<!-- END: PageHeader -->
+<!-- BEGIN: MetricCards -->
+<section class="grid grid-cols-5 gap-4">
+<!-- Card 1: Total Parsers -->
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center text-white shrink-0">
+<i class="w-5 h-5" data-lucide="file-code"></i>
+</div>
+<div>
+<span class="text-[11px] font-medium text-slate-500">Total Parsers</span>
+<div class="text-2xl font-bold text-slate-900 mt-0.5">38</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<i class="w-3.5 h-3.5" data-lucide="arrow-up"></i>
+<span>+4</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Active Parsers -->
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-emerald-500 flex items-center justify-center text-white shrink-0">
+<i class="w-5 h-5" data-lucide="check-square"></i>
+</div>
+<div>
+<span class="text-[11px] font-medium text-slate-500">Active Parsers</span>
+<div class="text-2xl font-bold text-slate-900 mt-0.5">32</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<i class="w-3.5 h-3.5" data-lucide="arrow-up"></i>
+<span>+3</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Pending Approval -->
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center text-white shrink-0">
+<i class="w-5 h-5" data-lucide="clock"></i>
+</div>
+<div>
+<span class="text-[11px] font-medium text-slate-500">Pending Approval</span>
+<div class="text-2xl font-bold text-slate-900 mt-0.5">4</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-red-500 mt-1">
+<i class="w-3.5 h-3.5" data-lucide="arrow-down"></i>
+<span>-1</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Parser Versions -->
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center text-white shrink-0">
+<i class="w-5 h-5" data-lucide="layers"></i>
+</div>
+<div>
+<span class="text-[11px] font-medium text-slate-500">Parser Versions</span>
+<div class="text-2xl font-bold text-slate-900 mt-0.5">76</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<i class="w-3.5 h-3.5" data-lucide="arrow-up"></i>
+<span>+6</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- Card 5: Deprecated Parsers -->
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-rose-500 flex items-center justify-center text-white shrink-0">
+<i class="w-5 h-5" data-lucide="alert-octagon"></i>
+</div>
+<div>
+<span class="text-[11px] font-medium text-slate-500">Deprecated Parsers</span>
+<div class="text-2xl font-bold text-slate-900 mt-0.5">2</div>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-slate-500 mt-1">
+<span class="font-bold text-slate-600">â€”</span>
+<span>0</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: MetricCards -->
+<!-- BEGIN: MainContentGrid (Table + Details Panel) -->
+<div class="grid grid-cols-12 gap-5 items-start">
+<!-- Left Table Section (8 Cols) -->
+<div class="col-span-8 bg-white border border-slate-200 rounded-xl shadow-sm p-4 space-y-4">
+<!-- Tab Navigation -->
+<div class="flex items-center gap-6 border-b border-slate-200 pb-2 text-xs font-semibold">
+<button class="flex items-center gap-1.5 text-orange-600 border-b-2 border-orange-500 pb-2 -mb-2 font-bold">
+<i class="w-4 h-4" data-lucide="files"></i>
+<span>All Parsers</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-500 hover:text-slate-800 pb-2 -mb-2">
+<i class="w-4 h-4" data-lucide="cpu"></i>
+<span>Built-in Parsers</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-500 hover:text-slate-800 pb-2 -mb-2">
+<i class="w-4 h-4" data-lucide="bot"></i>
+<span>AI-Generated (Pending)</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-500 hover:text-slate-800 pb-2 -mb-2">
+<i class="w-4 h-4" data-lucide="code"></i>
+<span>Custom Parsers</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-500 hover:text-slate-800 pb-2 -mb-2">
+<i class="w-4 h-4" data-lucide="archive"></i>
+<span>Deprecated</span>
+</button>
+</div>
+<!-- Filter & Action Controls -->
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-2 flex-1">
+<div class="relative w-48">
+<i class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-lucide="search"></i>
+<input class="w-full bg-slate-50 border border-slate-200 rounded-lg pl-8 pr-3 py-1 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Search parsers..." type="text"/>
+</div>
+<!-- Dropdowns -->
+<select class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs text-slate-600 focus:outline-none focus:ring-1">
+<option>All Formats</option>
+<option>Syslog</option>
+<option>JSON</option>
+<option>CSV</option>
+</select>
+<select class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs text-slate-600 focus:outline-none focus:ring-1">
+<option>All Status</option>
+<option>Active</option>
+<option>Pending</option>
+</select>
+<select class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs text-slate-600 focus:outline-none focus:ring-1">
+<option>All Sources</option>
+</select>
+<button class="px-2.5 py-1 text-xs text-blue-600 hover:bg-blue-50 rounded-lg font-medium border border-blue-200">
+                Reset
+              </button>
+</div>
+<!-- Register New Parser Button -->
+<button class="flex items-center gap-1 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-semibold shadow-sm transition">
+<i class="w-3.5 h-3.5" data-lucide="plus"></i>
+<span>Register New Parser</span>
+</button>
+</div>
+<!-- Table Content -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="border-b border-slate-200 text-slate-400 font-medium">
+<th class="py-2 px-1 text-center w-6">#</th>
+<th class="py-2 px-2">Parser Name</th>
+<th class="py-2 px-2">Format</th>
+<th class="py-2 px-2">Type</th>
+<th class="py-2 px-2">Version</th>
+<th class="py-2 px-2">Status</th>
+<th class="py-2 px-2">Created By</th>
+<th class="py-2 px-2">Last Updated</th>
+<th class="py-2 px-2 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700">
+<!-- Row 1: Selected Syslog Parser -->
+<tr class="bg-blue-50/40 hover:bg-blue-50/70 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">1</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-blue-600" data-lucide="terminal"></i>
+<span>Syslog Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">Syslog</td>
+<td class="py-2.5 px-2 text-slate-500">Built-in</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.4</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">System</td>
+<td class="py-2.5 px-2 text-slate-500">12 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 2: JSON Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">2</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-amber-600" data-lucide="file-json"></i>
+<span>JSON Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">JSON</td>
+<td class="py-2.5 px-2 text-slate-500">Built-in</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v2.1</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">System</td>
+<td class="py-2.5 px-2 text-slate-500">10 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 3: CSV Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">3</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-green-600" data-lucide="file-spreadsheet"></i>
+<span>CSV Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">CSV</td>
+<td class="py-2.5 px-2 text-slate-500">Built-in</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.2</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">System</td>
+<td class="py-2.5 px-2 text-slate-500">08 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 4: CEF Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">4</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-cyan-600" data-lucide="file-text"></i>
+<span>CEF Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">CEF</td>
+<td class="py-2.5 px-2 text-slate-500">Built-in</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.3</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">System</td>
+<td class="py-2.5 px-2 text-slate-500">09 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 5: LEEF Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">5</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-purple-600" data-lucide="file-text"></i>
+<span>LEEF Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">LEEF</td>
+<td class="py-2.5 px-2 text-slate-500">Built-in</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.1</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">System</td>
+<td class="py-2.5 px-2 text-slate-500">08 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 6: Nginx Custom Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">6</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-emerald-600" data-lucide="globe"></i>
+<span>Nginx Custom Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">Nginx</td>
+<td class="py-2.5 px-2 text-slate-500">Custom</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.0</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">Admin</td>
+<td class="py-2.5 px-2 text-slate-500">21 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 7: Apache Access Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">7</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-rose-500" data-lucide="feather"></i>
+<span>Apache Access Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">Apache</td>
+<td class="py-2.5 px-2 text-slate-500">Custom</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.0</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">Admin</td>
+<td class="py-2.5 px-2 text-slate-500">20 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 8: Windows Event Parser -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">8</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-sky-500" data-lucide="layout"></i>
+<span>Windows Event Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">EVTX</td>
+<td class="py-2.5 px-2 text-slate-500">Custom</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v1.1</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">Admin</td>
+<td class="py-2.5 px-2 text-slate-500">18 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 9: IoT Sensor Parser (AI-Generated, Pending) -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">9</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-violet-500" data-lucide="cpu"></i>
+<span>IoT Sensor Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">Custom</td>
+<td class="py-2.5 px-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-50 text-purple-700 border border-purple-200">AI-Generated</span>
+</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v0.9</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-50 text-orange-700 border border-orange-200">
+<i class="w-3 h-3 text-orange-500" data-lucide="clock"></i>
+                      Pending
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">AI Assistant</td>
+<td class="py-2.5 px-2 text-slate-500">22 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+<!-- Row 10: Proprietary App Parser (AI-Generated, Pending) -->
+<tr class="hover:bg-slate-50 transition">
+<td class="py-2.5 px-1 text-center text-slate-400 font-mono">10</td>
+<td class="py-2.5 px-2 font-semibold text-slate-900 flex items-center gap-2">
+<i class="w-3.5 h-3.5 text-indigo-500" data-lucide="shield"></i>
+<span>Proprietary App Parser</span>
+</td>
+<td class="py-2.5 px-2 text-blue-600">Custom</td>
+<td class="py-2.5 px-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-50 text-purple-700 border border-purple-200">AI-Generated</span>
+</td>
+<td class="py-2.5 px-2 font-mono text-slate-600">v0.8</td>
+<td class="py-2.5 px-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-50 text-orange-700 border border-orange-200">
+<i class="w-3 h-3 text-orange-500" data-lucide="clock"></i>
+                      Pending
+                    </span>
+</td>
+<td class="py-2.5 px-2 text-slate-500">AI Assistant</td>
+<td class="py-2.5 px-2 text-slate-500">21 Sep 2026</td>
+<td class="py-2.5 px-2">
+<div class="flex items-center justify-center gap-1.5 text-slate-400">
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="eye"></i>
+<i class="w-3.5 h-3.5 hover:text-blue-600 cursor-pointer" data-lucide="edit-2"></i>
+<i class="w-3.5 h-3.5 hover:text-slate-600 cursor-pointer" data-lucide="more-horizontal"></i>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Side: Parser Details Panel (4 Cols) -->
+<div class="col-span-4 bg-white border border-slate-200 rounded-xl shadow-sm p-4 space-y-4">
+<!-- Details Header -->
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-900 text-sm">Parser Details</h3>
+<a class="text-blue-600 hover:text-blue-700 text-xs font-medium flex items-center gap-1" href="#">
+<span>View Version History</span>
+<i class="w-3.5 h-3.5" data-lucide="arrow-right"></i>
+</a>
+</div>
+<!-- Parser Title and Meta -->
+<div class="flex items-start gap-3 pt-1">
+<div class="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center shrink-0">
+<i class="w-5 h-5" data-lucide="file-text"></i>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900 text-sm">Syslog Parser</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Active</span>
+</div>
+<p class="text-[11px] text-slate-500">Built-in Parser for RFC 3164/5424 Syslog</p>
+</div>
+</div>
+<!-- Key Metadata Grid -->
+<div class="grid grid-cols-2 gap-y-2 text-xs pt-1 border-t border-slate-100">
+<span class="text-slate-400">Version</span>
+<span class="text-slate-700 font-mono">v1.4</span>
+<span class="text-slate-400">Format</span>
+<span class="text-slate-700">Syslog (RFC 3164/5424)</span>
+<span class="text-slate-400">Type</span>
+<span class="text-slate-700">Built-in</span>
+<span class="text-slate-400">Created By</span>
+<span class="text-slate-700">System</span>
+<span class="text-slate-400">Last Updated</span>
+<span class="text-slate-700">12 Sep 2026, 14:22</span>
+</div>
+<!-- Description -->
+<div class="pt-2 border-t border-slate-100">
+<span class="text-slate-900 font-bold text-xs block mb-1">Description</span>
+<p class="text-xs text-slate-600 leading-relaxed font-mono bg-slate-50 p-2 rounded-lg border border-slate-200/70">
+              Parses standard syslog logs and extracts common fields like timestamp, hostname, program, message.
+            </p>
+</div>
+<!-- Extracted Fields Badges -->
+<div>
+<span class="text-slate-900 font-bold text-xs block mb-1.5">Extracted Fields</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">timestamp</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">hostname</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">facility</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">severity</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">program</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">message</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">process_id</span>
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-[11px] font-mono border border-blue-100">source_ip</span>
+</div>
+</div>
+<!-- Sample Log Block -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-slate-900 font-bold text-xs">Sample Log</span>
+<div class="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 text-[11px]">
+<button class="px-2.5 py-0.5 bg-blue-600 text-white rounded font-medium shadow-sm">Raw</button>
+<button class="px-2.5 py-0.5 text-slate-600 hover:text-slate-900 font-medium">Parsed</button>
+</div>
+</div>
+<div class="bg-[#0b162c] text-sky-300 font-mono text-[11px] p-3 rounded-lg border border-slate-800 leading-relaxed overflow-x-auto">
+              Sep 22 18:24:01 Firewall-01 %ASA-6-302013: Built inbound TCP connection 12345 for outside:8.8.8.8/443 (8.8.8.8) to inside:10.0.0.10/54321 (10.0.0.10)
+            </div>
+</div>
+<!-- Panel Action Buttons -->
+<div class="flex items-center gap-2 pt-2">
+<button class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition">
+<i class="w-3.5 h-3.5" data-lucide="edit-3"></i>
+<span>Edit Parser</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 px-3 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold transition">
+<i class="w-3.5 h-3.5" data-lucide="copy"></i>
+<span>Clone</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 px-3 py-2 border border-red-200 hover:bg-red-50 text-red-600 rounded-lg text-xs font-semibold transition">
+<i class="w-3.5 h-3.5" data-lucide="trash-2"></i>
+<span>Deprecate</span>
+</button>
+</div>
+</div>
+<!-- END: Right Details Panel -->
+</div>
+<!-- END: MainContentGrid -->
+<!-- BEGIN: BottomRowAnalytics -->
+<div class="grid grid-cols-12 gap-5">
+<!-- Donut Chart 1: Parsers by Format (3 Cols) -->
+<div class="col-span-3 bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+<h4 class="font-bold text-slate-900 text-xs mb-3">Parsers by Format</h4>
+<div class="flex items-center gap-4">
+<!-- Donut Graphic Representation -->
+<div class="relative w-28 h-28 flex items-center justify-center shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Circular slices -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#3b82f6" stroke-dasharray="57.3 238.7" stroke-dashoffset="0" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#10b981" stroke-dasharray="42.9 238.7" stroke-dashoffset="-57.3" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#f59e0b" stroke-dasharray="31.0 238.7" stroke-dashoffset="-100.2" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#06b6d4" stroke-dasharray="26.2 238.7" stroke-dashoffset="-131.2" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#a855f7" stroke-dasharray="19.1 238.7" stroke-dashoffset="-157.4" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#f97316" stroke-dasharray="50.1 238.7" stroke-dashoffset="-176.5" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#64748b" stroke-dasharray="11.9 238.7" stroke-dashoffset="-226.6" stroke-width="14"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-base font-bold text-slate-900 leading-none">38</span>
+<span class="text-[9px] text-slate-400 font-medium">Parsers</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="text-[11px] space-y-1 w-full font-medium">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500"></span><span class="text-slate-600">Syslog</span></div>
+<span class="text-slate-800 font-bold">24%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-slate-600">JSON</span></div>
+<span class="text-slate-800 font-bold">18%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span><span class="text-slate-600">CSV</span></div>
+<span class="text-slate-800 font-bold">13%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-500"></span><span class="text-slate-600">CEF</span></div>
+<span class="text-slate-800 font-bold">11%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-500"></span><span class="text-slate-600">LEEF</span></div>
+<span class="text-slate-800 font-bold">8%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-orange-500"></span><span class="text-slate-600">Custom</span></div>
+<span class="text-slate-800 font-bold">21%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-500"></span><span class="text-slate-600">Others</span></div>
+<span class="text-slate-800 font-bold">5%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Donut Chart 2: Parser Status (3 Cols) -->
+<div class="col-span-3 bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+<h4 class="font-bold text-slate-900 text-xs mb-3">Parser Status</h4>
+<div class="flex items-center gap-4">
+<!-- Donut Graphic Representation -->
+<div class="relative w-28 h-28 flex items-center justify-center shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#10b981" stroke-dasharray="200.5 238.7" stroke-dashoffset="0" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#f97316" stroke-dasharray="26.2 238.7" stroke-dashoffset="-200.5" stroke-width="14"></circle>
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#ef4444" stroke-dasharray="12.0 238.7" stroke-dashoffset="-226.7" stroke-width="14"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-base font-bold text-slate-900 leading-none">38</span>
+<span class="text-[9px] text-slate-400 font-medium">Parsers</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="text-[11px] space-y-2.5 w-full font-medium">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-slate-600">Active</span></div>
+<span class="text-slate-800 font-bold">84%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-orange-500"></span><span class="text-slate-600">Pending</span></div>
+<span class="text-slate-800 font-bold">11%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span><span class="text-slate-600">Deprecated</span></div>
+<span class="text-slate-800 font-bold">5%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Activity Table: Recent Parser Activity (6 Cols) -->
+<div class="col-span-6 bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-bold text-slate-900 text-xs">Recent Parser Activity</h4>
+<a class="text-blue-600 hover:text-blue-700 text-xs font-medium flex items-center gap-1" href="#">
+<span>View All</span>
+<i class="w-3.5 h-3.5" data-lucide="arrow-right"></i>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-[11px]">
+<thead>
+<tr class="border-b border-slate-200 text-slate-400 font-medium">
+<th class="py-1.5 px-2">Time</th>
+<th class="py-1.5 px-2">Action</th>
+<th class="py-1.5 px-2">Parser</th>
+<th class="py-1.5 px-2">Details</th>
+<th class="py-1.5 px-2">User</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700">
+<!-- Activity 1 -->
+<tr>
+<td class="py-2 px-2 font-mono text-slate-500">18:22:15</td>
+<td class="py-2 px-2">
+<span class="inline-flex items-center gap-1 text-emerald-600 font-medium">
+<i class="w-3.5 h-3.5" data-lucide="arrow-down-circle"></i> Created
+                    </span>
+</td>
+<td class="py-2 px-2 font-medium text-slate-900">IoT Sensor Parser</td>
+<td class="py-2 px-2 text-slate-500">New AI-generated parser</td>
+<td class="py-2 px-2 text-slate-600">AI Assistant</td>
+</tr>
+<!-- Activity 2 -->
+<tr>
+<td class="py-2 px-2 font-mono text-slate-500">16:41:03</td>
+<td class="py-2 px-2">
+<span class="inline-flex items-center gap-1 text-blue-600 font-medium">
+<i class="w-3.5 h-3.5" data-lucide="refresh-cw"></i> Updated
+                    </span>
+</td>
+<td class="py-2 px-2 font-medium text-slate-900">Nginx Custom Parser</td>
+<td class="py-2 px-2 text-slate-500 font-mono">Version 1.0 â†’ 1.1</td>
+<td class="py-2 px-2 text-slate-600">Admin</td>
+</tr>
+<!-- Activity 3 -->
+<tr>
+<td class="py-2 px-2 font-mono text-slate-500">14:32:17</td>
+<td class="py-2 px-2">
+<span class="inline-flex items-center gap-1 text-emerald-600 font-medium">
+<i class="w-3.5 h-3.5" data-lucide="check-circle"></i> Approved
+                    </span>
+</td>
+<td class="py-2 px-2 font-medium text-slate-900">Apache Access Parser</td>
+<td class="py-2 px-2 text-slate-500">Human approval completed</td>
+<td class="py-2 px-2 text-slate-600">Admin</td>
+</tr>
+<!-- Activity 4 -->
+<tr>
+<td class="py-2 px-2 font-mono text-slate-500">11:27:56</td>
+<td class="py-2 px-2">
+<span class="inline-flex items-center gap-1 text-red-500 font-medium">
+<i class="w-3.5 h-3.5" data-lucide="minus-circle"></i> Deprecated
+                    </span>
+</td>
+<td class="py-2 px-2 font-medium text-slate-900">Old App Parser</td>
+<td class="py-2 px-2 text-slate-500">Marked as deprecated</td>
+<td class="py-2 px-2 text-slate-600">Admin</td>
+</tr>
+<!-- Activity 5 -->
+<tr>
+<td class="py-2 px-2 font-mono text-slate-500">10:15:44</td>
+<td class="py-2 px-2">
+<span class="inline-flex items-center gap-1 text-emerald-600 font-medium">
+<i class="w-3.5 h-3.5" data-lucide="arrow-down-circle"></i> Created
+                    </span>
+</td>
+<td class="py-2 px-2 font-medium text-slate-900">Proprietary App Parser</td>
+<td class="py-2 px-2 text-slate-500">Submitted for review</td>
+<td class="py-2 px-2 text-slate-600">AI Assistant</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- END: BottomRowAnalytics -->
+</div>
+</main>
+<script>
+// PARSER REGISTRY — complete rewrite
+(function(){
+    const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+    const COLORS={JSON:"background:#e0f2fe;color:#0369a1;",SYSLOG:"background:#dbeafe;color:#1d4ed8;",CEF:"background:#f3e8ff;color:#7e22ce;",LEEF:"background:#cffafe;color:#0e7490;",XML:"background:#ffe4e6;color:#be123c;",CSV:"background:#ffedd5;color:#c2410c;",CUSTOM:"background:#d1fae5;color:#065f46;"};
+    const DESC={JSON:"Parses standard JSON-formatted log events",SYSLOG:"Parses RFC 3164 and RFC 5424 Syslog messages",CEF:"Parses ArcSight Common Event Format (CEF)",LEEF:"Parses IBM QRadar Log Event Extended Format (LEEF)",XML:"Parses XML-formatted log events",CSV:"Parses comma-separated value log files",CUSTOM:"Custom key-value pair parser for unrecognized formats"};
+
+    async function load(){
+        try{
+            const d=await fetch(API+"/parsers",{signal:AbortSignal.timeout(8000)}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+            const parsers=d.parsers||[];
+            const count=parsers.length;
+
+            // Update all stat count cards
+            document.querySelectorAll("span, div").forEach(el=>{
+                if(el.children.length)return;
+                const txt=el.textContent.trim();
+                if(["Total Parsers","Active Parsers","Parser Versions","Deprecated Parsers"].includes(txt)){
+                    const card=el.closest(".bg-white");
+                    if(!card)return;
+                    // Find the number display element (bold large text)
+                    const numEl=card.querySelector(".text-xl,.text-2xl,.text-lg");
+                    if(numEl){
+                        if(txt==="Deprecated Parsers")numEl.textContent="0";
+                        else numEl.textContent=count;
+                    }
+                }
+            });
+
+            // Find the main parser table
+            const tables=document.querySelectorAll("table");
+            let mainTable=null;
+            tables.forEach(t=>{
+                const ths=Array.from(t.querySelectorAll("th"));
+                if(ths.some(th=>/parser\s*name|format|version/i.test(th.textContent)))mainTable=t;
+            });
+            if(!mainTable&&tables.length)mainTable=tables[0];
+
+            if(mainTable){
+                const tbody=mainTable.querySelector("tbody");
+                if(tbody){
+                    tbody.innerHTML=parsers.map((p,i)=>{
+                        // API returns {format:"JSON", parser:"json_v1"} objects
+                        const fmt=(p.format||String(p)).toUpperCase();
+                        const pid=p.parser||p||"—";
+                        const colorStyle=COLORS[fmt]||"background:#f1f5f9;color:#475569;";
+                        const desc=DESC[fmt]||"Log format parser";
+                        return `<tr class="hover:bg-slate-50 border-b border-slate-100">
+                            <td class="py-2.5 px-3 text-center text-slate-400 text-[10px]">${i+1}</td>
+                            <td class="py-2.5 px-3 font-semibold text-slate-900 text-[11px]">${fmt} Parser</td>
+                            <td class="py-2.5 px-3">
+                                <span style="${colorStyle}padding:2px 8px;border-radius:9999px;font-size:10px;font-weight:700;">${fmt}</span>
+                            </td>
+                            <td class="py-2.5 px-3 text-slate-500 text-[10px]">Built-in</td>
+                            <td class="py-2.5 px-3 font-mono text-[10px] text-slate-500">${pid}</td>
+                            <td class="py-2.5 px-3">
+                                <span style="background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:9999px;font-size:10px;font-weight:700;">Active</span>
+                            </td>
+                        </tr>`;
+                    }).join("");
+                }
+            }
+
+            // Also update the second table (if it exists - bottom analytics table)
+            const tables2=document.querySelectorAll("table");
+            if(tables2.length>1){
+                const tbody2=tables2[1].querySelector("tbody");
+                if(tbody2&&parsers.length){
+                    tbody2.innerHTML=parsers.slice(0,5).map(p=>{
+                        const fmt=(p.format||String(p)).toUpperCase();
+                        const pid=p.parser||"—";
+                        return `<tr class="hover:bg-slate-50 border-b border-slate-100">
+                            <td class="py-2 px-2 text-[10px] text-slate-700 font-medium">${fmt}</td>
+                            <td class="py-2 px-2 font-mono text-[10px] text-slate-500">${pid}</td>
+                            <td class="py-2 px-2"><span style="background:#d1fae5;color:#065f46;padding:1px 6px;border-radius:9999px;font-size:9px;font-weight:700;">Active</span></td>
+                        </tr>`;
+                    }).join("");
+                }
+            }
+
+        }catch(e){
+            console.error("Parser Registry:",e);
+            const tbody=document.querySelector("table tbody");
+            if(tbody)tbody.innerHTML=`<tr><td colspan="6" class="py-10 text-center text-xs text-red-500">Backend unavailable: ${e.message}</td></tr>`;
+        }
+    }
+    document.addEventListener("DOMContentLoaded",load);
+})();
+</script>
+</div>
+</body></html>

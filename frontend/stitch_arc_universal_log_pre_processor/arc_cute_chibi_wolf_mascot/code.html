@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<title>Chibi Wolf Mascot - ARC</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #020617;
+  }
+
+  @keyframes floatBounce {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(0.4deg); }
+  }
+
+  @keyframes tailWag {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(18deg); }
+  }
+
+  @keyframes earTwitchLeft {
+    0%, 82%, 100% { transform: rotate(0deg); }
+    86% { transform: rotate(-7deg); }
+    90% { transform: rotate(3deg); }
+    94% { transform: rotate(-3deg); }
+  }
+
+  @keyframes earTwitchRight {
+    0%, 65%, 100% { transform: rotate(0deg); }
+    70% { transform: rotate(8deg); }
+    74% { transform: rotate(-3deg); }
+    78% { transform: rotate(5deg); }
+  }
+
+  @keyframes blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.08); }
+    97% { transform: scaleY(1.1); }
+  }
+
+  @keyframes sparklePulse {
+    0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg); }
+    50% { opacity: 0.95; transform: scale(1.15) rotate(90deg); }
+  }
+
+  @keyframes ambientAura {
+    0%, 100% { opacity: 0.55; transform: scale(0.96); }
+    50% { opacity: 0.85; transform: scale(1.04); }
+  }
+
+  @keyframes collarGlow {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6)); }
+    50% { filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.95)); }
+  }
+
+  .anim-body {
+    transform-origin: 500px 750px;
+    animation: floatBounce 3.8s ease-in-out infinite;
+  }
+
+  .anim-tail {
+    transform-origin: 390px 650px;
+    animation: tailWag 2.4s ease-in-out infinite;
+  }
+
+  .anim-ear-left {
+    transform-origin: 370px 320px;
+    animation: earTwitchLeft 4.5s ease-in-out infinite;
+  }
+
+  .anim-ear-right {
+    transform-origin: 630px 320px;
+    animation: earTwitchRight 5.2s ease-in-out infinite;
+  }
+
+  .anim-eye {
+    transform-origin: 500px 455px;
+    animation: blink 4.2s infinite;
+  }
+
+  .anim-sparkle-1 { animation: sparklePulse 2.8s ease-in-out infinite; transform-origin: 260px 320px; }
+  .anim-sparkle-2 { animation: sparklePulse 3.3s ease-in-out 0.7s infinite; transform-origin: 750px 280px; }
+  .anim-sparkle-3 { animation: sparklePulse 2.5s ease-in-out 1.2s infinite; transform-origin: 220px 580px; }
+  .anim-sparkle-4 { animation: sparklePulse 3.1s ease-in-out 1.8s infinite; transform-origin: 770px 600px; }
+  .anim-sparkle-5 { animation: sparklePulse 2.2s ease-in-out 0.4s infinite; transform-origin: 500px 170px; }
+  .anim-aura { animation: ambientAura 4s ease-in-out infinite; transform-origin: 500px 520px; }
+  .anim-pendant { animation: collarGlow 2.5s ease-in-out infinite; }
+</style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-slate-950 select-none">
+<div class="relative w-full h-full max-w-[900px] max-h-[900px] flex items-center justify-center p-4">
+<svg class="w-full h-full drop-shadow-2xl overflow-visible" viewbox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Radial Backdrop Glow -->
+<radialgradient cx="50%" cy="50%" id="backAura" r="50%">
+<stop offset="0%" stop-color="#0284c7" stop-opacity="0.35"></stop>
+<stop offset="50%" stop-color="#38bdf8" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#020617" stop-opacity="0"></stop>
+</radialgradient>
+<!-- Floor Soft Glow / Shadow -->
+<radialgradient cx="50%" cy="50%" id="groundShadow" r="50%">
+<stop offset="0%" stop-color="#0f172a" stop-opacity="0.8"></stop>
+<stop offset="60%" stop-color="#38bdf8" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#020617" stop-opacity="0"></stop>
+</radialgradient>
+<!-- Wolf Coat Navy Gradients -->
+<lineargradient id="wolfCoatGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#1e293b"></stop>
+<stop offset="35%" stop-color="#0f172a"></stop>
+<stop offset="100%" stop-color="#020617"></stop>
+</lineargradient>
+<lineargradient id="wolfEarsOuter" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#334155"></stop>
+<stop offset="60%" stop-color="#0f172a"></stop>
+<stop offset="100%" stop-color="#020617"></stop>
+</lineargradient>
+<!-- Ear Inner Fluff Soft Pastel Cyan/Pink -->
+<lineargradient id="earInnerGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#bae6fd"></stop>
+<stop offset="45%" stop-color="#7dd3fc"></stop>
+<stop offset="100%" stop-color="#f472b6"></stop>
+</lineargradient>
+<!-- Eye Irises - Vibrant Multi-layer Anime Glow -->
+<lineargradient id="eyeIrisGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#0369a1"></stop>
+<stop offset="25%" stop-color="#0284c7"></stop>
+<stop offset="70%" stop-color="#38bdf8"></stop>
+<stop offset="100%" stop-color="#7dd3fc"></stop>
+</lineargradient>
+<!-- Cheek Blush Glow -->
+<radialgradient cx="50%" cy="50%" id="blushGlow" r="50%">
+<stop offset="0%" stop-color="#fb7185" stop-opacity="0.85"></stop>
+<stop offset="65%" stop-color="#f43f5e" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#fb7185" stop-opacity="0"></stop>
+</radialgradient>
+<!-- White Fur Highlight Gradients -->
+<lineargradient id="whiteFluffGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#ffffff"></stop>
+<stop offset="85%" stop-color="#f8fafc"></stop>
+<stop offset="100%" stop-color="#e2e8f0"></stop>
+</lineargradient>
+<!-- Tail Fur Gradient -->
+<lineargradient id="tailCoatGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#1e293b"></stop>
+<stop offset="40%" stop-color="#0f172a"></stop>
+<stop offset="100%" stop-color="#020617"></stop>
+</lineargradient>
+<!-- Collar & Pendant Cyber Tech -->
+<lineargradient id="collarBandGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#0369a1"></stop>
+<stop offset="50%" stop-color="#0284c7"></stop>
+<stop offset="100%" stop-color="#38bdf8"></stop>
+</lineargradient>
+<lineargradient id="pendantGem" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#38bdf8"></stop>
+<stop offset="60%" stop-color="#0284c7"></stop>
+<stop offset="100%" stop-color="#075985"></stop>
+</lineargradient>
+<!-- Filter for Magical Sparkles / Aura -->
+<filter height="160%" id="softGlow" width="160%" x="-30%" y="-30%">
+<fegaussianblur result="blur" stddeviation="8"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+<filter height="200%" id="hyperGlow" width="200%" x="-50%" y="-50%">
+<fegaussianblur result="blur2" stddeviation="14"></fegaussianblur>
+<femerge>
+<femergenode in="blur2"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Background Ambient Aura -->
+<circle class="anim-aura" cx="500" cy="510" fill="url(#backAura)" r="360"></circle>
+<ellipse cx="500" cy="795" fill="url(#groundShadow)" rx="270" ry="45"></ellipse>
+<!-- Floating Magical Cyber Sparkles & Stars -->
+<g class="anim-sparkle-1" filter="url(#hyperGlow)">
+<path d="M260,300 L264,316 L280,320 L264,324 L260,340 L256,324 L240,320 L256,316 Z" fill="#7dd3fc"></path>
+<circle cx="260" cy="320" fill="#ffffff" r="3"></circle>
+</g>
+<g class="anim-sparkle-2" filter="url(#hyperGlow)">
+<path d="M750,260 L754,276 L770,280 L754,284 L750,300 L746,284 L730,280 L746,276 Z" fill="#38bdf8"></path>
+<circle cx="750" cy="280" fill="#ffffff" r="3"></circle>
+</g>
+<g class="anim-sparkle-3" filter="url(#hyperGlow)">
+<path d="M220,565 L223,577 L235,580 L223,583 L220,595 L217,583 L205,580 L217,577 Z" fill="#bae6fd"></path>
+</g>
+<g class="anim-sparkle-4" filter="url(#hyperGlow)">
+<path d="M770,585 L773,597 L785,600 L773,603 L770,615 L767,603 L755,600 L767,597 Z" fill="#38bdf8"></path>
+</g>
+<g class="anim-sparkle-5" filter="url(#hyperGlow)">
+<circle cx="500" cy="170" fill="#bae6fd" r="4"></circle>
+<circle cx="340" cy="230" fill="#7dd3fc" opacity="0.8" r="2.5"></circle>
+<circle cx="670" cy="220" fill="#7dd3fc" opacity="0.8" r="3"></circle>
+<circle cx="280" cy="460" fill="#ffffff" opacity="0.6" r="2"></circle>
+<circle cx="720" cy="450" fill="#bae6fd" opacity="0.7" r="2.5"></circle>
+</g>
+<!-- Main Animated Mascot Rig -->
+<g class="anim-body">
+<!-- Big Fluffy Luxurious Tail (Behind Body) -->
+<g class="anim-tail">
+<!-- Outer Tail Fur -->
+<path d="M400,640 C340,610 240,560 190,470 C160,410 170,340 215,310 C250,290 300,320 330,370 C360,420 375,470 380,510 C395,500 410,495 425,500 C430,540 435,600 400,640 Z" fill="url(#tailCoatGrad)"></path>
+<!-- Fluffy Tail Curve Silhouette Accent -->
+<path d="M220,315 C185,345 180,410 205,465 C245,545 330,600 395,635 C385,600 380,550 370,510 C360,460 335,405 310,360 C280,320 245,300 220,315 Z" fill="#1e293b" opacity="0.8"></path>
+<!-- Snowy White Fluffy Tip -->
+<path d="M225,310 C185,345 178,405 200,455 C215,445 228,450 235,435 C242,420 252,430 262,410 C272,390 282,395 288,380 C300,355 315,360 325,345 C295,315 255,295 225,310 Z" fill="url(#whiteFluffGrad)"></path>
+<!-- Tail Soft Cloud Tuffs -->
+<path d="M210,440 Q225,430 238,442 Q250,425 264,432 Q276,410 292,418" fill="none" stroke="#cbd5e1" stroke-linecap="round" stroke-width="3"></path>
+</g>
+<!-- Left Ear with Twitch Animation -->
+<g class="anim-ear-left">
+<!-- Outer Ear -->
+<path d="M380,350 C350,290 295,195 280,140 C275,120 290,120 310,135 C360,175 425,245 445,305 Z" fill="url(#wolfEarsOuter)"></path>
+<!-- Outer Ear Fluff Edge -->
+<path d="M280,140 C300,210 330,265 350,305" fill="none" stroke="#475569" stroke-linecap="round" stroke-width="4"></path>
+<!-- Inner Ear Pastel Fluff -->
+<path d="M365,330 C345,285 305,210 295,160 C310,175 350,235 375,275 C390,300 415,310 425,295 C415,315 390,335 365,330 Z" fill="url(#earInnerGrad)"></path>
+<!-- Inner Soft White Tuft Spikes -->
+<path d="M350,310 C340,290 325,260 320,245 C330,260 345,270 355,275 C350,260 345,245 345,235 C355,250 370,265 375,280 Z" fill="#ffffff" opacity="0.9"></path>
+</g>
+<!-- Right Ear with Twitch Animation -->
+<g class="anim-ear-right">
+<!-- Outer Ear -->
+<path d="M620,350 C650,290 705,195 720,140 C725,120 710,120 690,135 C640,175 575,245 555,305 Z" fill="url(#wolfEarsOuter)"></path>
+<!-- Outer Ear Fluff Edge -->
+<path d="M720,140 C700,210 670,265 650,305" fill="none" stroke="#475569" stroke-linecap="round" stroke-width="4"></path>
+<!-- Inner Ear Pastel Fluff -->
+<path d="M635,330 C655,285 695,210 705,160 C690,175 650,235 625,275 C610,300 585,310 575,295 C585,315 610,335 635,330 Z" fill="url(#earInnerGrad)"></path>
+<!-- Inner Soft White Tuft Spikes -->
+<path d="M650,310 C660,290 675,260 680,245 C670,260 655,270 645,275 C650,260 655,245 655,235 C645,250 630,265 625,280 Z" fill="#ffffff" opacity="0.9"></path>
+</g>
+<!-- Cuddly Compact Body & Sitting Hind Legs -->
+<g id="bodyGroup">
+<!-- Back Body Shape -->
+<path d="M380,520 C360,570 350,640 370,720 C385,770 430,790 500,790 C570,790 615,770 630,720 C650,640 640,570 620,520 Z" fill="url(#wolfCoatGrad)"></path>
+<!-- Hind Haunches / Sitting Curvature -->
+<ellipse cx="380" cy="710" fill="#0f172a" rx="65" ry="50"></ellipse>
+<ellipse cx="620" cy="710" fill="#0f172a" rx="65" ry="50"></ellipse>
+<!-- Snowy Soft Belly & Chest Fur -->
+<path d="M430,550 C410,610 405,670 425,745 C440,775 470,785 500,785 C530,785 560,775 575,745 C595,670 590,610 570,550 C540,560 515,540 500,545 C485,540 460,560 430,550 Z" fill="url(#whiteFluffGrad)"></path>
+<!-- Fluffy Chest Tuft Accents -->
+<path d="M470,610 C485,630 500,645 500,650 C500,645 515,630 530,610" fill="none" stroke="#cbd5e1" stroke-linecap="round" stroke-width="3.5"></path>
+<path d="M480,665 C490,680 500,690 500,693 C500,690 510,680 520,665" fill="none" stroke="#cbd5e1" stroke-linecap="round" stroke-width="3"></path>
+<!-- Tiny Rounded Front Paws Sitting Neatly Together -->
+<g id="frontPaws">
+<!-- Left Front Paw -->
+<rect fill="url(#whiteFluffGrad)" height="65" rx="26" width="52" x="440" y="715"></rect>
+<path d="M440,745 C440,770 455,780 466,780 C477,780 492,770 492,745" fill="none" stroke="#cbd5e1" stroke-width="2"></path>
+<line stroke="#94a3b8" stroke-linecap="round" stroke-width="2.5" x1="456" x2="456" y1="760" y2="778"></line>
+<line stroke="#94a3b8" stroke-linecap="round" stroke-width="2.5" x1="474" x2="474" y1="760" y2="778"></line>
+<!-- Right Front Paw -->
+<rect fill="url(#whiteFluffGrad)" height="65" rx="26" width="52" x="508" y="715"></rect>
+<path d="M508,745 C508,770 523,780 534,780 C545,780 560,770 560,745" fill="none" stroke="#cbd5e1" stroke-width="2"></path>
+<line stroke="#94a3b8" stroke-linecap="round" stroke-width="2.5" x1="524" x2="524" y1="760" y2="778"></line>
+<line stroke="#94a3b8" stroke-linecap="round" stroke-width="2.5" x1="542" x2="542" y1="760" y2="778"></line>
+<!-- Soft Toe Beans Hint under shadow -->
+<circle cx="466" cy="740" fill="#fda4af" opacity="0.3" r="4"></circle>
+<circle cx="534" cy="740" fill="#fda4af" opacity="0.3" r="4"></circle>
+</g>
+<!-- Stylish ARC Cyber Collar & Pendant -->
+<g class="anim-pendant" id="arcCollar">
+<!-- Sleek Band -->
+<path d="M425,535 Q500,560 575,535 Q565,550 500,575 Q435,550 425,535 Z" fill="url(#collarBandGrad)"></path>
+<!-- Neon Edge Accent -->
+<path d="M430,540 Q500,565 570,540" fill="none" opacity="0.9" stroke="#7dd3fc" stroke-width="2"></path>
+<!-- Cyber Pendant Badge -->
+<g transform="translate(500, 565)">
+<!-- Outer Glow Hexagon/Shield -->
+<polygon fill="#0369a1" points="0,-12 18,-2 18,15 0,26 -18,15 -18,-2" stroke="#38bdf8" stroke-width="2.5"></polygon>
+<polygon fill="url(#pendantGem)" points="0,-9 14,-1 14,12 0,21 -14,12 -14,-1"></polygon>
+<!-- ARC Insignia Text -->
+<text fill="#ffffff" font-family="'Inter', sans-serif" font-size="11" font-weight="900" letter-spacing="1" text-anchor="middle" x="0" y="10">ARC</text>
+<!-- Micro Core Center Gem Sparkle -->
+<circle cx="0" cy="-3" fill="#e0f2fe" r="1.5"></circle>
+</g>
+</g>
+</g>
+<!-- Oversized Adorable Chibi Head & Chubby Cheeks -->
+<g id="headGroup">
+<!-- Head Base Silhouette -->
+<path d="M300,430 C270,470 260,540 315,570 C350,590 405,580 440,570 C475,580 525,580 560,570 C595,580 650,590 685,570 C740,540 730,470 700,430 C685,340 640,265 500,265 C360,265 315,340 300,430 Z" fill="url(#wolfCoatGrad)"></path>
+<!-- Cheek Fluff Tufts (Left Side Silhouette) -->
+<path d="M295,470 C265,490 250,525 260,555 C275,550 290,540 305,535 C285,550 280,575 295,590 C320,590 350,575 375,565" fill="url(#wolfCoatGrad)"></path>
+<!-- Cheek Fluff Tufts (Right Side Silhouette) -->
+<path d="M705,470 C735,490 750,525 740,555 C725,550 710,540 695,535 C715,550 720,575 705,590 C680,590 650,575 625,565" fill="url(#wolfCoatGrad)"></path>
+<!-- Cloud-Soft Pure White Chubby Cheeks & Muzzle Faceplate -->
+<path d="M335,475 C310,500 290,535 310,570 C335,600 395,605 450,580 C480,588 520,588 550,580 C605,605 665,600 690,570 C710,535 690,500 665,475 C630,500 580,515 500,515 C420,515 370,500 335,475 Z" fill="url(#whiteFluffGrad)"></path>
+<!-- Forehead White Diamond Blaze Mark -->
+<path d="M500,310 C510,345 520,380 520,410 C510,430 500,440 500,440 C500,440 490,430 480,410 C480,380 490,345 500,310 Z" fill="url(#whiteFluffGrad)"></path>
+<polygon fill="#ffffff" points="500,290 508,312 500,328 492,312"></polygon>
+<!-- Cheek Fluff Inner Accent Lines -->
+<path d="M315,535 Q335,545 355,540" fill="none" stroke="#cbd5e1" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M685,535 Q665,545 645,540" fill="none" stroke="#cbd5e1" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Glowing Rosy Blush Cheeks with Cute Highlight Dashes -->
+<g id="cheeksBlush">
+<!-- Left Blush -->
+<ellipse cx="365" cy="515" fill="url(#blushGlow)" rx="38" ry="22"></ellipse>
+<line opacity="0.8" stroke="#f43f5e" stroke-linecap="round" stroke-width="3" x1="352" x2="362" y1="510" y2="520"></line>
+<line opacity="0.8" stroke="#f43f5e" stroke-linecap="round" stroke-width="3" x1="368" x2="378" y1="509" y2="519"></line>
+<circle cx="382" cy="505" fill="#ffffff" opacity="0.75" r="3"></circle>
+<!-- Right Blush -->
+<ellipse cx="635" cy="515" fill="url(#blushGlow)" rx="38" ry="22"></ellipse>
+<line opacity="0.8" stroke="#f43f5e" stroke-linecap="round" stroke-width="3" x1="622" x2="632" y1="510" y2="520"></line>
+<line opacity="0.8" stroke="#f43f5e" stroke-linecap="round" stroke-width="3" x1="638" x2="648" y1="509" y2="519"></line>
+<circle cx="618" cy="505" fill="#ffffff" opacity="0.75" r="3"></circle>
+</g>
+<!-- Giant Sparkling Anime Eyes with Natural Blinking -->
+<g class="anim-eye" id="eyesGroup">
+<!-- LEFT EYE -->
+<g id="leftEye">
+<!-- Dark Outer Socket / Eyeliner Outline -->
+<ellipse cx="400" cy="455" fill="#090d16" rx="46" ry="54"></ellipse>
+<!-- Iris Background Base -->
+<ellipse cx="402" cy="457" fill="url(#eyeIrisGrad)" rx="42" ry="50"></ellipse>
+<!-- Deep Upper Shadow in Pupil -->
+<path d="M362,440 C370,415 434,415 442,440 C440,480 364,480 362,440 Z" fill="#031b33" opacity="0.85"></path>
+<!-- Large Inner Deep Pupil -->
+<ellipse cx="402" cy="460" fill="#020d1a" rx="26" ry="34"></ellipse>
+<!-- Vibrant Sky-Blue Bottom Iris Crescent Glow -->
+<ellipse cx="402" cy="482" fill="#7dd3fc" filter="url(#softGlow)" opacity="0.95" rx="30" ry="18"></ellipse>
+<!-- Star Sparkle Accent in Eye -->
+<path d="M402,468 L404,476 L412,478 L404,480 L402,488 L400,480 L392,478 L400,476 Z" fill="#e0f2fe"></path>
+<!-- Multiple Twinkling Circular Catchlights -->
+<!-- Primary Giant Catchlight (Top-Left) -->
+<ellipse cx="384" cy="432" fill="#ffffff" rx="15" ry="20" transform="rotate(-20 384 432)"></ellipse>
+<!-- Secondary Round Catchlight (Bottom-Right) -->
+<circle cx="422" cy="478" fill="#ffffff" r="8.5"></circle>
+<!-- Mini Sparkling Dot -->
+<circle cx="395" cy="492" fill="#ffffff" r="3.5"></circle>
+<!-- Elegant Anime Upper Eyelash -->
+<path d="M350,445 C365,405 435,405 452,445" fill="none" stroke="#020617" stroke-linecap="round" stroke-width="7.5"></path>
+<!-- Cute Side Wing Lash -->
+<path d="M445,422 C458,416 465,425 460,435" fill="none" stroke="#020617" stroke-linecap="round" stroke-width="4.5"></path>
+<path d="M355,430 C345,432 342,440 345,445" fill="none" stroke="#020617" stroke-linecap="round" stroke-width="3.5"></path>
+</g>
+<!-- RIGHT EYE -->
+<g id="rightEye">
+<!-- Dark Outer Socket / Eyeliner Outline -->
+<ellipse cx="600" cy="455" fill="#090d16" rx="46" ry="54"></ellipse>
+<!-- Iris Background Base -->
+<ellipse cx="598" cy="457" fill="url(#eyeIrisGrad)" rx="42" ry="50"></ellipse>
+<!-- Deep Upper Shadow in Pupil -->
+<path d="M558,440 C566,415 630,415 638,440 C636,480 560,480 558,440 Z" fill="#031b33" opacity="0.85"></path>
+<!-- Large Inner Deep Pupil -->
+<ellipse cx="598" cy="460" fill="#020d1a" rx="26" ry="34"></ellipse>
+<!-- Vibrant Sky-Blue Bottom Iris Crescent Glow -->
+<ellipse cx="598" cy="482" fill="#7dd3fc" filter="url(#softGlow)" opacity="0.95" rx="30" ry="18"></ellipse>
+<!-- Star Sparkle Accent in Eye -->
+<path d="M598,468 L600,476 L608,478 L600,480 L598,488 L596,480 L588,478 L596,476 Z" fill="#e0f2fe"></path>
+<!-- Multiple Twinkling Circular Catchlights -->
+<!-- Primary Giant Catchlight (Top-Left) -->
+<ellipse cx="580" cy="432" fill="#ffffff" rx="15" ry="20" transform="rotate(-20 580 432)"></ellipse>
+<!-- Secondary Round Catchlight (Bottom-Right) -->
+<circle cx="618" cy="478" fill="#ffffff" r="8.5"></circle>
+<!-- Mini Sparkling Dot -->
+<circle cx="591" cy="492" fill="#ffffff" r="3.5"></circle>
+<!-- Elegant Anime Upper Eyelash -->
+<path d="M548,445 C565,405 635,405 650,445" fill="none" stroke="#020617" stroke-linecap="round" stroke-width="7.5"></path>
+<!-- Cute Side Wing Lash -->
+<path d="M642,422 C655,416 662,425 657,435" fill="none" stroke="#020617" stroke-linecap="round" stroke-width="4.5"></path>
+<path d="M552,430 C542,432 539,440 542,445" fill="none" stroke="#020617" stroke-linecap="round" stroke-width="3.5"></path>
+</g>
+</g>
+<!-- Cute Little Eyebrows -->
+<path d="M375,385 C395,372 425,380 435,390" fill="none" stroke="#334155" stroke-linecap="round" stroke-width="5"></path>
+<path d="M625,385 C605,372 575,380 565,390" fill="none" stroke="#334155" stroke-linecap="round" stroke-width="5"></path>
+<!-- Sweet Little Black Button Nose -->
+<g id="wolfNose">
+<path d="M492,504 C488,504 485,508 488,512 C494,520 506,520 512,512 C515,508 512,504 508,504 Z" fill="#0f172a"></path>
+<!-- Shiny Nose Highlight -->
+<ellipse cx="497" cy="507" fill="#ffffff" opacity="0.9" rx="3.5" ry="1.8"></ellipse>
+</g>
+<!-- Irresistibly Happy Puppy/Kitty Smile with Peeking Pink Tongue -->
+<g id="happyMouth">
+<!-- Happy Open Tongue Pocket -->
+<path d="M482,525 C482,548 518,548 518,525 Z" fill="#f43f5e"></path>
+<!-- Cute Pink Tongue Bulb -->
+<path d="M488,532 C494,545 506,545 512,532 Z" fill="#fb7185"></path>
+<!-- W-Curve Mouth Lips -->
+<path d="M472,520 Q486,530 500,523 Q514,530 528,520" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-width="4"></path>
+</g>
+</g>
+</g>
+</svg>
+</div>
+</body></html>

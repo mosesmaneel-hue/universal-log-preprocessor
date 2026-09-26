@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>ARC - Quarantine Management</title>
+  <!-- Tailwind CSS v3 with forms & container queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            arcNavy: '#07162c',
+            arcNavyDark: '#040d1c',
+            arcBlueBg: '#f3f6fc',
+            arcPrimary: '#1e3a8a',
+            arcOrange: '#ea580c',
+            arcOrangeHover: '#c2410c'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+  <style data-purpose="typography-and-helpers">
+    .font-serif-arc {
+      font-family: 'Times New Roman', 'Cinzel', 'Baskerville', serif;
+    }
+    .custom-donut {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+  </style>
+  <script src="/stitch_arc_universal_log_pre_processor/api.js"></script>
+</head>
+<body class="bg-[#f4f7fb] text-slate-800 antialiased font-sans flex h-screen overflow-hidden">
+  <!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-white"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+
+  <!-- BEGIN: MainContentWrapper (Fixed 100vh flex column) -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    <!-- BEGIN: TopGlobalHeader (Pinned Top) -->
+    <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0 z-20 shadow-xs" data-purpose="top-global-header">
+      <!-- Left: Title & Tagline -->
+      <div>
+        <h1 class="text-base font-bold text-[#0f284e]">Universal Log Pre-Processing Framework</h1>
+        <p class="text-[11px] text-slate-500 font-medium tracking-tight">Learn Once. Process Forever.</p>
+      </div>
+      <!-- Center: Universal Search -->
+      <div class="flex-1 max-w-md mx-6">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </span>
+          <input class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600 focus:bg-white transition" placeholder="Search logs, sources, formats, events..." type="text"/>
+        </div>
+      </div>
+      <!-- Right: System Status, Notifications & Profile -->
+      <div class="flex items-center gap-4">
+        <!-- System Healthy Badge -->
+        <div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-200 text-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <div class="leading-tight">
+            <span class="font-semibold block text-[11px]">System Healthy</span>
+            <span class="text-[9px] text-emerald-600 block -mt-0.5">All services operational</span>
+          </div>
+        </div>
+        <!-- Notification Bell with red badge -->
+        <button class="relative p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-full transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+        </button>
+        <!-- User Profile Dropdown -->
+        <div class="flex items-center gap-2 border-l border-slate-200 pl-3">
+          <div class="w-7 h-7 rounded-full bg-[#061937] text-white flex items-center justify-center font-semibold text-xs shadow-inner">
+            SK
+          </div>
+          <span class="text-xs font-semibold text-slate-700">Administrator</span>
+          <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </div>
+      </div>
+    </header>
+    <!-- END: TopGlobalHeader -->
+
+    <!-- BEGIN: Scrollable Main Content Container -->
+    <main class="p-6 space-y-5 flex-1 overflow-y-auto" data-purpose="page-main-container">
+      <!-- Breadcrumbs & Page Header -->
+      <div class="flex items-start justify-between">
+        <div>
+          <!-- Breadcrumb navigation -->
+          <div class="flex items-center gap-1.5 text-xs text-blue-700 font-medium mb-1">
+            <a class="hover:underline" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">Dashboard</a>
+            <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <span class="text-blue-900 font-semibold">Quarantine</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Quarantine & Review Management</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Triage, review, and resolve logs that failed validation or parser rules.</p>
+        </div>
+        <!-- Live Data Notice Badge -->
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-2 rounded-lg text-right shadow-xs">
+          <span class="text-xs font-bold text-emerald-700 block">Interactive Review Workflow Active</span>
+          <span class="text-[10px] text-emerald-600 block">Connected to SQLite Database</span>
+        </div>
+      </div>
+
+      <!-- BEGIN: MetricKPICards (Live Review Workflow Metrics) -->
+      <section class="grid grid-cols-1 md:grid-cols-4 gap-4" data-purpose="kpi-metrics-grid">
+        <!-- Card 1: Total Quarantined -->
+        <div id="cardTotalQuarantine" class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between cursor-pointer hover:border-blue-400 transition" title="Click to view all records">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </div>
+            <div>
+              <span class="text-xs font-medium text-slate-500 block">Total Quarantined</span>
+              <span id="kpiTotalQuarantined" class="text-xl font-bold text-slate-900">—</span>
+              <div class="flex items-center gap-1 text-[11px] font-medium text-slate-500">
+                <span>Total records in database</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Pending Review -->
+        <div id="cardPendingReview" class="bg-white p-4 rounded-xl border-2 border-amber-400/80 shadow-xs flex items-center justify-between cursor-pointer hover:border-amber-500 transition" title="Click to view Pending Review items">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </div>
+            <div>
+              <span class="text-xs font-medium text-slate-500 block">Pending Review</span>
+              <span id="kpiQuarantinePending" class="text-xl font-bold text-amber-700">—</span>
+              <div class="flex items-center gap-1 text-[11px] font-medium text-amber-600">
+                <span>Awaiting review triage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Resolved -->
+        <div id="cardResolved" class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between cursor-pointer hover:border-emerald-400 transition" title="Click to view Resolved items">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+            </div>
+            <div>
+              <span class="text-xs font-medium text-slate-500 block">Resolved</span>
+              <span id="kpiResolved" class="text-xl font-bold text-emerald-700">0</span>
+              <div class="flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+                <span>Triaged & approved</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Auto-Rejected -->
+        <div id="cardRejected" class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between cursor-pointer hover:border-rose-400 transition" title="Click to view Rejected items">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-lg bg-slate-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </div>
+            <div>
+              <span class="text-xs font-medium text-slate-500 block">Rejected / Dismissed</span>
+              <span id="kpiRejected" class="text-xl font-bold text-slate-700">0</span>
+              <div class="flex items-center gap-1 text-[11px] font-medium text-slate-500">
+                <span>Dismissed from queue</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END: MetricKPICards -->
+
+      <!-- BEGIN: FilterBar -->
+      <section class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-2.5" data-purpose="filter-controls-bar">
+        <!-- Search input -->
+        <div class="relative min-w-[210px] flex-1 md:flex-initial">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </span>
+          <input id="qSearchInput" class="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Filter by reason, format, content..." type="text"/>
+        </div>
+        <!-- Filter Selects -->
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <!-- View / Queue Select Filter -->
+          <select id="qViewFilter" class="py-1.5 pl-3 pr-8 text-xs border border-slate-200 rounded-lg bg-white text-slate-800 font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option value="ALL">Queue: All Records</option>
+            <option value="PENDING" selected>Queue: Pending Review</option>
+            <option value="RESOLVED">Queue: Resolved</option>
+            <option value="REJECTED">Queue: Rejected</option>
+          </select>
+          <!-- All Reasons -->
+          <select id="qReasonFilter" class="py-1.5 pl-3 pr-8 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option value="">All Reasons</option>
+          </select>
+          <!-- All Formats -->
+          <select id="qFormatFilter" class="py-1.5 pl-3 pr-8 text-xs border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option value="">All Formats</option>
+          </select>
+        </div>
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2 ml-auto">
+          <button id="qResetBtn" class="px-3.5 py-1.5 text-xs text-blue-600 hover:text-blue-700 font-medium border border-blue-200 rounded-lg hover:bg-blue-50 transition">
+            Reset
+          </button>
+        </div>
+      </section>
+      <!-- END: FilterBar -->
+
+      <!-- BEGIN: TableAndDetailGrid -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-5" data-purpose="table-and-details-split">
+        <!-- Quarantined Logs Table (Col-8) -->
+        <div class="lg:col-span-8 bg-white rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between overflow-hidden">
+          <div>
+            <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
+              <h3 class="text-sm font-bold text-slate-900">Quarantine Records <span id="qCountBadge" class="ml-2 font-normal text-xs text-slate-500"></span></h3>
+              <span class="text-xs text-slate-400">Click any row to inspect & review</span>
+            </div>
+            <!-- Scrollable Table Container (Prevents page elongation) -->
+            <div class="overflow-x-auto max-h-[540px] overflow-y-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead class="sticky top-0 bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 text-[11px] z-10 shadow-xs">
+                  <tr>
+                    <th class="py-2.5 px-3 text-left">ID</th>
+                    <th class="py-2.5 px-3 text-left">Reason</th>
+                    <th class="py-2.5 px-3 text-left">Format</th>
+                    <th class="py-2.5 px-3 text-left">Review Status</th>
+                    <th class="py-2.5 px-3 text-left">Time</th>
+                    <th class="py-2.5 px-3 text-left">Raw Log Preview</th>
+                  </tr>
+                </thead>
+                <tbody id="qTableBody" class="divide-y divide-slate-100">
+                  <tr><td colspan="6" class="py-10 text-center text-slate-400 text-xs">Loading quarantine records…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Pagination / Status Footer -->
+          <div class="px-5 py-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500">
+            <span id="qShowingLabel">Showing 0 of 0 logs</span>
+            <div id="qFeedbackBanner" class="text-[11px] text-emerald-600 font-medium"></div>
+          </div>
+        </div>
+
+        <!-- Log Details Panel (Col-4) -->
+        <div id="quarantineDetailPanel" class="lg:col-span-4 bg-white rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between p-4 space-y-4">
+          <div>
+            <!-- Header -->
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="text-sm font-bold text-slate-900">Review & Triage Details</h3>
+              <span id="qReviewBadgeTop" class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Pending Review</span>
+            </div>
+            <!-- Tabs: Raw Log / Attempted Format -->
+            <div class="flex items-center justify-between mt-3 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 bg-orange-600 text-white rounded text-xs font-semibold shadow-xs">Raw Log</span>
+              </div>
+              <button id="qCopyBtn" class="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 font-medium">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span>Copy</span>
+              </button>
+            </div>
+            <!-- Code Syntax View Box -->
+            <div class="bg-[#0b1626] rounded-lg p-3 text-[11px] font-mono text-slate-200 border border-slate-800 leading-relaxed overflow-x-auto select-all max-h-[160px] overflow-y-auto">
+              <pre id="qDetailRawLog" class="whitespace-pre-wrap break-all text-[11px] font-mono text-slate-200 m-0">Select a log from the table to view raw payload.</pre>
+            </div>
+            <!-- Metadata Key-Value List -->
+            <div class="mt-4 space-y-2.5 text-xs">
+              <div class="grid grid-cols-3 text-slate-500">
+                <span class="font-medium">Quarantine ID</span>
+                <span id="qDetailId" class="col-span-2 font-mono text-slate-800 truncate">—</span>
+              </div>
+              <div class="grid grid-cols-3 text-slate-500">
+                <span class="font-medium">Ingestion Time</span>
+                <span id="qDetailTime" class="col-span-2 font-mono text-slate-800">—</span>
+              </div>
+              <div class="grid grid-cols-3 text-slate-500">
+                <span class="font-medium">Reason</span>
+                <span id="qDetailReason" class="col-span-2 text-red-600 font-semibold">—</span>
+              </div>
+              <div class="grid grid-cols-3 text-slate-500">
+                <span class="font-medium">Format (Detected)</span>
+                <span id="qDetailFormat" class="col-span-2 text-slate-800 font-medium">—</span>
+              </div>
+              <div class="grid grid-cols-3 text-slate-500 items-center">
+                <span class="font-medium">Review Status</span>
+                <div id="qDetailStatus" class="col-span-2">
+                  <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-amber-100 text-amber-800 border border-amber-200">
+                    Pending Review
+                  </span>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 text-slate-500">
+                <span class="font-medium">Validation</span>
+                <span id="qDetailValidation" class="col-span-2 text-slate-700">—</span>
+              </div>
+              <div class="grid grid-cols-3 text-slate-500 pt-1">
+                <span class="font-medium">Triage Action</span>
+                <p id="qDetailNotes" class="col-span-2 text-[11px] text-slate-600 leading-normal">
+                  Review this log payload. You can mark it as resolved or dismiss it.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Review Workflow Action Buttons -->
+          <div class="space-y-2 pt-2 border-t border-slate-100">
+            <div class="grid grid-cols-2 gap-2">
+              <!-- Mark as Resolved Button -->
+              <button id="btnMarkResolved" class="w-full py-2 px-2 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-lg text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+                <span>Mark as Resolved</span>
+              </button>
+              <!-- Ask AI Assistant Button -->
+              <a href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html" class="w-full py-2 px-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span>Ask AI Assistant</span>
+              </a>
+            </div>
+            <!-- Reject / Dismiss Button -->
+            <button id="btnRejectLog" class="w-full py-1.5 px-3 border border-rose-200 text-rose-600 hover:bg-rose-50 active:bg-rose-100 font-medium rounded-lg text-xs flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              <span>Reject / Dismiss from Queue</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- END: TableAndDetailGrid -->
+
+      <!-- BEGIN: BottomInsightsSection -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-5" data-purpose="charts-and-quick-actions">
+        <!-- Donut Chart: Quarantine Reasons (Col-4) -->
+        <div class="md:col-span-4 bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
+          <h3 class="text-sm font-bold text-slate-900 mb-3">Quarantine Reasons</h3>
+          <div class="flex items-center justify-between gap-4">
+            <!-- Donut SVG Graphic -->
+            <div class="relative w-36 h-36 flex-shrink-0">
+              <svg id="qDonutSvg" class="w-full h-full custom-donut" viewbox="0 0 100 100">
+                <circle cx="50" cy="50" fill="transparent" r="38" stroke="#e2e8f0" stroke-width="15" stroke-dasharray="238.76 0"></circle>
+              </svg>
+              <!-- Center Metric Text -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span id="qDonutTotal" class="text-sm font-bold text-slate-900 leading-tight">—</span>
+                <span class="text-[10px] text-slate-500">Logs</span>
+              </div>
+            </div>
+            <!-- Legend breakdown list -->
+            <div id="qDonutLegend" class="space-y-1 text-[11px] flex-1">
+              <div class="text-slate-400 text-xs">Loading breakdown…</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trend Multi-Line Chart (Col-5) -->
+        <div class="md:col-span-5 bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-bold text-slate-900">Quarantine Trend <span class="text-xs font-normal text-slate-500">(Last 7 Days)</span></h3>
+            <!-- Legend -->
+            <div class="flex items-center gap-3 text-[10px] text-slate-600 font-medium">
+              <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span>Queue</div>
+            </div>
+          </div>
+          <!-- Honest Unavailable State: Quarantine Time-Series Not Configured -->
+          <div class="relative w-full h-36 flex flex-col items-center justify-center text-center p-3">
+            <svg class="w-7 h-7 text-slate-300 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+            <div class="text-xs font-semibold text-slate-700">Time-Series Telemetry Unavailable</div>
+            <div class="text-[11px] text-slate-400 mt-0.5 max-w-xs leading-relaxed">Historical trend requires time-series aggregation. Real-time quarantine table is active.</div>
+          </div>
+          <!-- X-Axis Days -->
+          <div class="flex justify-between text-[9px] text-slate-400 px-6 font-medium mt-1">
+            <span>Day -6</span>
+            <span>Day -5</span>
+            <span>Day -4</span>
+            <span>Day -3</span>
+            <span>Day -2</span>
+            <span>Yesterday</span>
+            <span>Today</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions & Help tip (Col-3) -->
+        <div class="md:col-span-3 flex flex-col justify-between gap-2.5">
+          <!-- Quick Actions Grid -->
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex-1 flex flex-col justify-between">
+            <h3 class="text-sm font-bold text-slate-900 mb-2">Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <!-- Review with AI Assistant -->
+              <a href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html" class="p-2.5 rounded-lg border border-slate-200 hover:border-purple-300 hover:bg-purple-50/50 flex flex-col items-center text-center justify-center gap-1 transition group">
+                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span class="text-[11px] font-semibold text-slate-700 leading-tight">Review with AI Assistant</span>
+              </a>
+              <!-- Create New Parser -->
+              <a href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html" class="p-2.5 rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50/50 flex flex-col items-center text-center justify-center gap-1 transition group">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span class="text-[11px] font-semibold text-slate-700 leading-tight">Parser Registry</span>
+              </a>
+              <!-- Format Detection -->
+              <a href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html" class="p-2.5 rounded-lg border border-slate-200 hover:border-cyan-300 hover:bg-cyan-50/50 flex flex-col items-center text-center justify-center gap-1 transition group">
+                <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7M4 7c0-2 1.5-3 3.5-3h9c2 0 3.5 1 3.5 3M4 7h16m-16 5h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span class="text-[11px] font-semibold text-slate-700 leading-tight">Format Detection</span>
+              </a>
+              <!-- Normalization -->
+              <a href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html" class="p-2.5 rounded-lg border border-slate-200 hover:border-amber-300 hover:bg-amber-50/50 flex flex-col items-center text-center justify-center gap-1 transition group">
+                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span class="text-[11px] font-semibold text-slate-700 leading-tight">Schema Rules</span>
+              </a>
+            </div>
+          </div>
+          <!-- Bottom Quarantine Informational Alert Card -->
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3 flex items-start gap-2.5">
+            <svg class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <p class="text-[11px] text-blue-900 leading-snug">
+              Triaged logs help improve the system. When a log is marked as resolved or approved, parsers and schema rules can be updated accordingly.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- END: BottomInsightsSection -->
+    </main>
+    <!-- END: PageContent -->
+  </div>
+  <!-- END: MainContentWrapper -->
+
+  <script>
+  (function(){
+      const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+      let allLogs = [];
+      let filteredLogs = [];
+      let selectedIdx = 0;
+      let currentView = "PENDING"; // "ALL", "PENDING", "RESOLVED", "REJECTED"
+
+      function getStatusBadge(st){
+          const s = (st || "PENDING").toUpperCase();
+          if (s === "RESOLVED") {
+              return `<span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 whitespace-nowrap">Resolved</span>`;
+          }
+          if (s === "REJECTED") {
+              return `<span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 whitespace-nowrap">Rejected</span>`;
+          }
+          return `<span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 whitespace-nowrap">Pending Review</span>`;
+      }
+
+      function renderTable(logs){
+          const tbody = document.getElementById("qTableBody");
+          if (!tbody) return;
+
+          if (!logs.length) {
+              const msg = currentView === "RESOLVED"
+                  ? "No resolved quarantine records yet. Mark pending logs as resolved to complete review."
+                  : currentView === "REJECTED"
+                  ? "No rejected logs in the archive."
+                  : "No quarantine records match the current criteria.";
+
+              tbody.innerHTML = `<tr><td colspan="6" class="py-14 text-center text-slate-400 text-xs">
+                  <div class="font-medium text-slate-600 mb-1">${msg}</div>
+              </td></tr>`;
+              document.getElementById("qShowingLabel").textContent = "Showing 0 of 0 logs";
+              return;
+          }
+
+          tbody.innerHTML = logs.map((log, i) => {
+              const ts = log.created_at || "";
+              const time = ts ? new Date(ts).toLocaleString() : "—";
+              const det = log.detection || {};
+              const raw = (log.raw_log || "").substring(0, 75).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+              const rCls = log.reason?.includes("Validation") ? "text-amber-600" : "text-red-600";
+              const isSelected = i === selectedIdx;
+              const bg = isSelected ? "bg-orange-50/60" : "";
+              const badge = getStatusBadge(log.review_status);
+
+              return `<tr class="hover:bg-orange-50/40 cursor-pointer border-b border-slate-100 ${bg}" onclick="arcQSel(${i})" data-idx="${i}">
+                  <td class="py-2.5 px-3 font-mono text-[10px] text-slate-500 whitespace-nowrap">${(log.quarantine_id || "").substring(0, 8)}…</td>
+                  <td class="py-2.5 px-3 text-[11px] font-semibold ${rCls} whitespace-nowrap">${log.reason || "—"}</td>
+                  <td class="py-2.5 px-3 whitespace-nowrap"><span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700">${det.format || "UNKNOWN"}</span></td>
+                  <td class="py-2.5 px-3 whitespace-nowrap">${badge}</td>
+                  <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400 whitespace-nowrap">${time}</td>
+                  <td class="py-2.5 px-3 font-mono text-[10px] text-slate-500 truncate max-w-xs">${raw}</td>
+              </tr>`;
+          }).join("");
+
+          document.getElementById("qShowingLabel").textContent = `Showing 1 - ${logs.length} of ${allLogs.length} logs`;
+      }
+
+      window.arcQSel = function(i){
+          selectedIdx = i;
+          const rows = document.querySelectorAll("#qTableBody tr");
+          rows.forEach((r, j) => {
+              if (j === i) {
+                  r.classList.add("bg-orange-50/60");
+              } else {
+                  r.classList.remove("bg-orange-50/60");
+              }
+          });
+
+          const log = filteredLogs[i] || allLogs[i];
+          if (!log) return;
+
+          const det = log.detection || {};
+          const val = log.validation || {};
+          const ts = log.created_at || "";
+          const st = (log.review_status || "PENDING").toUpperCase();
+
+          const idEl = document.getElementById("qDetailId");
+          const timeEl = document.getElementById("qDetailTime");
+          const reasonEl = document.getElementById("qDetailReason");
+          const formatEl = document.getElementById("qDetailFormat");
+          const statusEl = document.getElementById("qDetailStatus");
+          const valEl = document.getElementById("qDetailValidation");
+          const notesEl = document.getElementById("qDetailNotes");
+          const rawEl = document.getElementById("qDetailRawLog");
+          const topBadgeEl = document.getElementById("qReviewBadgeTop");
+
+          if (idEl) idEl.textContent = log.quarantine_id || "—";
+          if (timeEl) timeEl.textContent = ts ? new Date(ts).toLocaleString() : "—";
+          if (reasonEl) reasonEl.textContent = log.reason || "—";
+          if (formatEl) formatEl.textContent = det.format ? `${det.format} (${det.method || "detected"})` : "UNKNOWN";
+
+          if (statusEl) statusEl.innerHTML = getStatusBadge(st);
+          if (topBadgeEl) {
+              topBadgeEl.textContent = st === "RESOLVED" ? "Resolved" : st === "REJECTED" ? "Rejected" : "Pending Review";
+              topBadgeEl.className = st === "RESOLVED"
+                  ? "text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800"
+                  : st === "REJECTED"
+                  ? "text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700"
+                  : "text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800";
+          }
+
+          if (valEl) {
+              if (val.valid === false) {
+                  const errs = Array.isArray(val.errors) ? val.errors.join(", ") : "Failed";
+                  valEl.innerHTML = `<span class="text-red-600 font-semibold">Failed (${errs})</span>`;
+              } else if (val.valid === true) {
+                  valEl.innerHTML = `<span class="text-emerald-600 font-semibold">Passed</span>`;
+              } else {
+                  valEl.textContent = "—";
+              }
+          }
+
+          if (notesEl) {
+              if (st === "RESOLVED") {
+                  notesEl.textContent = log.resolution_notes || "Resolved by operator review.";
+              } else if (st === "REJECTED") {
+                  notesEl.textContent = log.resolution_notes || "Dismissed from active quarantine queue.";
+              } else {
+                  notesEl.textContent = log.reason?.includes("Validation")
+                      ? "Validation constraints failed. Review payload to accept or discard."
+                      : "Could not parse or validate this log. Review or create a custom parser rule.";
+              }
+          }
+
+          if (rawEl) {
+              rawEl.textContent = log.raw_log || "(Empty payload)";
+          }
+      };
+
+      function applyFilters(){
+          const qText = (document.getElementById("qSearchInput")?.value || "").toLowerCase().trim();
+          const qReason = document.getElementById("qReasonFilter")?.value || "";
+          const qFormat = document.getElementById("qFormatFilter")?.value || "";
+
+          filteredLogs = allLogs.filter(log => {
+              const det = log.detection || {};
+              const reason = log.reason || "";
+              const format = det.format || "";
+              const raw = log.raw_log || "";
+              const st = (log.review_status || "PENDING").toUpperCase();
+
+              // Status queue view filter
+              if (currentView !== "ALL" && st !== currentView) {
+                  return false;
+              }
+
+              if (qReason && reason !== qReason) return false;
+              if (qFormat && format !== qFormat) return false;
+              if (qText) {
+                  const match = reason.toLowerCase().includes(qText) ||
+                                format.toLowerCase().includes(qText) ||
+                                raw.toLowerCase().includes(qText) ||
+                                (log.quarantine_id || "").toLowerCase().includes(qText);
+                  if (!match) return false;
+              }
+              return true;
+          });
+
+          const countBadgeEl = document.getElementById("qCountBadge");
+          if (countBadgeEl) {
+              const label = currentView === "PENDING" ? "pending" : currentView === "RESOLVED" ? "resolved" : currentView === "REJECTED" ? "rejected" : "total";
+              countBadgeEl.textContent = `(${filteredLogs.length} ${label})`;
+          }
+
+          selectedIdx = 0;
+          renderTable(filteredLogs);
+          if (filteredLogs.length) arcQSel(0);
+      }
+
+      async function refreshStats(){
+          try {
+              const res = await fetch(API + "/quarantine/stats");
+              const data = await res.json();
+              if (data && data.stats) {
+                  const s = data.stats;
+                  const totalEl = document.getElementById("kpiTotalQuarantined");
+                  const pendingEl = document.getElementById("kpiQuarantinePending");
+                  const resolvedEl = document.getElementById("kpiResolved");
+                  const rejectedEl = document.getElementById("kpiRejected");
+                  const donutTotalEl = document.getElementById("qDonutTotal");
+
+                  if (totalEl) totalEl.textContent = s.total.toLocaleString();
+                  if (pendingEl) pendingEl.textContent = s.pending.toLocaleString();
+                  if (resolvedEl) resolvedEl.textContent = s.resolved.toLocaleString();
+                  if (rejectedEl) rejectedEl.textContent = s.rejected.toLocaleString();
+                  if (donutTotalEl) donutTotalEl.textContent = s.total.toLocaleString();
+              }
+          } catch(e) {
+              console.error("Stats refresh error:", e);
+          }
+      }
+
+      async function reviewAction(action){
+          const currentLog = filteredLogs[selectedIdx] || allLogs[selectedIdx];
+          if (!currentLog || !currentLog.quarantine_id) return;
+
+          const qId = currentLog.quarantine_id;
+          const url = `${API}/quarantine/${qId}/${action}`;
+          const banner = document.getElementById("qFeedbackBanner");
+
+          try {
+              if (banner) banner.textContent = `Updating log ${qId.substring(0, 8)}…`;
+              const res = await fetch(url, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ notes: action === "resolve" ? "Resolved by operator in ARC Console" : "Rejected/Dismissed from queue" })
+              });
+              const json = await res.json();
+              if (res.ok) {
+                  // Update local record
+                  currentLog.review_status = action === "resolve" ? "RESOLVED" : "REJECTED";
+                  if (banner) {
+                      banner.textContent = `✓ Log ${qId.substring(0, 8)} marked as ${action === "resolve" ? "Resolved" : "Rejected"}!`;
+                      setTimeout(() => { if (banner) banner.textContent = ""; }, 3000);
+                  }
+                  await refreshStats();
+                  applyFilters();
+              } else {
+                  if (banner) banner.textContent = `⚠ Error: ${json.detail || "Action failed"}`;
+              }
+          } catch(err) {
+              if (banner) banner.textContent = `⚠ Network error: ${err.message}`;
+          }
+      }
+
+      async function load(){
+          const tbody = document.getElementById("qTableBody");
+          if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-400 text-xs">Loading quarantine records…</td></tr>`;
+
+          try {
+              const [qData, statsData] = await Promise.all([
+                  fetch(API + "/quarantine", { signal: AbortSignal.timeout(8000) }).then(r => r.json()),
+                  fetch(API + "/quarantine/stats", { signal: AbortSignal.timeout(8000) }).then(r => r.json()).catch(() => null)
+              ]);
+
+              allLogs = qData.logs || [];
+              filteredLogs = [...allLogs];
+              const qTotal = allLogs.length;
+
+              // Populate stats
+              if (statsData && statsData.stats) {
+                  const s = statsData.stats;
+                  document.getElementById("kpiTotalQuarantined").textContent = s.total.toLocaleString();
+                  document.getElementById("kpiQuarantinePending").textContent = s.pending.toLocaleString();
+                  document.getElementById("kpiResolved").textContent = s.resolved.toLocaleString();
+                  document.getElementById("kpiRejected").textContent = s.rejected.toLocaleString();
+                  document.getElementById("qDonutTotal").textContent = s.total.toLocaleString();
+              } else {
+                  document.getElementById("kpiTotalQuarantined").textContent = qTotal.toLocaleString();
+                  document.getElementById("kpiQuarantinePending").textContent = qTotal.toLocaleString();
+                  document.getElementById("kpiResolved").textContent = "0";
+                  document.getElementById("kpiRejected").textContent = "0";
+                  document.getElementById("qDonutTotal").textContent = qTotal.toLocaleString();
+              }
+
+              // Reason & format dropdowns
+              const reasonsSet = new Set();
+              const formatsSet = new Set();
+              const reasonCounts = {};
+
+              allLogs.forEach(l => {
+                  const r = l.reason || "Validation failed";
+                  const f = l.detection?.format || "UNKNOWN";
+                  reasonsSet.add(r);
+                  formatsSet.add(f);
+                  reasonCounts[r] = (reasonCounts[r] || 0) + 1;
+              });
+
+              const rFilterEl = document.getElementById("qReasonFilter");
+              if (rFilterEl) {
+                  rFilterEl.innerHTML = `<option value="">All Reasons</option>` +
+                      Array.from(reasonsSet).map(r => `<option value="${r}">${r}</option>`).join("");
+                  rFilterEl.addEventListener("change", applyFilters);
+              }
+
+              const fFilterEl = document.getElementById("qFormatFilter");
+              if (fFilterEl) {
+                  fFilterEl.innerHTML = `<option value="">All Formats</option>` +
+                      Array.from(formatsSet).map(f => `<option value="${f}">${f}</option>`).join("");
+                  fFilterEl.addEventListener("change", applyFilters);
+              }
+
+              const viewFilterEl = document.getElementById("qViewFilter");
+              if (viewFilterEl) {
+                  viewFilterEl.addEventListener("change", () => {
+                      currentView = viewFilterEl.value;
+                      applyFilters();
+                  });
+              }
+
+              // Card click shortcuts
+              const cardTotal = document.getElementById("cardTotalQuarantine");
+              if (cardTotal) {
+                  cardTotal.addEventListener("click", () => {
+                      currentView = "ALL";
+                      if (viewFilterEl) viewFilterEl.value = "ALL";
+                      applyFilters();
+                  });
+              }
+
+              const cardPending = document.getElementById("cardPendingReview");
+              if (cardPending) {
+                  cardPending.addEventListener("click", () => {
+                      currentView = "PENDING";
+                      if (viewFilterEl) viewFilterEl.value = "PENDING";
+                      applyFilters();
+                  });
+              }
+
+              const cardResolved = document.getElementById("cardResolved");
+              if (cardResolved) {
+                  cardResolved.addEventListener("click", () => {
+                      currentView = "RESOLVED";
+                      if (viewFilterEl) viewFilterEl.value = "RESOLVED";
+                      applyFilters();
+                  });
+              }
+
+              const cardRejected = document.getElementById("cardRejected");
+              if (cardRejected) {
+                  cardRejected.addEventListener("click", () => {
+                      currentView = "REJECTED";
+                      if (viewFilterEl) viewFilterEl.value = "REJECTED";
+                      applyFilters();
+                  });
+              }
+
+              const searchInput = document.getElementById("qSearchInput");
+              if (searchInput) searchInput.addEventListener("input", applyFilters);
+
+              const resetBtn = document.getElementById("qResetBtn");
+              if (resetBtn) {
+                  resetBtn.addEventListener("click", () => {
+                      if (searchInput) searchInput.value = "";
+                      if (rFilterEl) rFilterEl.value = "";
+                      if (fFilterEl) fFilterEl.value = "";
+                      if (viewFilterEl) viewFilterEl.value = "PENDING";
+                      currentView = "PENDING";
+                      applyFilters();
+                  });
+              }
+
+              // Action buttons wiring
+              const btnResolve = document.getElementById("btnMarkResolved");
+              if (btnResolve) {
+                  btnResolve.addEventListener("click", () => reviewAction("resolve"));
+              }
+
+              const btnReject = document.getElementById("btnRejectLog");
+              if (btnReject) {
+                  btnReject.addEventListener("click", () => reviewAction("reject"));
+              }
+
+              // Copy button handler
+              const copyBtn = document.getElementById("qCopyBtn");
+              if (copyBtn) {
+                  copyBtn.addEventListener("click", () => {
+                      const log = filteredLogs[selectedIdx] || allLogs[selectedIdx];
+                      if (log && log.raw_log) {
+                          navigator.clipboard.writeText(log.raw_log).then(() => {
+                              const orig = copyBtn.innerHTML;
+                              copyBtn.innerHTML = `<span class="text-emerald-600 font-semibold">Copied!</span>`;
+                              setTimeout(() => copyBtn.innerHTML = orig, 1500);
+                          });
+                      }
+                  });
+              }
+
+              // Donut Chart
+              const donutSvgEl = document.getElementById("qDonutSvg");
+              const donutLegendEl = document.getElementById("qDonutLegend");
+              if (donutSvgEl && donutLegendEl) {
+                  const entries = Object.entries(reasonCounts).sort((a,b) => b[1] - a[1]);
+                  const colors = ["#2563eb", "#ea580c", "#e11d48", "#8b5cf6", "#059669"];
+                  const C = 238.761; // 2 * PI * 38
+                  let cumPct = 0;
+
+                  const circles = entries.map(([r, count], idx) => {
+                      const pct = qTotal > 0 ? (count / qTotal) * 100 : 0;
+                      const color = colors[idx % colors.length];
+                      const dash = (pct / 100) * C;
+                      const offset = (cumPct / 100) * C;
+                      cumPct += pct;
+                      return `<circle cx="50" cy="50" fill="transparent" r="38" stroke="${color}" stroke-width="15" stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}" stroke-dashoffset="-${offset.toFixed(2)}"></circle>`;
+                  }).join("");
+
+                  donutSvgEl.innerHTML = circles || `<circle cx="50" cy="50" fill="transparent" r="38" stroke="#e2e8f0" stroke-width="15" stroke-dasharray="238.76 0"></circle>`;
+
+                  donutLegendEl.innerHTML = entries.map(([r, count], idx) => {
+                      const pct = qTotal > 0 ? ((count / qTotal) * 100).toFixed(1) : "0.0";
+                      const color = colors[idx % colors.length];
+                      return `
+                          <div class="flex items-center justify-between">
+                              <span class="flex items-center gap-1.5 truncate max-w-[130px]"><span class="w-2 h-2 rounded-full shrink-0" style="background:${color}"></span>${r}</span>
+                              <span class="font-semibold text-slate-700">${pct}% (${count})</span>
+                          </div>
+                      `;
+                  }).join("");
+              }
+
+              applyFilters();
+
+          } catch (e) {
+              console.error("Quarantine load error:", e);
+              if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center text-xs"><div class="text-red-500 font-semibold">Could not load quarantine data</div><div class="text-slate-400 mt-1">Error: ${e.message}</div></td></tr>`;
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", load);
+  })();
+  </script>
+</body>
+</html>

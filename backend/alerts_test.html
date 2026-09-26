@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ARC - Alerts Dashboard</title>
+<!-- Tailwind CSS CDN with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            arcNav: '#07162c',
+            arcNavHover: '#0d2242',
+            arcBlue: '#0052cc',
+            arcLightBg: '#f4f6fa',
+            arcBorder: '#e2e8f0',
+            arcOrange: '#f95716'
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars-and-typography">
+    /* Custom fine-line scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+<script src="../api.js"></script></head>
+<body class="bg-arcLightBg text-slate-800 antialiased flex h-screen overflow-hidden text-[13px]">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-white"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col h-screen overflow-y-auto">
+<!-- Top Global Header -->
+<header class="bg-white border-b border-arcBorder px-6 py-2.5 flex items-center justify-between flex-shrink-0 sticky top-0 z-10 shadow-sm">
+<div>
+<h1 class="text-base font-bold text-slate-900 leading-none">Universal Log Pre-Processing Framework</h1>
+<p class="text-xs text-blue-600 font-medium mt-0.5">Learn Once. Process Forever.</p>
+</div>
+<!-- Search and Header Controls -->
+<div class="flex items-center gap-4">
+<!-- Search bar -->
+<div class="relative w-80">
+<input class="w-full bg-slate-50 border border-slate-200 rounded-md py-1.5 pl-8 pr-3 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white" placeholder="Search alerts, logs, IPs, threats, users..." type="text"/>
+<svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<!-- System Healthy badge -->
+<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-md">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<div class="leading-none">
+<div class="text-[11px] font-semibold text-emerald-800">System Healthy</div>
+<div class="text-[9px] text-emerald-600">All services operational</div>
+</div>
+</div>
+<!-- Bell Notification -->
+<button class="relative p-1.5 rounded-full hover:bg-slate-100 text-slate-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- User Profile -->
+<div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center tracking-tighter">SK</div>
+<span class="text-xs font-semibold text-slate-800">Administrator</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+</header>
+<!-- Page Content Container -->
+<main class="p-6 space-y-4">
+<!-- Breadcrumbs and Title Row -->
+<div class="flex items-start justify-between">
+<div>
+<nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs text-slate-500 mb-1">
+<a class="text-blue-600 hover:underline" href="../arc_01_dashboard/code.html">Dashboard</a>
+<span>&gt;</span>
+<span class="text-slate-700 font-medium">Alerts</span>
+</nav>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight leading-tight">Alerts</h2>
+<p class="text-xs text-slate-500">Stay ahead of threats with real-time detection and intelligent alerts.</p>
+</div>
+<!-- Live Data Notice Badge -->
+<div id="alertsConnectionStatus" class="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+  <span id="alertsConnectionText">Live Alerts API</span>
+</div>
+</div>
+<!-- BEGIN: MetricCards -->
+<section class="grid grid-cols-1 md:grid-cols-5 gap-3.5" data-purpose="kpi-metrics">
+<!-- 1. Total Alerts -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 flex items-center gap-3.5 shadow-sm">
+<div class="w-11 h-11 rounded-lg bg-red-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" fill-rule="evenodd"></path></svg>
+</div>
+<div class="flex-1">
+<div class="text-[11px] font-medium text-slate-500">Total Alerts</div>
+<div id="kpiTotalAlerts" class="text-xl font-bold text-slate-900 leading-snug">0</div>
+<div class="flex items-center text-[10px] text-slate-400 font-normal gap-1"><span id="kpiTotalSubtitle">No active alerts</span></div>
+</div>
+</div>
+<!-- 2. Critical -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 flex items-center gap-3.5 shadow-sm">
+<div class="w-11 h-11 rounded-lg bg-red-600 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" fill-rule="evenodd"></path></svg>
+</div>
+<div class="flex-1">
+<div class="text-[11px] font-medium text-slate-500">Critical</div>
+<div id="kpiCriticalAlerts" class="text-xl font-bold text-red-600 leading-snug">0</div>
+<div class="flex items-center text-[10px] text-slate-400 font-normal gap-1"><span id="kpiCriticalSubtitle">No active alerts</span></div>
+</div>
+</div>
+<!-- 3. High -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 flex items-center gap-3.5 shadow-sm">
+<div class="w-11 h-11 rounded-lg bg-orange-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" fill-rule="evenodd"></path></svg>
+</div>
+<div class="flex-1">
+<div class="text-[11px] font-medium text-slate-500">High</div>
+<div id="kpiHighAlerts" class="text-xl font-bold text-orange-600 leading-snug">0</div>
+<div class="flex items-center text-[10px] text-slate-400 font-normal gap-1"><span id="kpiHighSubtitle">No active alerts</span></div>
+</div>
+</div>
+<!-- 4. Medium -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 flex items-center gap-3.5 shadow-sm">
+<div class="w-11 h-11 rounded-lg bg-amber-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path></svg>
+</div>
+<div class="flex-1">
+<div class="text-[11px] font-medium text-slate-500">Medium</div>
+<div id="kpiMediumAlerts" class="text-xl font-bold text-amber-600 leading-snug">0</div>
+<div class="flex items-center text-[10px] text-slate-400 font-normal gap-1"><span id="kpiMediumSubtitle">No active alerts</span></div>
+</div>
+</div>
+<!-- 5. Low -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 flex items-center gap-3.5 shadow-sm">
+<div class="w-11 h-11 rounded-lg bg-blue-500 flex items-center justify-center text-white flex-shrink-0">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path></svg>
+</div>
+<div class="flex-1">
+<div class="text-[11px] font-medium text-slate-500">Low</div>
+<div id="kpiLowAlerts" class="text-xl font-bold text-blue-600 leading-snug">0</div>
+<div class="flex items-center text-[10px] text-slate-400 font-normal gap-1"><span id="kpiLowSubtitle">No active alerts</span></div>
+</div>
+</div>
+</section>
+<!-- END: MetricCards -->
+<!-- BEGIN: FilterToolbar -->
+<section class="bg-white border border-slate-200 rounded-lg p-2.5 flex flex-wrap items-center justify-between gap-2.5 shadow-sm" data-purpose="filter-bar">
+<div class="flex flex-wrap items-center gap-2 text-xs flex-1">
+<!-- Time Filter -->
+<div class="relative">
+<button id="filterTimeBtn" class="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-slate-700 font-medium hover:bg-slate-100">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>All Time</span>
+<svg class="w-3.5 h-3.5 text-slate-400 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Severity Filter -->
+<select id="filterSeverity" class="bg-slate-50 border border-slate-200 rounded py-1.5 px-2.5 text-xs text-slate-700 font-medium focus:ring-1 focus:ring-blue-500">
+<option value="All">All Severities</option>
+<option value="Critical">Critical</option>
+<option value="High">High</option>
+<option value="Medium">Medium</option>
+<option value="Low">Low</option>
+</select>
+<!-- Source Filter -->
+<select id="filterSource" class="bg-slate-50 border border-slate-200 rounded py-1.5 px-2.5 text-xs text-slate-700 font-medium focus:ring-1 focus:ring-blue-500">
+<option value="All">All Sources</option>
+</select>
+<!-- Alert Type Filter -->
+<select id="filterAlertType" class="bg-slate-50 border border-slate-200 rounded py-1.5 px-2.5 text-xs text-slate-700 font-medium focus:ring-1 focus:ring-blue-500">
+<option value="All">All Alert Types</option>
+</select>
+<!-- Search In Table -->
+<div class="relative min-w-[240px] flex-1 max-w-sm">
+<input id="filterSearch" class="w-full bg-slate-50 border border-slate-200 rounded py-1.5 pl-7 pr-3 text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Search alerts (IP, message, rule ID, source)..." type="text"/>
+<svg class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<button id="btnApplyFilter" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium shadow-sm transition-colors cursor-pointer">Apply</button>
+<button id="btnResetFilter" class="px-3 py-1.5 border border-slate-200 text-slate-600 rounded font-medium hover:bg-slate-50 transition-colors cursor-pointer">Reset</button>
+</div>
+<!-- Export Button -->
+<div class="flex items-center">
+<button id="btnExportAlerts" class="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 text-slate-700 rounded font-medium hover:bg-slate-50 transition-colors cursor-pointer">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Export JSON</span>
+</button>
+</div>
+</section>
+<!-- END: FilterToolbar -->
+<!-- BEGIN: ChartsAnalyticsSection -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-4" data-purpose="charts">
+<!-- 1. Alert Trend Line Chart (5 cols) -->
+<div class="lg:col-span-5 bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-semibold text-slate-800 text-xs tracking-tight">Alert Trend <span class="text-slate-400 font-normal">(Last 24 Hours)</span></h3>
+<!-- Chart Legend -->
+<div class="flex items-center gap-2.5 text-[10px] text-slate-600 font-medium">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span>Critical</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-500"></span>High</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Medium</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span>Low</span>
+</div>
+</div>
+<!-- Empty/Unavailable State: Alert rules not configured -->
+<div class="w-full h-44 flex flex-col items-center justify-center text-center p-4">
+  <svg class="w-8 h-8 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+  <div class="text-xs font-semibold text-slate-600">No alert trend data available</div>
+  <div class="text-[11px] text-slate-400 mt-0.5">No alerts recorded in the last 24 hours.</div>
+</div>
+</div>
+<!-- 2. Alerts by Type (Donut) (3.5 cols) -->
+<div class="lg:col-span-3 bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex flex-col justify-between">
+<h3 class="font-semibold text-slate-800 text-xs mb-1">Alerts by Type</h3>
+<div class="flex items-center justify-between gap-2 h-44">
+<!-- Donut SVG with central total -->
+<div class="relative w-32 h-32 flex-shrink-0 flex items-center justify-center">
+<svg id="donutSvg" class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<!-- Neutral track for empty alerts state -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#e2e8f0" stroke-dasharray="100 0" stroke-dashoffset="0" stroke-width="5"></circle>
+</svg>
+<!-- Center Metric inside Donut -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span id="donutAlertsTotal" class="text-sm font-bold text-slate-800 leading-none">0</span>
+<span class="text-[9px] text-slate-500 font-medium">Alerts</span>
+</div>
+</div>
+<!-- List Legend -->
+<div id="donutAlertTypesLegend" class="flex-1 space-y-1 text-[11px] max-h-40 overflow-y-auto pr-1">
+<!-- Dynamic Alert Types Legend -->
+</div>
+</div>
+</div>
+<!-- 3. Top Alert Sources (Horizontal Bars) (3.5 cols) -->
+<div class="lg:col-span-4 bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex flex-col justify-between">
+<h3 class="font-semibold text-slate-800 text-xs mb-1">Top Alert Sources</h3>
+<div id="topAlertSourcesList" class="space-y-1.5 pt-1 max-h-40 overflow-y-auto pr-1">
+<!-- Dynamic Sources Bars -->
+</div>
+</div>
+
+</section>
+<!-- END: ChartsAnalyticsSection -->
+<!-- BEGIN: BottomSplitView (Table & Alert Details) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start" data-purpose="table-and-details-section">
+<!-- Table Container (Left 8 Columns) -->
+<div class="lg:col-span-8 bg-white border border-slate-200 rounded-lg shadow-sm flex flex-col min-w-0">
+<div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
+<h3 class="font-bold text-slate-800 text-xs">Recent Alerts</h3>
+<span id="tableAlertsBadge" class="text-[10px] font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">No Active Alerts</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="border-b border-slate-200 bg-slate-50/70 text-slate-600 font-semibold">
+<th class="py-2.5 px-3 w-8">#</th>
+<th class="py-2.5 px-3">
+<div class="flex items-center gap-1 cursor-pointer">
+<span>Time</span>
+<svg class="w-3 h-3 text-blue-600" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" fill-rule="evenodd"></path></svg>
+</div>
+</th>
+<th class="py-2.5 px-3">Severity</th>
+<th class="py-2.5 px-3">Source</th>
+<th class="py-2.5 px-3">Alert Type</th>
+<th class="py-2.5 px-3">Message</th>
+<th class="py-2.5 px-3 text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="alertsTableBody" class="divide-y divide-slate-100 text-slate-700">
+<tr><td colspan="7" class="py-12 text-center text-slate-400 text-xs">
+  <div class="flex items-center justify-center gap-2">
+    <svg class="animate-spin h-4 w-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+    <span>Loading alerts from database...</span>
+  </div>
+</td></tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 select-none">
+<div id="alertsPaginationSummary">Showing 0 - 0 of 0 alerts</div>
+<div id="alertsPaginationButtons" class="flex items-center gap-1.5">
+<!-- Dynamic pagination page numbers -->
+</div>
+<div class="flex items-center gap-2">
+<span class="text-slate-500">Rows per page:</span>
+<div class="relative">
+<select id="alertsRowsPerPageSelect" class="border border-slate-200 rounded px-2 py-1 text-xs text-slate-700 bg-white pr-6 focus:outline-none focus:ring-1 focus:ring-blue-500">
+<option value="10">10</option>
+<option value="25">25</option>
+<option value="50">50</option>
+<option value="All">All</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert Details Panel (Right 4 Columns) -->
+<div class="lg:col-span-4 bg-white border border-slate-200 rounded-lg shadow-sm p-4 flex flex-col justify-between min-w-0" data-purpose="alert-details-card">
+<div>
+<!-- Header with Prev/Next -->
+<div class="flex items-center justify-between pb-3 border-b border-slate-200">
+<h3 class="font-bold text-slate-800 text-sm">Alert Details</h3>
+<div class="flex items-center gap-3 text-xs text-blue-600 font-medium">
+<button id="detailPrevBtn" type="button" class="flex items-center gap-0.5 hover:underline cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Previous</span>
+</button>
+<button id="detailNextBtn" type="button" class="flex items-center gap-0.5 hover:underline cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+<span>Next</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<!-- Property Meta List -->
+<div class="divide-y divide-slate-100 text-xs py-1">
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Alert ID</span>
+<div class="flex items-center gap-1.5 font-mono font-medium text-slate-800">
+<span id="detailAlertId">Select an alert</span>
+<button id="detailCopyAlertIdBtn" type="button" class="text-slate-400 hover:text-slate-600 cursor-pointer" title="Copy Alert ID">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Time</span>
+<span id="detailTime" class="font-medium text-slate-800">—</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Severity</span>
+<span id="detailSeverityBadge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+—
+</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Source</span>
+<span id="detailSource" class="font-medium text-slate-800">—</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Alert Type</span>
+<span id="detailAlertType" class="font-medium text-slate-800">—</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Source IP</span>
+<div class="flex items-center gap-1 font-mono font-medium text-slate-800">
+<span id="detailSourceIp">—</span>
+<button id="detailCopySourceIpBtn" type="button" class="text-slate-400 hover:text-slate-600 cursor-pointer" title="Copy Source IP">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Destination IP</span>
+<div class="flex items-center gap-1 font-mono font-medium text-slate-800">
+<span id="detailDestIp">—</span>
+<button id="detailCopyDestIpBtn" type="button" class="text-slate-400 hover:text-slate-600 cursor-pointer" title="Copy Dest IP">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Port</span>
+<span id="detailPort" class="font-mono text-slate-800">—</span>
+</div>
+<div class="py-2 flex flex-col gap-1">
+<span class="text-slate-500">Message</span>
+<span id="detailMessage" class="font-normal text-slate-800 text-[12px] leading-relaxed break-words">—</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Rule ID</span>
+<span id="detailRuleId" class="font-mono text-slate-800">—</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Status</span>
+<span id="detailStatus" class="inline-flex items-center gap-1 font-semibold text-slate-600">—</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Assigned To</span>
+<div class="flex items-center gap-1 text-slate-700">
+<span id="detailAssignedTo">Unassigned</span>
+<button id="detailAssignBtn" type="button" class="text-blue-600 hover:underline font-medium ml-1 cursor-pointer">Assign to me</button>
+</div>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-slate-500">Tags</span>
+<div id="detailTags" class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] rounded font-medium">—</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons in Details Panel -->
+<div class="pt-3 border-t border-slate-200 space-y-2 mt-2">
+<div class="grid grid-cols-3 gap-2">
+<button id="btnInvestigateAlert" type="button" class="flex items-center justify-center gap-1 py-1.5 px-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-medium shadow-sm transition-colors cursor-pointer">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Investigate</span>
+</button>
+<button id="btnViewInLogsAlert" type="button" class="flex items-center justify-center gap-1 py-1.5 px-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded text-xs font-medium transition-colors cursor-pointer">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>View in Logs</span>
+</button>
+<a href="../arc_05_parser_registry/code.html" class="flex items-center justify-center gap-1 py-1.5 px-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded text-xs font-medium transition-colors">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Create Rule</span>
+</a>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<button id="btnResolveAlert" type="button" class="flex items-center justify-center gap-1 py-1.5 px-2 border border-slate-200 hover:bg-emerald-50 text-emerald-700 rounded text-xs font-medium transition-colors cursor-pointer">
+<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Mark as Resolved</span>
+</button>
+<a href="../arc_09_quarantine/code.html" class="flex items-center justify-center gap-1 py-1.5 px-2 border border-slate-200 hover:bg-rose-50 text-red-600 rounded text-xs font-medium transition-colors">
+<svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>View Quarantine</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- END: BottomSplitView -->
+</main>
+</div>
+<!-- END: MainContentArea -->
+
+<script>
+// ============================================================
+// ALERTS DASHBOARD — Live SQLite Integration & Reactive UI
+// ============================================================
+(function() {
+  "use strict";
+  const API_BASE = "http://127.0.0.1:8000/api/v1";
+
+  let allAlerts = [];
+  let filteredAlerts = [];
+  let activeAlertIndex = 0;
+  let currentPage = 1;
+  let pageSize = 10;
+
+  // DOM Elements - Metrics
+  const kpiTotalAlerts    = document.getElementById("kpiTotalAlerts");
+  const kpiCriticalAlerts = document.getElementById("kpiCriticalAlerts");
+  const kpiHighAlerts     = document.getElementById("kpiHighAlerts");
+  const kpiMediumAlerts   = document.getElementById("kpiMediumAlerts");
+  const kpiLowAlerts      = document.getElementById("kpiLowAlerts");
+
+  // DOM Elements - Charts
+  const donutAlertsTotal      = document.getElementById("donutAlertsTotal");
+  const donutAlertTypesLegend = document.getElementById("donutAlertTypesLegend");
+  const topAlertSourcesList   = document.getElementById("topAlertSourcesList");
+
+  // DOM Elements - Filters
+  const filterSeverity  = document.getElementById("filterSeverity");
+  const filterSource    = document.getElementById("filterSource");
+  const filterAlertType = document.getElementById("filterAlertType");
+  const filterSearch    = document.getElementById("filterSearch");
+  const btnApplyFilter  = document.getElementById("btnApplyFilter");
+  const btnResetFilter  = document.getElementById("btnResetFilter");
+  const btnExportAlerts = document.getElementById("btnExportAlerts");
+
+  // DOM Elements - Table & Pagination
+  const alertsTableBody           = document.getElementById("alertsTableBody");
+  const alertsPaginationSummary   = document.getElementById("alertsPaginationSummary");
+  const alertsPaginationButtons   = document.getElementById("alertsPaginationButtons");
+  const alertsRowsPerPageSelect   = document.getElementById("alertsRowsPerPageSelect");
+
+  // DOM Elements - Detail Panel
+  const detailAlertId       = document.getElementById("detailAlertId");
+  const detailCopyAlertIdBtn= document.getElementById("detailCopyAlertIdBtn");
+  const detailTime          = document.getElementById("detailTime");
+  const detailSeverityBadge = document.getElementById("detailSeverityBadge");
+  const detailSource        = document.getElementById("detailSource");
+  const detailAlertType     = document.getElementById("detailAlertType");
+  const detailSourceIp      = document.getElementById("detailSourceIp");
+  const detailCopySourceIpBtn=document.getElementById("detailCopySourceIpBtn");
+  const detailDestIp        = document.getElementById("detailDestIp");
+  const detailCopyDestIpBtn = document.getElementById("detailCopyDestIpBtn");
+  const detailPort          = document.getElementById("detailPort");
+  const detailMessage       = document.getElementById("detailMessage");
+  const detailRuleId        = document.getElementById("detailRuleId");
+  const detailStatus        = document.getElementById("detailStatus");
+  const detailAssignedTo    = document.getElementById("detailAssignedTo");
+  const detailAssignBtn     = document.getElementById("detailAssignBtn");
+  const detailTags          = document.getElementById("detailTags");
+  const detailPrevBtn       = document.getElementById("detailPrevBtn");
+  const detailNextBtn       = document.getElementById("detailNextBtn");
+
+  // Detail Action Buttons
+  const btnInvestigateAlert = document.getElementById("btnInvestigateAlert");
+  const btnViewInLogsAlert  = document.getElementById("btnViewInLogsAlert");
+  const btnResolveAlert     = document.getElementById("btnResolveAlert");
+
+  // Severity color helpers
+  function getSeverityBadge(sev) {
+    const s = (sev || "Medium").toLowerCase();
+    if (s === "critical") {
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-700"><span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>Critical</span>`;
+    } else if (s === "high") {
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-100 text-orange-700"><span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>High</span>`;
+    } else if (s === "low") {
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-blue-700"><span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>Low</span>`;
+    }
+    return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-700"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Medium</span>`;
+  }
+
+  function getStatusBadge(status) {
+    const st = (status || "Open").toLowerCase();
+    if (st === "resolved") {
+      return `<span class="inline-flex items-center gap-1 text-emerald-600 font-semibold"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Resolved</span>`;
+    } else if (st === "investigating") {
+      return `<span class="inline-flex items-center gap-1 text-blue-600 font-semibold"><svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>Investigating</span>`;
+    }
+    return `<span class="inline-flex items-center gap-1 text-red-600 font-semibold"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>Open</span>`;
+  }
+
+  // Format timestamp helper
+  function formatTimestamp(ts) {
+    if (!ts) return "—";
+    try {
+      const d = new Date(ts);
+      if (isNaN(d.getTime())) return ts;
+      return d.toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' }) + ", " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch (e) {
+      return ts;
+    }
+  }
+
+  // Fetch real alerts from backend API
+  async function fetchAlerts() {
+    try {
+      const res = await fetch(`${API_BASE}/alerts`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      allAlerts = data.alerts || [];
+
+      // Update Live API Connection Badge
+      const connBadge = document.getElementById("alertsConnectionStatus");
+      if (connBadge) {
+        connBadge.className = "flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full";
+        connBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>Live Alerts API</span>`;
+      }
+
+      // Update KPI metrics
+      const total = typeof data.total === "number" ? data.total : allAlerts.length;
+      if (kpiTotalAlerts) kpiTotalAlerts.textContent = total.toLocaleString();
+      const sevs = data.counts_by_severity || {};
+      const crit = sevs["Critical"] || 0;
+      const high = sevs["High"] || 0;
+      const med  = sevs["Medium"] || 0;
+      const low  = sevs["Low"] || 0;
+
+      if (kpiCriticalAlerts) kpiCriticalAlerts.textContent = crit.toLocaleString();
+      if (kpiHighAlerts)     kpiHighAlerts.textContent     = high.toLocaleString();
+      if (kpiMediumAlerts)   kpiMediumAlerts.textContent   = med.toLocaleString();
+      if (kpiLowAlerts)      kpiLowAlerts.textContent      = low.toLocaleString();
+
+      const kpiTotalSub = document.getElementById("kpiTotalSubtitle");
+      if (kpiTotalSub) kpiTotalSub.textContent = total === 0 ? "No active alerts" : `${total} active alert${total === 1 ? '' : 's'}`;
+      const kpiCritSub = document.getElementById("kpiCriticalSubtitle");
+      if (kpiCritSub) kpiCritSub.textContent = crit === 0 ? "No active alerts" : `${crit} active`;
+      const kpiHighSub = document.getElementById("kpiHighSubtitle");
+      if (kpiHighSub) kpiHighSub.textContent = high === 0 ? "No active alerts" : `${high} active`;
+      const kpiMedSub = document.getElementById("kpiMediumSubtitle");
+      if (kpiMedSub) kpiMedSub.textContent = med === 0 ? "No active alerts" : `${med} active`;
+      const kpiLowSub = document.getElementById("kpiLowSubtitle");
+      if (kpiLowSub) kpiLowSub.textContent = low === 0 ? "No active alerts" : `${low} active`;
+
+      const tableAlertsBadge = document.getElementById("tableAlertsBadge");
+      if (tableAlertsBadge) {
+        if (total === 0) {
+          tableAlertsBadge.textContent = "No Active Alerts";
+          tableAlertsBadge.className = "text-[10px] font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full";
+        } else {
+          tableAlertsBadge.textContent = `${total} Active Alert${total === 1 ? '' : 's'}`;
+          tableAlertsBadge.className = "text-[10px] font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full";
+        }
+      }
+
+      // Update Donut Chart Central Count
+      if (donutAlertsTotal) donutAlertsTotal.textContent = total;
+
+      // Populate Filter Dropdowns dynamically
+      populateFilterOptions(allAlerts);
+
+      // Render Charts
+      renderAlertsByType(data.counts_by_type || {}, total);
+      renderTopSources(data.counts_by_source || {});
+
+      // Apply initial filters
+      applyFilters();
+    } catch (err) {
+      console.error("Failed to load alerts:", err);
+      const connBadge = document.getElementById("alertsConnectionStatus");
+      if (connBadge) {
+        connBadge.className = "flex items-center gap-1.5 text-xs text-red-600 bg-red-50 border border-red-200 px-2.5 py-1 rounded-full";
+        connBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500"></span><span>Connection Error</span>`;
+      }
+      if (alertsTableBody) {
+        alertsTableBody.innerHTML = `<tr><td colspan="7" class="py-12 text-center">
+          <div class="flex flex-col items-center justify-center text-center p-4">
+            <div class="w-10 h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            </div>
+            <div class="text-xs font-semibold text-red-700">Failed to connect to Alerts API</div>
+            <div class="text-[11px] text-slate-500 mt-1 max-w-sm">Unable to reach ${API_BASE}/alerts. (${err.message})</div>
+          </div>
+        </td></tr>`;
+      }
+    }
+  }
+
+  // Populate dynamic source and alert type dropdowns
+  function populateFilterOptions(alerts) {
+    const sources = new Set();
+    const types = new Set();
+
+    alerts.forEach(a => {
+      if (a.source) sources.add(a.source);
+      if (a.alert_type) types.add(a.alert_type);
+    });
+
+    if (filterSource) {
+      const cur = filterSource.value;
+      filterSource.innerHTML = '<option value="All">All Sources</option>';
+      Array.from(sources).sort().forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        if (s === cur) opt.selected = true;
+        filterSource.appendChild(opt);
+      });
+    }
+
+    if (filterAlertType) {
+      const cur = filterAlertType.value;
+      filterAlertType.innerHTML = '<option value="All">All Alert Types</option>';
+      Array.from(types).sort().forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        if (t === cur) opt.selected = true;
+        filterAlertType.appendChild(opt);
+      });
+    }
+  }
+
+  // Render Donut Legend & Slices from Real Type Counts
+  function renderAlertsByType(typesMap, totalCount) {
+    if (!donutAlertTypesLegend) return;
+    const entries = Object.entries(typesMap).sort((a, b) => b[1] - a[1]);
+    const donutSvg = document.getElementById("donutSvg");
+    if (!entries.length || totalCount === 0) {
+      donutAlertTypesLegend.innerHTML = '<div class="text-[11px] text-slate-400 italic py-8 text-center">No active alerts</div>';
+      if (donutSvg) {
+        donutSvg.innerHTML = '<circle cx="18" cy="18" fill="none" r="14" stroke="#e2e8f0" stroke-dasharray="100 0" stroke-dashoffset="0" stroke-width="5"></circle>';
+      }
+      return;
+    }
+    const total = totalCount || Object.values(typesMap).reduce((a, b) => a + b, 0) || 1;
+    const colors = ["#3b82f6", "#10b981", "#f97316", "#ec4899", "#a855f7", "#06b6d4", "#ef4444", "#64748b"];
+
+    let accumulatedPct = 0;
+    let svgCircles = '';
+    const circumference = 2 * Math.PI * 14;
+
+    donutAlertTypesLegend.innerHTML = entries.map(([type, count], idx) => {
+      const pct = Math.round((count / total) * 100);
+      const color = colors[idx % colors.length];
+
+      const slicePct = (count / total) * 100;
+      const strokeDash = `${(slicePct / 100) * circumference} ${circumference}`;
+      const strokeOffset = -((accumulatedPct / 100) * circumference);
+      accumulatedPct += slicePct;
+      svgCircles += `<circle cx="18" cy="18" fill="none" r="14" stroke="${color}" stroke-dasharray="${strokeDash}" stroke-dashoffset="${strokeOffset}" stroke-width="5" class="transition-all"></circle>`;
+
+      return `
+        <div class="flex items-center justify-between text-slate-600 hover:text-slate-900 cursor-pointer" onclick="filterByTypeQuick('${type}')">
+          <span class="flex items-center gap-1.5 truncate max-w-[130px]"><span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${color}"></span>${type}</span>
+          <span class="font-medium text-slate-800">${count} (${pct}%)</span>
+        </div>
+      `;
+    }).join("");
+
+    if (donutSvg) {
+      donutSvg.innerHTML = svgCircles;
+    }
+  }
+
+  window.filterByTypeQuick = function(type) {
+    if (filterAlertType) {
+      filterAlertType.value = type;
+      applyFilters();
+    }
+  };
+
+  // Render Top Sources with Real Data
+  function renderTopSources(sourcesMap) {
+    if (!topAlertSourcesList) return;
+    const entries = Object.entries(sourcesMap).sort((a, b) => b[1] - a[1]);
+    if (!entries.length) {
+      topAlertSourcesList.innerHTML = '<div class="text-[11px] text-slate-400 italic py-8 text-center">No active alerts</div>';
+      return;
+    }
+    const maxVal = Math.max(...Object.values(sourcesMap), 1);
+    const colors = ["bg-blue-500", "bg-emerald-500", "bg-orange-400", "bg-purple-500", "bg-rose-400", "bg-slate-400"];
+
+    topAlertSourcesList.innerHTML = entries.map(([src, count], idx) => {
+      const pct = Math.round((count / maxVal) * 100);
+      const colorClass = colors[idx % colors.length];
+      return `
+        <div class="flex items-center text-xs">
+          <span class="w-24 text-slate-600 font-medium truncate" title="${src}">${src}</span>
+          <span class="w-8 text-slate-500 text-[11px]">${count}</span>
+          <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+            <div class="${colorClass} h-2 rounded-full" style="width: ${Math.max(pct, 12)}%"></div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // Filter & Search Logic
+  function applyFilters() {
+    const sev = filterSeverity ? filterSeverity.value : "All";
+    const src = filterSource ? filterSource.value : "All";
+    const atype = filterAlertType ? filterAlertType.value : "All";
+    const query = filterSearch ? filterSearch.value.trim().toLowerCase() : "";
+
+    filteredAlerts = allAlerts.filter(a => {
+      if (sev !== "All" && (a.severity || "").toLowerCase() !== sev.toLowerCase()) return false;
+      if (src !== "All" && a.source !== src) return false;
+      if (atype !== "All" && a.alert_type !== atype) return false;
+      if (query) {
+        const hay = [
+          a.alert_id, a.message, a.source_ip, a.destination_ip, a.source, a.alert_type, a.rule_id
+        ].join(" ").toLowerCase();
+        if (!hay.includes(query)) return false;
+      }
+      return true;
+    });
+
+    currentPage = 1;
+    activeAlertIndex = 0;
+    renderTable();
+    updateDetailPanel();
+  }
+
+  // Reset Filters
+  function resetFilters() {
+    if (filterSeverity) filterSeverity.value = "All";
+    if (filterSource) filterSource.value = "All";
+    if (filterAlertType) filterAlertType.value = "All";
+    if (filterSearch) filterSearch.value = "";
+    applyFilters();
+  }
+
+  // Render Table
+  function renderTable() {
+    if (!alertsTableBody) return;
+    if (filteredAlerts.length === 0) {
+      const emptyMsg = allAlerts.length === 0
+        ? `<div class="py-12 flex flex-col items-center justify-center text-center">
+             <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
+               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+             </div>
+             <div class="text-sm font-semibold text-slate-700">No active alerts</div>
+             <div class="text-xs text-slate-400 mt-1">There are currently no active alerts in the system.</div>
+           </div>`
+        : `<div class="py-8 text-center text-slate-400 text-xs">No alerts match the selected criteria.</div>`;
+      alertsTableBody.innerHTML = `<tr><td colspan="7">${emptyMsg}</td></tr>`;
+      renderPagination(0);
+      return;
+    }
+
+    const total = filteredAlerts.length;
+    const start = pageSize === "All" ? 0 : (currentPage - 1) * pageSize;
+    const end = pageSize === "All" ? total : Math.min(start + pageSize, total);
+    const pageItems = filteredAlerts.slice(start, end);
+
+    alertsTableBody.innerHTML = pageItems.map((alert, idx) => {
+      const globalIdx = start + idx;
+      const isSelected = globalIdx === activeAlertIndex;
+      const bgClass = isSelected ? "bg-blue-50/70 border-l-4 border-l-blue-600 font-medium" : "hover:bg-slate-50/80 transition-colors";
+      const timeStr = formatTimestamp(alert.timestamp);
+      const msgSnippet = (alert.message || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+      return `
+        <tr class="${bgClass} cursor-pointer" onclick="selectAlertByIndex(${globalIdx})">
+          <td class="py-2.5 px-3 font-medium text-slate-400">${globalIdx + 1}</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">${timeStr}</td>
+          <td class="py-2.5 px-3">${getSeverityBadge(alert.severity)}</td>
+          <td class="py-2.5 px-3 font-medium text-slate-800">${alert.source || '—'}</td>
+          <td class="py-2.5 px-3">${alert.alert_type || '—'}</td>
+          <td class="py-2.5 px-3 max-w-xs truncate text-slate-600" title="${msgSnippet}">${msgSnippet}</td>
+          <td class="py-2.5 px-3 text-right whitespace-nowrap">
+            <button type="button" class="text-slate-400 hover:text-blue-600 p-1 cursor-pointer" title="View Details" onclick="event.stopPropagation(); selectAlertByIndex(${globalIdx});">
+              <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </button>
+            <a href="../arc_07_event_viewer/code.html" class="text-slate-400 hover:text-slate-700 p-1 ml-1" title="Jump to Event Viewer" onclick="event.stopPropagation();">
+              <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    renderPagination(total);
+  }
+
+  // Pagination controls
+  function renderPagination(total) {
+    if (!alertsPaginationSummary || !alertsPaginationButtons) return;
+    if (total === 0) {
+      alertsPaginationSummary.textContent = "Showing 0 alerts";
+      alertsPaginationButtons.innerHTML = "";
+      return;
+    }
+
+    const start = pageSize === "All" ? 1 : (currentPage - 1) * pageSize + 1;
+    const end = pageSize === "All" ? total : Math.min(start + pageSize - 1, total);
+    alertsPaginationSummary.textContent = `Showing ${start} - ${end} of ${total} alerts`;
+
+    if (pageSize === "All") {
+      alertsPaginationButtons.innerHTML = `<button class="px-2 py-1 bg-blue-600 text-white rounded font-medium text-xs">1</button>`;
+      return;
+    }
+
+    const totalPages = Math.ceil(total / pageSize);
+    let btns = `<button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="w-7 h-7 flex items-center justify-center border border-slate-200 rounded text-slate-300 cursor-not-allowed"' : 'class="w-7 h-7 flex items-center justify-center border border-slate-200 rounded text-slate-500 hover:bg-slate-50 cursor-pointer"'}>&lt;</button>`;
+
+    for (let p = 1; p <= totalPages; p++) {
+      if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+        if (p === currentPage) {
+          btns += `<button class="w-7 h-7 flex items-center justify-center bg-blue-600 text-white rounded font-medium cursor-default">${p}</button>`;
+        } else {
+          btns += `<button onclick="changePage(${p})" class="w-7 h-7 flex items-center justify-center border border-slate-200 rounded text-slate-600 hover:bg-slate-50 cursor-pointer">${p}</button>`;
+        }
+      } else if (p === currentPage - 2 || p === currentPage + 2) {
+        btns += `<span class="px-1 text-slate-400">...</span>`;
+      }
+    }
+
+    btns += `<button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled class="w-7 h-7 flex items-center justify-center border border-slate-200 rounded text-slate-300 cursor-not-allowed"' : 'class="w-7 h-7 flex items-center justify-center border border-slate-200 rounded text-slate-500 hover:bg-slate-50 cursor-pointer"'}>&gt;</button>`;
+    alertsPaginationButtons.innerHTML = btns;
+  }
+
+  window.changePage = function(page) {
+    const totalPages = pageSize === "All" ? 1 : Math.ceil(filteredAlerts.length / pageSize);
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    renderTable();
+  };
+
+  // Row Selection Handler
+  window.selectAlertByIndex = function(idx) {
+    if (idx < 0 || idx >= filteredAlerts.length) return;
+    activeAlertIndex = idx;
+    renderTable();
+    updateDetailPanel();
+  };
+
+  // Update Detail Panel with active alert data
+  function updateDetailPanel() {
+    const alert = filteredAlerts[activeAlertIndex];
+    if (!alert) {
+      if (detailAlertId) detailAlertId.textContent = "No alert selected";
+      if (detailTime) detailTime.textContent = "—";
+      if (detailSeverityBadge) detailSeverityBadge.innerHTML = "—";
+      if (detailSource) detailSource.textContent = "—";
+      if (detailAlertType) detailAlertType.textContent = "—";
+      if (detailSourceIp) detailSourceIp.textContent = "—";
+      if (detailDestIp) detailDestIp.textContent = "—";
+      if (detailPort) detailPort.textContent = "—";
+      if (detailMessage) detailMessage.textContent = allAlerts.length === 0 ? "No active alerts. Alerts will appear here when triggered." : "Select an alert from the table on the left.";
+      if (detailRuleId) detailRuleId.textContent = "—";
+      if (detailStatus) detailStatus.innerHTML = "—";
+      if (detailAssignedTo) detailAssignedTo.textContent = "—";
+      if (detailTags) detailTags.innerHTML = "—";
+      if (detailPrevBtn) detailPrevBtn.disabled = true;
+      if (detailNextBtn) detailNextBtn.disabled = true;
+      return;
+    }
+
+    if (detailAlertId) detailAlertId.textContent = alert.alert_id;
+    if (detailTime) detailTime.textContent = formatTimestamp(alert.timestamp);
+    if (detailSeverityBadge) detailSeverityBadge.innerHTML = getSeverityBadge(alert.severity);
+    if (detailSource) detailSource.textContent = alert.source || "—";
+    if (detailAlertType) detailAlertType.textContent = alert.alert_type || "—";
+    if (detailSourceIp) detailSourceIp.textContent = alert.source_ip || "—";
+    if (detailDestIp) detailDestIp.textContent = alert.destination_ip || "—";
+    if (detailPort) detailPort.textContent = alert.port ? `${alert.port}` : "—";
+    if (detailMessage) detailMessage.textContent = alert.message || "—";
+    if (detailRuleId) detailRuleId.textContent = alert.rule_id || "RULE-1001";
+    if (detailStatus) detailStatus.innerHTML = getStatusBadge(alert.status);
+    if (detailAssignedTo) detailAssignedTo.textContent = alert.assigned_to || "Unassigned";
+
+    // Tags
+    if (detailTags) {
+      const tagsList = Array.isArray(alert.tags) ? alert.tags : [alert.tags || "security"];
+      detailTags.innerHTML = tagsList.map(t => `<span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] rounded font-medium">${t}</span>`).join(" ");
+    }
+
+    // Prev / Next button states
+    if (detailPrevBtn) detailPrevBtn.disabled = (activeAlertIndex <= 0);
+    if (detailNextBtn) detailNextBtn.disabled = (activeAlertIndex >= filteredAlerts.length - 1);
+  }
+
+  // Prev / Next Button Actions
+  if (detailPrevBtn) {
+    detailPrevBtn.addEventListener("click", () => {
+      if (activeAlertIndex > 0) {
+        activeAlertIndex--;
+        renderTable();
+        updateDetailPanel();
+      }
+    });
+  }
+
+  if (detailNextBtn) {
+    detailNextBtn.addEventListener("click", () => {
+      if (activeAlertIndex < filteredAlerts.length - 1) {
+        activeAlertIndex++;
+        renderTable();
+        updateDetailPanel();
+      }
+    });
+  }
+
+  // Copy helper
+  function setupCopyButton(btn, textGetter) {
+    if (!btn) return;
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const txt = textGetter();
+      if (!txt || txt === "—") return;
+      navigator.clipboard.writeText(txt).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<span class="text-emerald-500 font-bold text-[10px]">Copied!</span>`;
+        setTimeout(() => btn.innerHTML = orig, 1500);
+      });
+    });
+  }
+
+  setupCopyButton(detailCopyAlertIdBtn, () => detailAlertId ? detailAlertId.textContent : "");
+  setupCopyButton(detailCopySourceIpBtn, () => detailSourceIp ? detailSourceIp.textContent : "");
+  setupCopyButton(detailCopyDestIpBtn, () => detailDestIp ? detailDestIp.textContent : "");
+
+  // Status Update Actions
+  async function updateActiveAlertStatus(newStatus) {
+    const alert = filteredAlerts[activeAlertIndex];
+    if (!alert) return;
+
+    try {
+      const res = await fetch(`${API_BASE}/alerts/${alert.alert_id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      
+      alert.status = newStatus;
+      // also update in allAlerts
+      const orig = allAlerts.find(a => a.alert_id === alert.alert_id);
+      if (orig) orig.status = newStatus;
+
+      updateDetailPanel();
+      renderTable();
+    } catch (e) {
+      alert("Failed to update alert: " + e.message);
+    }
+  }
+
+  if (btnInvestigateAlert) {
+    btnInvestigateAlert.addEventListener("click", () => updateActiveAlertStatus("Investigating"));
+  }
+
+  if (btnResolveAlert) {
+    btnResolveAlert.addEventListener("click", () => updateActiveAlertStatus("Resolved"));
+  }
+
+  if (detailAssignBtn) {
+    detailAssignBtn.addEventListener("click", async () => {
+      const alert = filteredAlerts[activeAlertIndex];
+      if (!alert) return;
+      const user = "Administrator";
+      try {
+        await fetch(`${API_BASE}/alerts/${alert.alert_id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ assigned_to: user })
+        });
+        alert.assigned_to = user;
+        const orig = allAlerts.find(a => a.alert_id === alert.alert_id);
+        if (orig) orig.assigned_to = user;
+        updateDetailPanel();
+      } catch (e) {
+        alert("Failed to assign: " + e.message);
+      }
+    });
+  }
+
+  // View in Logs -> Jump to Event Viewer
+  if (btnViewInLogsAlert) {
+    btnViewInLogsAlert.addEventListener("click", () => {
+      const alert = filteredAlerts[activeAlertIndex];
+      if (alert && alert.event_id) {
+        window.location.href = `../arc_07_event_viewer/code.html?event_id=${encodeURIComponent(alert.event_id)}`;
+      } else {
+        window.location.href = `../arc_07_event_viewer/code.html`;
+      }
+    });
+  }
+
+  // Export Filtered Alerts as JSON
+  if (btnExportAlerts) {
+    btnExportAlerts.addEventListener("click", () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(filteredAlerts, null, 2));
+      const dl = document.createElement("a");
+      dl.setAttribute("href", dataStr);
+      dl.setAttribute("download", `alerts_export_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(dl);
+      dl.click();
+      dl.remove();
+    });
+  }
+
+  // Filter Event Listeners
+  if (btnApplyFilter) btnApplyFilter.addEventListener("click", applyFilters);
+  if (btnResetFilter) btnResetFilter.addEventListener("click", resetFilters);
+  if (filterSeverity) filterSeverity.addEventListener("change", applyFilters);
+  if (filterSource) filterSource.addEventListener("change", applyFilters);
+  if (filterAlertType) filterAlertType.addEventListener("change", applyFilters);
+  if (filterSearch) filterSearch.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") applyFilters();
+  });
+
+  if (alertsRowsPerPageSelect) {
+    alertsRowsPerPageSelect.addEventListener("change", (e) => {
+      pageSize = e.target.value === "All" ? "All" : parseInt(e.target.value, 10);
+      currentPage = 1;
+      renderTable();
+    });
+  }
+
+  // Navigation Links Fix
+  const navMap = {
+    "Dashboard": "../arc_01_dashboard/code.html",
+    "Log Ingestion": "../arc_02_log_ingestion/code.html",
+    "Source Management": "../arc_03_source_management/code.html",
+    "Format Detection": "../arc_04_format_detection/code.html",
+    "Parser Registry": "../arc_05_parser_registry/code.html",
+    "Normalization / Schema": "../arc_06_normalization_schema/code.html",
+    "Event Viewer": "../arc_07_event_viewer/code.html",
+    "AI Assistant": "../arc_08_ai_assistant/code.html",
+    "Quarantine": "../arc_09_quarantine/code.html",
+    "Analytics": "../arc_10_analytics/code.html",
+    "Audit Logs": "../arc_11_audit_logs/code.html",
+    "Alerts": "../arc_12_alerts/code.html",
+    "Settings": "../arc_13_settings/code.html",
+    "Documentation": "../arc_14_documentation/code.html"
+  };
+
+  document.querySelectorAll('a[href="#"], a[href=""]').forEach(a => {
+    const txt = (a.querySelector('span')?.textContent || a.textContent).trim();
+    if (navMap[txt]) a.href = navMap[txt];
+  });
+
+  document.addEventListener("DOMContentLoaded", fetchAlerts);
+})();
+</script>
+</body>
+</html>

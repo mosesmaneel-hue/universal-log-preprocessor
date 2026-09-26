@@ -1,0 +1,1115 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ARC - Format Detection</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- FontAwesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0B132B',
+              dark: '#070D1F',
+              accent: '#FF5722',
+              blue: '#0D6EFD',
+              lightBg: '#F3F6F9',
+              sidebarText: '#94A3B8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+<style data-purpose="toggle-switch">
+    /* Custom Toggle Switch styling */
+    .switch input:checked ~ .slider {
+      background-color: #0D6EFD;
+    }
+    .switch input:checked ~ .slider:before {
+      transform: translateX(14px);
+    }
+    .slider {
+      transition: .2s;
+    }
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 12px;
+      width: 12px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      border-radius: 50%;
+      transition: .2s;
+    }
+  </style>
+<!-- END: Custom Styles -->
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-[#F4F6F9] text-slate-800 font-sans antialiased flex h-screen overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-white"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- BEGIN: GlobalHeader -->
+<header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0">
+<!-- Title & Slogan -->
+<div>
+<h1 class="text-base font-bold text-slate-800 leading-tight">Universal Log Pre-Processing Framework</h1>
+<p class="text-xs text-slate-500">Learn Once. Process Forever.</p>
+</div>
+<!-- Search & Status & Profile -->
+<div class="flex items-center gap-4">
+<!-- Global Search Bar -->
+<div class="relative w-80">
+<i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+<input class="w-full bg-[#F8FAFC] border border-slate-200 rounded-lg pl-9 pr-3 py-1.5 text-xs focus:ring-1 focus:ring-blue-500 focus:bg-white text-slate-700" placeholder="Search logs, sources, formats..." type="text">
+</div>
+<!-- Health Indicator -->
+<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1.5 rounded-lg">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<div class="text-[11px] leading-tight">
+<span class="font-bold text-emerald-800 block">System Healthy</span>
+<span class="text-emerald-600 text-[10px]">All services operational</span>
+</div>
+</div>
+<!-- Notification Bell -->
+<div class="relative cursor-pointer p-1">
+<i class="fa-regular fa-bell text-slate-600 text-base"></i>
+<span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+</div>
+<!-- User Profile Pill -->
+<div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-[#070D1F] text-white flex items-center justify-center text-xs font-bold">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-700">Administrator</span>
+<i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+</div>
+</div>
+</header>
+<!-- END: GlobalHeader -->
+<!-- Scrollable Workspace -->
+<main class="flex-1 overflow-y-auto p-6 space-y-5">
+<!-- BEGIN: PageTitleArea -->
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 text-xs text-slate-500 mb-1">
+<span class="">Dashboard</span>
+<i class="fa-solid fa-chevron-right text-[9px] text-slate-400"></i>
+<span class="font-medium text-slate-700">Format Detection</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900">Format Detection</h2>
+<p class="text-xs text-slate-500 mt-0.5">Automatically detect log formats from ingested data using pattern analysis and AI-assisted classification.</p>
+</div>
+<!-- Live Data Notice Badge -->
+<div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800">
+  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+  <div>
+    <p class="text-[10px] font-bold text-emerald-900 leading-tight">Detection Engine Active</p>
+    <p class="text-[8px] text-emerald-600 leading-none">FastAPI /api/v1/stats</p>
+  </div>
+</div>
+</div>
+<!-- END: PageTitleArea -->
+<!-- BEGIN: StatCardsSection -->
+<section class="grid grid-cols-5 gap-4" data-purpose="kpi-metrics">
+<!-- 1. Total Analyzed -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500">Total Analyzed</span>
+<div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center text-sm shadow-sm">
+<i class="fa-regular fa-file-lines"></i>
+</div>
+</div>
+<div class="mt-2">
+<span id="kpiTotalAnalyzed" class="text-xl font-bold text-slate-900">—</span>
+<span class="block text-[11px] text-slate-400 mt-1">Live SQLite database</span>
+</div>
+</div>
+<!-- 2. Known Formats -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500">Known Formats</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-sm shadow-sm">
+<i class="fa-solid fa-check"></i>
+</div>
+</div>
+<div class="mt-2">
+<span id="kpiKnownFormats" class="text-xl font-bold text-slate-900">—</span>
+<span class="block text-[11px] text-slate-400 mt-1">Successfully parsed</span>
+</div>
+</div>
+<!-- 3. Unknown Formats -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500">Unknown Formats</span>
+<div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shadow-sm">
+<i class="fa-solid fa-magnifying-glass"></i>
+</div>
+</div>
+<div class="mt-2">
+<span id="kpiUnknownFormats" class="text-xl font-bold text-slate-900">—</span>
+<span class="block text-[11px] text-slate-400 mt-1">Quarantined records</span>
+</div>
+</div>
+<!-- 4. Auto-Detected -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500">Auto-Detected</span>
+<div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center text-sm shadow-sm">
+<i class="fa-solid fa-network-wired"></i>
+</div>
+</div>
+<div class="mt-2">
+<span class="text-xl font-bold text-slate-900">1,231,890</span>
+<span class="block text-[11px] text-slate-400">98.7%</span>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
+<i class="fa-solid fa-arrow-up text-[9px]"></i>
+<span class="">+1.1%</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+<!-- 5. Detection Failures -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500">Detection Failures</span>
+<div class="w-8 h-8 rounded-lg bg-red-500 text-white flex items-center justify-center text-sm shadow-sm">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+</div>
+<div class="mt-2">
+<span class="text-xl font-bold text-slate-900">1,204</span>
+<span class="block text-[11px] text-slate-400">0.1%</span>
+<div class="flex items-center gap-1 text-[11px] font-semibold text-red-600 mt-1">
+<i class="fa-solid fa-arrow-up text-[9px]"></i>
+<span class="">+18%</span>
+<span class="text-slate-400 font-normal ml-0.5">vs. last 24h</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: StatCardsSection -->
+<!-- BEGIN: MiddleContentGrid -->
+<div class="grid grid-cols-12 gap-5">
+<!-- Left Column: Tabs + Upload Zone & Config -->
+<div class="col-span-8 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+<!-- Top Card Tabs -->
+<div class="flex items-center border-b border-slate-200 px-5 pt-3 gap-6 text-xs font-semibold">
+<button class="flex items-center gap-2 pb-3 border-b-2 border-[#FF5722] text-[#FF5722]">
+<i class="fa-regular fa-file-code"></i>
+<span class="">Analyze Log Sample</span>
+</button>
+<button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700">
+<i class="fa-solid fa-layer-group"></i>
+<span class="">Batch Analysis</span>
+</button>
+<button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700">
+<i class="fa-solid fa-code-fork"></i>
+<span class="">Detection Rules</span>
+</button>
+</div>
+<!-- Tab Content Area -->
+<div class="p-5 grid grid-cols-12 gap-5 items-stretch flex-1">
+          <!-- Upload Box (Left Sub-column) -->
+          <div id="dropZone" class="col-span-7 border-2 border-dashed border-sky-200 bg-sky-50/40 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors hover:bg-sky-50/70">
+            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-sky-600 text-2xl mb-3 pointer-events-none">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800" id="uploadHeading">Upload a log file or paste log data</h4>
+            <p class="text-[11px] text-slate-400 mt-1 mb-4" id="uploadSubtext">Supports .log, .txt, .json, .csv, .xml, .evtx and more (Max 10 MB)</p>
+            
+            <!-- Real Hidden File Input to trigger Windows File Selector -->
+            <input type="file" id="formatFileInput" accept=".log,.txt,.json,.csv,.xml,.evtx,.gz,.zip" class="hidden">
+            
+            <div class="flex items-center gap-3">
+              <button type="button" id="chooseFileBtn" class="bg-[#FF5722] hover:bg-[#E64A19] text-white px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 shadow-sm transition-colors cursor-pointer">
+                <i class="fa-regular fa-folder-open"></i>
+                <span id="chooseFileBtnText">Choose File</span>
+              </button>
+              <button type="button" id="pasteLogBtn" class="border border-blue-400 text-blue-600 hover:bg-blue-50 px-4 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer">
+                Paste Log Data
+              </button>
+            </div>
+
+            <!-- Paste Input Modal/Dropdown -->
+            <div id="pasteContainer" class="w-full mt-3 hidden text-left" onclick="event.stopPropagation()">
+              <textarea id="pasteTextarea" class="w-full h-24 p-2.5 text-[11px] font-mono border border-slate-300 rounded-lg bg-white placeholder-slate-400 focus:ring-1 focus:ring-blue-500 focus:outline-none" placeholder="Paste your raw log line or event text here..."></textarea>
+              <div class="flex justify-end gap-2 mt-1.5">
+                <button type="button" id="cancelPasteBtn" class="text-[11px] text-slate-500 hover:text-slate-700 px-2 py-0.5">Cancel</button>
+                <button type="button" id="confirmPasteBtn" class="text-[11px] bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded shadow-xs">Use Pasted Log</button>
+              </div>
+            </div>
+          </div>
+          <!-- Detection Options (Right Sub-column) -->
+          <div class="col-span-5 flex flex-col justify-between pl-2">
+            <div class="space-y-3">
+              <h5 class="text-xs font-bold text-slate-800">Detection Options</h5>
+              <!-- Detection Mode Dropdown -->
+              <div>
+                <label class="block text-[11px] text-slate-500 mb-1">Detection Mode</label>
+                <select id="detectionMode" class="w-full text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg py-1.5 px-2.5 focus:ring-1 focus:ring-blue-500">
+                  <option value="auto">Automatic (Recommended)</option>
+                  <option value="heuristic">Heuristic Pattern Matching</option>
+                  <option value="ai">AI Model Classification</option>
+                </select>
+                <p class="text-[10px] text-slate-400 mt-0.5">Uses pattern matching + ML for best accuracy</p>
+              </div>
+              <!-- Confidence Threshold Slider -->
+              <div>
+                <div class="flex justify-between items-center text-[11px] mb-1">
+                  <label class="text-slate-500">Confidence Threshold</label>
+                  <span id="confidenceThresholdVal" class="border border-slate-200 rounded px-1.5 py-0.5 font-bold text-[10px] text-slate-600">70%</span>
+                </div>
+                <input id="confidenceSlider" class="w-full accent-blue-600 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer" max="100" min="0" type="range" value="70">
+                <div class="flex justify-between text-[9px] text-slate-400 mt-0.5">
+                  <span>0%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+              <!-- Toggle Options -->
+              <div class="space-y-2 pt-1">
+                <!-- Toggle 1 -->
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <label class="switch relative inline-block w-7 h-4 shrink-0">
+                    <input checked="" class="opacity-0 w-0 h-0" type="checkbox">
+                    <span class="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-slate-300 rounded-full"></span>
+                  </label>
+                  <span class="text-[11px] text-slate-600">Identify custom formats</span>
+                </label>
+                <!-- Toggle 2 -->
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <label class="switch relative inline-block w-7 h-4 shrink-0">
+                    <input checked="" class="opacity-0 w-0 h-0" type="checkbox">
+                    <span class="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-slate-300 rounded-full"></span>
+                  </label>
+                  <span class="text-[11px] text-slate-600">Show detailed analysis</span>
+                </label>
+                <!-- Toggle 3 -->
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <label class="switch relative inline-block w-7 h-4 shrink-0">
+                    <input checked="" class="opacity-0 w-0 h-0" type="checkbox">
+                    <span class="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-slate-300 rounded-full"></span>
+                  </label>
+                  <span class="text-[11px] text-slate-600">Save to detection history</span>
+                </label>
+              </div>
+            </div>
+            <!-- Action Button -->
+            <button type="button" id="analyzeLogBtn" class="w-full bg-[#0D6EFD] hover:bg-blue-600 text-white font-semibold py-2 rounded-lg text-xs mt-3 shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+              <span>Analyze Log</span>
+            </button>
+          </div>
+</div>
+</div>
+<!-- Right Column: Format Distribution Donut Chart Card -->
+<div class="col-span-4 bg-white rounded-xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between">
+<h3 class="text-xs font-bold text-slate-800">Format Distribution</h3>
+<div class="flex items-center justify-between my-auto py-2">
+<!-- Donut Chart Canvas/SVG -->
+<div class="relative w-36 h-36 flex items-center justify-center shrink-0">
+<svg id="fmtDonutSvg" class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+<!-- SVG Conic Ring Simulation -->
+<!-- Syslog 28% (#0D6EFD) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#0D6EFD" stroke-dasharray="28 72" stroke-dashoffset="0" stroke-width="5"></circle>
+<!-- JSON 24% (#10B981) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#10B981" stroke-dasharray="24 76" stroke-dashoffset="-28" stroke-width="5"></circle>
+<!-- CSV 15% (#F97316) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#F97316" stroke-dasharray="15 85" stroke-dashoffset="-52" stroke-width="5"></circle>
+<!-- CEF 12% (#EC4899) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#EC4899" stroke-dasharray="12 88" stroke-dashoffset="-67" stroke-width="5"></circle>
+<!-- LEEF 8% (#38BDF8) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#38BDF8" stroke-dasharray="8 92" stroke-dashoffset="-79" stroke-width="5"></circle>
+<!-- XML 6% (#FCA5A5) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#FCA5A5" stroke-dasharray="6 94" stroke-dashoffset="-87" stroke-width="5"></circle>
+<!-- Custom 5% (#64748B) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#64748B" stroke-dasharray="5 95" stroke-dashoffset="-93" stroke-width="5"></circle>
+<!-- Others 2% (#94A3B8) -->
+<circle cx="18" cy="18" fill="none" r="14" stroke="#94A3B8" stroke-dasharray="2 98" stroke-dashoffset="-98" stroke-width="5"></circle>
+</svg>
+<!-- Center Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span id="fmtDonutTotal" class="text-sm font-extrabold text-slate-900 leading-tight">—</span>
+<span class="text-[10px] text-slate-500 font-medium">Logs</span>
+</div>
+</div>
+<!-- Legend List -->
+<div id="fmtDonutLegend" class="space-y-1.5 text-[11px] font-medium pl-4 flex-1">
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#0D6EFD]"></span>Syslog</span>
+<span class="text-slate-600 font-semibold">28%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#10B981]"></span>JSON</span>
+<span class="text-slate-600 font-semibold">24%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#F97316]"></span>CSV</span>
+<span class="text-slate-600 font-semibold">15%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#EC4899]"></span>CEF</span>
+<span class="text-slate-600 font-semibold">12%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#38BDF8]"></span>LEEF</span>
+<span class="text-slate-600 font-semibold">8%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#FCA5A5]"></span>XML</span>
+<span class="text-slate-600 font-semibold">6%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#64748B]"></span>Custom</span>
+<span class="text-slate-600 font-semibold">5%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#94A3B8]"></span>Others</span>
+<span class="text-slate-600 font-semibold">2%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: MiddleContentGrid -->
+<!-- BEGIN: LowerGrid (Table & Log Preview) -->
+<div class="grid grid-cols-12 gap-5">
+<!-- Left Table: Detection Results -->
+<div class="col-span-8 bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
+<div>
+<!-- Table Header Bar -->
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-xs font-bold text-slate-800">Detection Results</h3>
+<div class="flex items-center gap-2">
+<!-- Search -->
+<div class="relative w-36">
+<i class="fa-solid fa-magnifying-glass absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
+<input class="w-full bg-[#F8FAFC] border border-slate-200 rounded-md pl-6 pr-2 py-1 text-[11px] text-slate-600" placeholder="Search results..." type="text">
+</div>
+<!-- Format Filter -->
+<select class="bg-[#F8FAFC] border border-slate-200 rounded-md text-[11px] py-1 px-2 text-slate-600">
+<option>All Formats</option>
+<option>Syslog</option>
+<option>JSON</option>
+</select>
+<!-- Status Filter -->
+<select class="bg-[#F8FAFC] border border-slate-200 rounded-md text-[11px] py-1 px-2 text-slate-600">
+<option>All Status</option>
+<option>Known</option>
+<option>Unknown</option>
+</select>
+<!-- Export Button -->
+<button class="border border-slate-200 hover:bg-slate-50 text-slate-600 px-2.5 py-1 rounded-md text-[11px] font-medium flex items-center gap-1">
+<i class="fa-solid fa-arrow-down-to-line text-[10px] text-blue-600"></i>
+<span class="">Export</span>
+</button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-[11px] border-collapse">
+<thead>
+<tr class="border-b border-slate-200 text-slate-400 font-semibold">
+<th class="py-2 px-1 font-medium">#</th>
+<th class="py-2 px-2 font-medium">Source</th>
+<th class="py-2 px-2 font-medium">Detected Format</th>
+<th class="py-2 px-2 font-medium">Confidence</th>
+<th class="py-2 px-2 font-medium">Status</th>
+<th class="py-2 px-2 font-medium">Sample Pattern</th>
+<th class="py-2 px-2 font-medium">Detected At</th>
+<th class="py-2 px-2 text-center font-medium">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">1</td>
+<td class="py-2 px-2 font-medium">Firewall-01</td>
+<td class="py-2 px-2 text-blue-600 font-medium">Syslog (RFC 3164)</td>
+<td class="py-2 px-2">99%</td>
+<td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">&lt;PRI&gt;Oct 12 10:22:01 ...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:24</td>
+<td class="py-2 px-2 text-center text-slate-400">
+<button class="hover:text-slate-600 mx-1"><i class="fa-regular fa-eye"></i></button>
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-ellipsis"></i></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">2</td>
+<td class="py-2 px-2 font-medium">App-Server</td>
+<td class="py-2 px-2 font-medium">JSON</td>
+<td class="py-2 px-2">98%</td>
+<td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">{ "timestamp": "2026-...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:22</td>
+<td class="py-2 px-2 text-center text-slate-400">
+<button class="hover:text-slate-600 mx-1"><i class="fa-regular fa-eye"></i></button>
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-ellipsis"></i></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">3</td>
+<td class="py-2 px-2 font-medium">VPN-Gateway</td>
+<td class="py-2 px-2 font-medium">CEF</td>
+<td class="py-2 px-2">97%</td>
+<td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">CEF:0|Cisco|ASA|9.1|...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:20</td>
+<td class="py-2 px-2 text-center text-slate-400">
+<button class="hover:text-slate-600 mx-1"><i class="fa-regular fa-eye"></i></button>
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-ellipsis"></i></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">4</td>
+<td class="py-2 px-2 font-medium">Web-Server</td>
+<td class="py-2 px-2 font-medium">Nginx (Custom)</td>
+<td class="py-2 px-2">92%</td>
+<td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">192.168.1.10 - - [22/S...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:18</td>
+<td class="py-2 px-2 text-center text-slate-400">
+<button class="hover:text-slate-600 mx-1"><i class="fa-regular fa-eye"></i></button>
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-ellipsis"></i></button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">5</td>
+<td class="py-2 px-2 font-medium">DB-Server</td>
+<td class="py-2 px-2 font-medium">CSV</td>
+<td class="py-2 px-2">95%</td>
+<td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">2026-09-22,10:20:15,...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:16</td>
+<td class="py-2 px-2 text-center text-slate-400">
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-pen text-[10px]"></i></button>
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-ellipsis"></i></button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">6</td>
+<td class="py-2 px-2 font-medium">IoT-Gateway</td>
+<td class="py-2 px-2 font-medium">Unknown</td>
+<td class="py-2 px-2">65%</td>
+<td class="py-2 px-2"><span class="bg-amber-50 text-amber-600 border border-amber-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Unknown</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">&lt;sensor&gt; temp=25.4 ...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:14</td>
+<td class="py-2 px-2 text-center">
+<button class="bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 px-2 py-0.5 rounded text-[10px] font-semibold">Review</button>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">7</td>
+<td class="py-2 px-2 font-medium">Windows-AD</td>
+<td class="py-2 px-2 font-medium">EVTX (Custom)</td>
+<td class="py-2 px-2">90%</td>
+<td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">&lt;Event xmlns="http://...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:12</td>
+<td class="py-2 px-2 text-center text-slate-400">
+<button class="hover:text-slate-600 mx-1"><i class="fa-regular fa-eye"></i></button>
+<button class="hover:text-slate-600 mx-1"><i class="fa-solid fa-ellipsis"></i></button>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-slate-50/60">
+<td class="py-2 px-1 text-slate-400">8</td>
+<td class="py-2 px-2 font-medium">Test-Source</td>
+<td class="py-2 px-2 font-medium">Unknown</td>
+<td class="py-2 px-2">60%</td>
+<td class="py-2 px-2"><span class="bg-amber-50 text-amber-600 border border-amber-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Unknown</span></td>
+<td class="py-2 px-2 font-mono text-slate-400 text-[10px]">random log line ...</td>
+<td class="py-2 px-2 text-slate-500">22 Sep 2026, 18:10</td>
+<td class="py-2 px-2 text-center">
+<button class="bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 px-2 py-0.5 rounded text-[10px] font-semibold">Review</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+      <!-- Right Card: Sample Log Preview & Detection Analysis -->
+      <div class="col-span-4 bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-col space-y-3.5">
+        <!-- Card Header -->
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-slate-800">Sample Log Preview</h3>
+          <div class="flex items-center border border-slate-200 rounded overflow-hidden text-[10px] font-medium">
+            <button id="previewRawTab" class="bg-blue-600 text-white px-2 py-0.5 font-semibold">Raw</button>
+            <button id="previewParsedTab" class="bg-white text-slate-600 px-2 py-0.5 hover:bg-slate-50">Parsed</button>
+          </div>
+        </div>
+        <!-- Dark Code Editor Mock -->
+        <div class="relative bg-[#0F172A] text-slate-200 p-3 rounded-lg font-mono text-[10px] leading-relaxed overflow-x-auto select-all max-h-56">
+          <button id="copyPreviewBtn" class="absolute top-2 right-2 text-slate-400 hover:text-white" title="Copy Preview">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+          <pre id="previewLogContent" class="text-slate-200 whitespace-pre-wrap text-[9.5px] leading-relaxed">Select a file or paste a log above to detect its format.</pre>
+        </div>
+
+        <!-- Detection Analysis Sub-box -->
+        <div class="border-t border-slate-100 pt-3">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-bold text-slate-800">Detection Analysis</h4>
+            <span id="detConfidenceBadge" class="bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded-full text-[10px] font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-clock text-[9px]"></i> Awaiting Input
+            </span>
+          </div>
+          <!-- Details -->
+          <div class="text-[11px] space-y-1.5">
+            <div class="flex justify-between border-b border-slate-50 pb-0.5">
+              <span class="text-slate-400">Format:</span>
+              <span id="detFormatVal" class="font-bold text-blue-600">—</span>
+            </div>
+            <div class="flex justify-between border-b border-slate-50 pb-0.5">
+              <span class="text-slate-400">Confidence:</span>
+              <span id="detConfidenceVal" class="font-semibold text-slate-700">—</span>
+            </div>
+            <div class="flex justify-between border-b border-slate-50 pb-0.5">
+              <span class="text-slate-400">Method:</span>
+              <span id="detMethodVal" class="text-slate-600 font-mono text-[10px]">—</span>
+            </div>
+            <div class="pt-1 flex justify-between items-start">
+              <div>
+                <span class="text-slate-700 font-semibold block text-[11px] mb-1">Status:</span>
+                <span id="detStatusBadge" class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">—</span>
+              </div>
+              <!-- Suggested Parser Box -->
+              <div class="flex flex-col items-end shrink-0 pl-2">
+                <span class="text-[10px] text-slate-500 mb-1">Suggested Parser:</span>
+                <div id="detParserVal" class="border border-sky-200 bg-sky-50 text-sky-700 px-2 py-1 rounded text-[10px] font-mono font-medium mb-1.5">
+                  —
+                </div>
+                <a href="../arc_05_parser_registry/code.html" class="text-[10px] text-blue-600 border border-blue-300 hover:bg-blue-50 px-2.5 py-1 rounded flex items-center gap-1 font-semibold transition-colors">
+                  <span>View Registry</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: LowerGrid -->
+
+    <!-- BEGIN: BottomNoticeBanner -->
+    <div class="bg-blue-50 border border-blue-100 rounded-lg p-3 flex items-center justify-between text-xs text-blue-900 shadow-sm">
+      <div class="flex items-center gap-2.5">
+        <div class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-[11px] shrink-0">
+          <i class="fa-solid fa-info"></i>
+        </div>
+        <span>Unknown formats are sent to AI-assisted mapping for human review. After approval, parsers are registered for future use.</span>
+      </div>
+      <a class="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 text-[11px] shrink-0" href="../arc_05_parser_registry/code.html">
+        <span>Learn More</span>
+        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+      </a>
+    </div>
+    <!-- END: BottomNoticeBanner -->
+  </main>
+  <!-- END: Scrollable Workspace -->
+</div>
+<!-- END: MainContentArea -->
+
+<script>
+// ============================================================
+// FORMAT DETECTION — File Selector & Live Backend Integration
+// ============================================================
+(function() {
+  "use strict";
+  const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+
+  let activeContent = "";
+  let activeSourceName = "";
+  let lastDetectionResult = null;
+  let previewMode = "raw"; // "raw" | "parsed"
+
+  // DOM Elements
+  const dropZone              = document.getElementById("dropZone");
+  const fileInput             = document.getElementById("formatFileInput");
+  const chooseFileBtn         = document.getElementById("chooseFileBtn");
+  const chooseFileBtnText     = document.getElementById("chooseFileBtnText");
+  const uploadHeading         = document.getElementById("uploadHeading");
+  const uploadSubtext         = document.getElementById("uploadSubtext");
+  const pasteLogBtn           = document.getElementById("pasteLogBtn");
+  const pasteContainer        = document.getElementById("pasteContainer");
+  const pasteTextarea         = document.getElementById("pasteTextarea");
+  const cancelPasteBtn        = document.getElementById("cancelPasteBtn");
+  const confirmPasteBtn       = document.getElementById("confirmPasteBtn");
+  const analyzeLogBtn         = document.getElementById("analyzeLogBtn");
+  const confidenceSlider      = document.getElementById("confidenceSlider");
+  const confidenceThresholdVal= document.getElementById("confidenceThresholdVal");
+
+  const previewLogContent     = document.getElementById("previewLogContent");
+  const copyPreviewBtn        = document.getElementById("copyPreviewBtn");
+  const previewRawTab         = document.getElementById("previewRawTab");
+  const previewParsedTab      = document.getElementById("previewParsedTab");
+
+  const detConfidenceBadge    = document.getElementById("detConfidenceBadge");
+  const detFormatVal          = document.getElementById("detFormatVal");
+  const detConfidenceVal      = document.getElementById("detConfidenceVal");
+  const detMethodVal          = document.getElementById("detMethodVal");
+  const detStatusBadge        = document.getElementById("detStatusBadge");
+  const detParserVal          = document.getElementById("detParserVal");
+
+  // 1. Trigger Windows File Selector Dialog
+  if (chooseFileBtn && fileInput) {
+    chooseFileBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      fileInput.click();
+    });
+  }
+
+  // Also click on dropZone triggers fileInput (unless paste area was clicked)
+  if (dropZone && fileInput) {
+    dropZone.addEventListener("click", (e) => {
+      if (pasteContainer && (pasteContainer.contains(e.target) || e.target === pasteContainer)) return;
+      if (e.target === pasteLogBtn) return;
+      fileInput.click();
+    });
+  }
+
+  // 2. Drag & Drop Support
+  if (dropZone) {
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("bg-sky-100/70", "border-sky-400");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("bg-sky-100/70", "border-sky-400");
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("bg-sky-100/70", "border-sky-400");
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+  }
+
+  // 3. File Input Change Handler
+  if (fileInput) {
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+  }
+
+  async function handleFileSelect(file) {
+    if (!file) return;
+    try {
+      activeSourceName = file.name;
+      const text = await file.text();
+      activeContent = text;
+
+      // Update UI labels
+      if (chooseFileBtnText) chooseFileBtnText.textContent = "📄 " + file.name;
+      if (uploadHeading) uploadHeading.textContent = file.name;
+      if (uploadSubtext) {
+        uploadSubtext.textContent = `${(file.size / 1024).toFixed(1)} KB loaded • Ready for format detection`;
+      }
+      if (previewLogContent) {
+        previewLogContent.textContent = text.substring(0, 1500) + (text.length > 1500 ? "\n... (truncated for preview)" : "");
+      }
+
+      // Automatically trigger detection
+      await executeDetection(text, file.name);
+    } catch (err) {
+      console.error("Error reading log file:", err);
+      alert("Failed to read file: " + err.message);
+    }
+  }
+
+  // 4. Paste Log Functionality
+  if (pasteLogBtn && pasteContainer) {
+    pasteLogBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pasteContainer.classList.toggle("hidden");
+      if (!pasteContainer.classList.contains("hidden") && pasteTextarea) {
+        pasteTextarea.focus();
+      }
+    });
+  }
+
+  if (cancelPasteBtn && pasteContainer) {
+    cancelPasteBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pasteContainer.classList.add("hidden");
+    });
+  }
+
+  if (confirmPasteBtn && pasteTextarea) {
+    confirmPasteBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const text = pasteTextarea.value.trim();
+      if (!text) {
+        alert("Please enter or paste log text first.");
+        return;
+      }
+      activeContent = text;
+      activeSourceName = "Pasted Sample";
+      if (uploadHeading) uploadHeading.textContent = "Pasted Log Content";
+      if (uploadSubtext) uploadSubtext.textContent = `${text.length} characters • Ready for format detection`;
+      if (pasteContainer) pasteContainer.classList.add("hidden");
+      await executeDetection(text, "Pasted Sample");
+    });
+  }
+
+  // 5. Slider update
+  if (confidenceSlider && confidenceThresholdVal) {
+    confidenceSlider.addEventListener("input", (e) => {
+      confidenceThresholdVal.textContent = e.target.value + "%";
+    });
+  }
+
+  // 6. Analyze Log Button Click
+  if (analyzeLogBtn) {
+    analyzeLogBtn.addEventListener("click", async () => {
+      if (!activeContent.trim()) {
+        if (pasteTextarea && pasteTextarea.value.trim()) {
+          activeContent = pasteTextarea.value.trim();
+          activeSourceName = "Pasted Sample";
+        } else {
+          alert("Please choose a log file or paste log data first.");
+          return;
+        }
+      }
+      await executeDetection(activeContent, activeSourceName || "Sample Log");
+    });
+  }
+
+  // 7. Core Detection API Call
+  async function executeDetection(rawText, sourceName) {
+    if (!rawText.trim()) return;
+
+    if (analyzeLogBtn) {
+      analyzeLogBtn.disabled = true;
+      analyzeLogBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i> <span>Detecting Format…</span>';
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/process`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ raw_log: rawText })
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      lastDetectionResult = data;
+
+      const det = data.detection || {};
+      const norm = data.normalized || {};
+      const format = det.format || "UNKNOWN";
+      const confidence = det.confidence ? Math.round(det.confidence * 100) : (format !== "UNKNOWN" ? 95 : 50);
+      const parser = norm.parser || data.parsed?.parser || (format !== "UNKNOWN" ? `${format.toLowerCase()}_parser` : "unknown_parser");
+
+      // Update Sample Log Preview Card
+      if (previewLogContent) {
+        if (previewMode === "parsed" && data.parsed) {
+          previewLogContent.textContent = JSON.stringify(data.parsed, null, 2);
+        } else {
+          previewLogContent.textContent = rawText.substring(0, 1500) + (rawText.length > 1500 ? "\n... (truncated)" : "");
+        }
+      }
+
+      // Update Detection Analysis Card
+      if (detFormatVal) detFormatVal.textContent = format;
+      if (detConfidenceVal) detConfidenceVal.textContent = confidence + "%";
+      if (detMethodVal) detMethodVal.textContent = det.method || "Heuristic Pattern Matching";
+      if (detParserVal) detParserVal.textContent = parser;
+
+      if (detConfidenceBadge) {
+        if (confidence >= 80) {
+          detConfidenceBadge.className = "bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-semibold flex items-center gap-1";
+          detConfidenceBadge.innerHTML = '<i class="fa-solid fa-check text-[9px]"></i> High Confidence';
+        } else if (confidence >= 60) {
+          detConfidenceBadge.className = "bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full text-[10px] font-semibold flex items-center gap-1";
+          detConfidenceBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-[9px]"></i> Medium Confidence';
+        } else {
+          detConfidenceBadge.className = "bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full text-[10px] font-semibold flex items-center gap-1";
+          detConfidenceBadge.innerHTML = '<i class="fa-solid fa-circle-xmark text-[9px]"></i> Low Confidence';
+        }
+      }
+
+      if (detStatusBadge) {
+        const isKnown = format !== "UNKNOWN";
+        detStatusBadge.className = isKnown
+          ? "bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded text-[10px] font-semibold"
+          : "bg-amber-50 text-amber-600 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-semibold";
+        detStatusBadge.textContent = isKnown ? "Known" : "Unknown";
+      }
+
+      // Prepend to Detection Results table
+      prependResultRow(sourceName, format, confidence, rawText);
+
+      // Refresh Stats
+      loadFormatDetectionData();
+    } catch (err) {
+      console.error("Format detection failed:", err);
+      alert("Format detection error: " + err.message);
+    } finally {
+      if (analyzeLogBtn) {
+        analyzeLogBtn.disabled = false;
+        analyzeLogBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles text-xs"></i> <span>Analyze Log</span>';
+      }
+    }
+  }
+
+  // 8. Prepend a new record to the detection results table
+  function prependResultRow(source, format, confidence, raw) {
+    const tbody = document.querySelector("table tbody");
+    if (!tbody) return;
+
+    const tr = document.createElement("tr");
+    tr.className = "hover:bg-blue-50/50 bg-blue-50/20 transition-colors";
+    const snippet = raw.substring(0, 35).replace(/</g, "&lt;").replace(/>/g, "&gt;") + "…";
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    tr.innerHTML = `
+      <td class="py-2 px-1 text-blue-600 font-bold">NEW</td>
+      <td class="py-2 px-2 font-semibold text-slate-800">${source}</td>
+      <td class="py-2 px-2 text-blue-600 font-semibold">${format}</td>
+      <td class="py-2 px-2 font-medium">${confidence}%</td>
+      <td class="py-2 px-2"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-semibold">Known</span></td>
+      <td class="py-2 px-2 font-mono text-slate-500 text-[10px]">${snippet}</td>
+      <td class="py-2 px-2 text-slate-500">${now}</td>
+      <td class="py-2 px-2 text-center">
+        <a href="../arc_07_event_viewer/code.html" class="text-blue-600 hover:text-blue-800 text-[10px] font-semibold">View</a>
+      </td>
+    `;
+    tbody.insertBefore(tr, tbody.firstChild);
+  }
+
+  // 9. Raw vs Parsed Tab in Preview
+  if (previewRawTab && previewParsedTab) {
+    previewRawTab.addEventListener("click", () => {
+      previewMode = "raw";
+      previewRawTab.className = "bg-blue-600 text-white px-2 py-0.5 font-semibold";
+      previewParsedTab.className = "bg-white text-slate-600 px-2 py-0.5 hover:bg-slate-50";
+      if (previewLogContent) {
+        previewLogContent.textContent = activeContent ? activeContent.substring(0, 1500) : "Select a file or paste a log above to detect its format.";
+      }
+    });
+
+    previewParsedTab.addEventListener("click", () => {
+      previewMode = "parsed";
+      previewParsedTab.className = "bg-blue-600 text-white px-2 py-0.5 font-semibold";
+      previewRawTab.className = "bg-white text-slate-600 px-2 py-0.5 hover:bg-slate-50";
+      if (previewLogContent && lastDetectionResult) {
+        const parsed = lastDetectionResult.parsed || lastDetectionResult.normalized || { error: "No parsed tree" };
+        previewLogContent.textContent = JSON.stringify(parsed, null, 2);
+      }
+    });
+  }
+
+  // 10. Copy Preview
+  if (copyPreviewBtn && previewLogContent) {
+    copyPreviewBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(previewLogContent.textContent).then(() => {
+        const orig = copyPreviewBtn.innerHTML;
+        copyPreviewBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i>';
+        setTimeout(() => copyPreviewBtn.innerHTML = orig, 1500);
+      });
+    });
+  }
+
+  // 11. Load Format Stats
+  async function loadFormatDetectionData() {
+    try {
+      const res = await fetch(`${API_BASE}/stats`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const formats = data.formats || {};
+      const total = data.processed_logs || 0;
+
+      // Update stat cards if present
+      document.querySelectorAll(".text-xl, .text-2xl").forEach(el => {
+        const card = el.closest(".bg-white");
+        if (!card) return;
+        const label = card.querySelector(".text-xs, .text-slate-500");
+        if (!label) return;
+        const txt = label.textContent.toLowerCase();
+        if (txt.includes("total")) el.textContent = total.toLocaleString();
+        else if (txt.includes("known")) el.textContent = total.toLocaleString();
+        else if (txt.includes("auto")) el.textContent = total.toLocaleString();
+      });
+    } catch (e) {
+      console.warn("Stats load warning:", e);
+    }
+  }
+
+  // 12. Fix navigation links
+  const pageMap = {
+    "Dashboard": "../arc_01_dashboard/code.html",
+    "Log Ingestion": "../arc_02_log_ingestion/code.html",
+    "Source Management": "../arc_03_source_management/code.html",
+    "Format Detection": "../arc_04_format_detection/code.html",
+    "Parser Registry": "../arc_05_parser_registry/code.html",
+    "Normalization / Schema": "../arc_06_normalization_schema/code.html",
+    "Event Viewer": "../arc_07_event_viewer/code.html",
+    "AI Assistant": "../arc_08_ai_assistant/code.html",
+    "Quarantine": "../arc_09_quarantine/code.html",
+    "Analytics": "../arc_10_analytics/code.html",
+    "Audit Logs": "../arc_11_audit_logs/code.html",
+    "Alerts": "../arc_12_alerts/code.html",
+    "Settings": "../arc_13_settings/code.html",
+    "Documentation": "../arc_14_documentation/code.html"
+  };
+
+  document.querySelectorAll('a[href="#"], a[href=""]').forEach(a => {
+    const txt = (a.querySelector('span')?.textContent || a.textContent).trim();
+    if (pageMap[txt]) a.href = pageMap[txt];
+  });
+
+  document.addEventListener("DOMContentLoaded", loadFormatDetectionData);
+})();
+</script>
+</body>
+</html>

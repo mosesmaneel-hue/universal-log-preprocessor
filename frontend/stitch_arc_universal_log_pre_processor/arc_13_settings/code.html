@@ -1,0 +1,1395 @@
+﻿<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Universal Log Pre-Processing Framework</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#07152b',
+              sidebar: '#07152b',
+              accent: '#f97316',
+              blue: '#0066f5',
+              darkblue: '#0242a8',
+              surface: '#f5f7fb',
+              border: '#e2e8f0'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom styles for layout & scrollbar refinements -->
+<style data-purpose="base-layout">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    
+    /* Custom sleek scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<style data-purpose="form-controls">
+    /* Subtle form field borders and standard heights */
+    .form-input-custom {
+      border: 1px solid #d8e2ef;
+      border-radius: 0.5rem;
+      background-color: #ffffff;
+      padding: 0.425rem 0.75rem;
+      font-size: 0.8125rem;
+      color: #1e293b;
+      transition: all 0.15s ease-in-out;
+      width: 100%;
+    }
+    .form-input-custom:focus {
+      border-color: #2563eb;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+    
+    /* Toggle switch styles */
+    .toggle-checkbox:checked {
+      right: 0;
+      background-color: #0066f5;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #0066f5;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="min-h-screen flex overflow-hidden antialiased bg-[#f5f7fb]">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-white"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- BEGIN: TopGlobalHeader -->
+<header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between flex-shrink-0" data-purpose="global-header">
+<!-- Title & Subtitle -->
+<div>
+<h1 class="text-base font-bold text-slate-900 tracking-tight">Universal Log Pre-Processing Framework</h1>
+<p class="text-xs text-blue-600 font-medium tracking-tight">Learn Once. Process Forever.</p>
+</div>
+<!-- Header actions: Search, Status, Notification, Profile -->
+<div class="flex items-center gap-4">
+<!-- Search bar -->
+<div class="relative w-80">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<input class="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-500 transition" placeholder="Search settings, configurations, users..." type="text"/>
+</div>
+<!-- System Healthy Badge -->
+<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-xs">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<div class="flex flex-col text-[11px] leading-tight">
+<span class="font-semibold text-emerald-800">System Healthy</span>
+<span class="text-[9.5px] text-emerald-600">All services operational</span>
+</div>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- User Profile Dropdown -->
+<div class="flex items-center gap-2 pl-2 border-l border-slate-200">
+<div class="w-8 h-8 rounded-full bg-blue-950 text-white font-semibold text-xs flex items-center justify-center">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-800">Administrator</span>
+<svg class="w-3.5 h-3.5 text-slate-400 ml-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+</header>
+<!-- END: TopGlobalHeader -->
+<!-- Scrollable main page container -->
+<main class="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+<!-- BEGIN: PageHeader & Notification Alert -->
+<section class="flex flex-col md:flex-row md:items-start md:justify-between gap-4" data-purpose="page-title-banner">
+<!-- Title & Breadcrumb -->
+<div>
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-1.5 text-xs text-slate-400 font-medium mb-1">
+<span class="hover:text-blue-600 cursor-pointer">Dashboard</span>
+<svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-blue-600 font-semibold">Settings</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Settings</h2>
+<p class="text-xs text-slate-500 mt-0.5">Configure your system preferences, integrations, security, and more.</p>
+</div>
+<!-- Illustrative Warning Badge -->
+<div class="bg-rose-50 border border-rose-200 rounded-lg px-3.5 py-2 text-rose-700 text-xs font-normal max-w-sm text-right flex flex-col justify-center">
+<span class="font-medium text-[11px] leading-tight">Settings shown are from live backend.</span>
+<span class="text-[10px] text-rose-600">Customize based on your deployment.</span>
+</div>
+</section>
+<!-- END: PageHeader & Notification Alert -->
+<!-- BEGIN: SettingsTabs -->
+<section class="border-b border-slate-200" data-purpose="tab-navigation">
+<div class="flex items-center space-x-1 overflow-x-auto text-xs font-semibold scrollbar-none">
+<!-- Active Tab: General -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-orange-600 border-b-2 border-orange-500 whitespace-nowrap bg-orange-50/50 rounded-t">
+<svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            General
+          </button>
+<!-- System -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            System
+          </button>
+<!-- Security -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Security
+          </button>
+<!-- Integrations -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Integrations
+          </button>
+<!-- Parser Settings -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Parser Settings
+          </button>
+<!-- Notifications -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Notifications
+          </button>
+<!-- AI Assistant -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            AI Assistant
+          </button>
+<!-- Appearance -->
+<button class="flex items-center gap-1.5 py-2.5 px-3.5 text-slate-600 hover:text-slate-900 whitespace-nowrap transition">
+<svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Appearance
+          </button>
+</div>
+</section>
+<!-- END: SettingsTabs -->
+<!-- BEGIN: 3ColumnSettingsGrid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-8">
+<!-- ======================= COLUMN 1 ======================= -->
+<div class="space-y-5">
+<!-- Card 1.1: General Settings -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between" data-purpose="general-settings-card">
+<div>
+<div class="flex items-start gap-3 mb-4">
+<div class="p-2 rounded-lg bg-blue-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">General Settings</h3>
+<p class="text-[11px] text-blue-600">Basic application preferences and configurations.</p>
+</div>
+</div>
+<!-- Form Fields -->
+<div class="space-y-3">
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Application Name</label>
+<input id="s-application_name" class="form-input-custom text-xs" type="text"/>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Organization</label>
+<input id="s-organization" class="form-input-custom text-xs" type="text"/>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Timezone</label>
+<select id="s-timezone" class="form-input-custom text-xs">
+<option>(GMT+05:30) Asia/Kolkata</option>
+<option>(GMT+00:00) UTC</option>
+<option>(GMT-05:00) Eastern Time (US)</option>
+</select>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Date Format</label>
+<select id="s-date_format" class="form-input-custom text-xs">
+<option>DD MMM YYYY (22 Sep 2026)</option>
+<option>YYYY-MM-DD</option>
+<option>MM/DD/YYYY</option>
+</select>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Time Format</label>
+<select id="s-time_format" class="form-input-custom text-xs">
+<option>24-hour (18:24)</option>
+<option>12-hour (06:24 PM)</option>
+</select>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Language</label>
+<select id="s-language" class="form-input-custom text-xs">
+<option>English</option>
+<option>Spanish</option>
+<option>German</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+<button id="save-btn-general" data-section="general" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Save Changes
+              </button>
+</div>
+</section>
+<!-- Card 1.2: Integrations -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between" data-purpose="integrations-settings-card">
+<div>
+<div class="flex items-start gap-3 mb-4">
+<div class="p-2 rounded-lg bg-sky-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">Integrations</h3>
+<p class="text-[11px] text-blue-600">Configure external services and data sources.</p>
+</div>
+</div>
+<!-- Form Fields -->
+<div class="space-y-3">
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">SIEM Integration</label>
+<select id="s-siem_integration" class="form-input-custom text-xs">
+<option>None</option>
+<option>Splunk</option>
+<option>Elasticsearch / Kibana</option>
+<option>Microsoft Sentinel</option>
+</select>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Email Notifications</label>
+<select id="s-email_notifications" class="form-input-custom text-xs">
+<option>Enabled</option>
+<option>Disabled</option>
+</select>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Slack Integration</label>
+<select id="s-slack_integration" class="form-input-custom text-xs">
+<option>Disabled</option>
+<option>Enabled</option>
+</select>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">Webhook Endpoint</label>
+<input id="s-webhook_endpoint" class="form-input-custom text-xs font-mono" type="text" placeholder="https://your-webhook-url.com"/>
+</div>
+<div class="flex items-center justify-between gap-4">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-1/3">API Access</label>
+<select id="s-api_access" class="form-input-custom text-xs">
+<option>Enabled</option>
+<option>Disabled</option>
+</select>
+</div>
+</div>
+<!-- Quick Action Link -->
+<div class="mt-3 flex items-center">
+<a id="btn-test-connection" class="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 underline font-medium cursor-pointer" href="#test-connection">
+                  Test Connection
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+<span id="connection-test-result" class="text-xs font-medium ml-2"></span>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+<button id="save-btn-integrations" data-section="integrations" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Save Changes
+              </button>
+</div>
+</section>
+</div>
+<!-- ======================= COLUMN 2 ======================= -->
+<div class="space-y-5">
+<!-- Card 2.1: System Preferences -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between" data-purpose="system-preferences-card">
+<div>
+<div class="flex items-start gap-3 mb-4">
+<div class="p-2 rounded-lg bg-sky-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">System Preferences</h3>
+<p class="text-[11px] text-blue-600">Control system behavior and performance.</p>
+</div>
+</div>
+<!-- Toggles & Retention list -->
+<div class="space-y-3.5">
+<!-- Toggle 1: Real-time Processing (ON) -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Enable Real-time Processing</h4>
+<p class="text-[10.5px] text-slate-500">Process incoming logs in real-time</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-realtime_processing" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Toggle 2: Auto-Detect Log Formats (ON) -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Auto-Detect Log Formats</h4>
+<p class="text-[10.5px] text-slate-500">Automatically detect log formats</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-auto_detect_formats" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Toggle 3: Enable AI Suggestions (ON) -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Enable AI Suggestions</h4>
+<p class="text-[10.5px] text-slate-500">Show AI-powered field mappings and insights</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-ai_suggestions" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Toggle 4: Store Raw Logs (OFF) -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Store Raw Logs</h4>
+<p class="text-[10.5px] text-slate-500">Keep original logs for troubleshooting</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-store_raw_logs" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Toggle 5: Enable Metrics Collection (ON) -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Enable Metrics Collection</h4>
+<p class="text-[10.5px] text-slate-500">Collect anonymized usage statistics</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-metrics_collection" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Retention Period Dropdown -->
+<div class="flex items-center justify-between pt-1 gap-4">
+<label class="text-xs text-slate-700 font-medium whitespace-nowrap">Default Retention Period</label>
+<select id="s-retention_period_days" class="form-input-custom text-xs w-36">
+<option>30 Days</option>
+<option>60 Days</option>
+<option>90 Days</option>
+<option>365 Days</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+<button id="save-btn-system" data-section="system" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Save Changes
+              </button>
+</div>
+</section>
+<!-- Card 2.2: Notifications -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between" data-purpose="notifications-settings-card">
+<div>
+<div class="flex items-start gap-3 mb-4">
+<div class="p-2 rounded-lg bg-blue-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">Notifications</h3>
+<p class="text-[11px] text-blue-600">Manage alert and system notifications.</p>
+</div>
+</div>
+<!-- Notifications list with icons -->
+<div class="space-y-3">
+<!-- Notification 1: Critical Alerts (ON) -->
+<div class="flex items-center justify-between" id="notif-row-critical_alerts">
+<div class="flex items-start gap-2.5">
+<span class="p-1 rounded bg-rose-50 text-rose-600 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+</span>
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Critical Alerts</h4>
+<p class="text-[10.5px] text-slate-500">Notify on critical security events</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-critical_alerts" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Notification 2: System Errors (ON) -->
+<div class="flex items-center justify-between">
+<div class="flex items-start gap-2.5">
+<span class="p-1 rounded bg-amber-50 text-amber-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" fill-rule="evenodd"></path></svg>
+</span>
+<div>
+<h4 class="text-xs font-semibold text-slate-800">System Errors</h4>
+<p class="text-[10.5px] text-slate-500">Notify on system errors</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-system_errors" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Notification 3: Daily Summary (OFF) -->
+<div class="flex items-center justify-between">
+<div class="flex items-start gap-2.5">
+<span class="p-1 rounded bg-blue-50 text-blue-500 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path></svg>
+</span>
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Daily Summary</h4>
+<p class="text-[10.5px] text-slate-500">Send daily processing summary</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-daily_summary" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Notification 4: Weekly Report (ON) -->
+<div class="flex items-center justify-between">
+<div class="flex items-start gap-2.5">
+<span class="p-1 rounded bg-purple-50 text-purple-600 mt-0.5">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" fill-rule="evenodd"></path></svg>
+</span>
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Weekly Report</h4>
+<p class="text-[10.5px] text-slate-500">Send weekly analytics report</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-weekly_report" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Notification Email Field -->
+<div class="flex items-center justify-between gap-3 pt-2">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap">Notification Email</label>
+<input id="s-notification_email" class="form-input-custom text-xs w-48" type="email"/>
+</div>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+<button id="save-btn-notifications" data-section="notifications" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Save Changes
+              </button>
+</div>
+</section>
+</div>
+<!-- ======================= COLUMN 3 ======================= -->
+<div class="space-y-5">
+<!-- Card 3.1: Security Settings -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between" data-purpose="security-settings-card">
+<div>
+<div class="flex items-start gap-3 mb-4">
+<div class="p-2 rounded-lg bg-blue-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">Security Settings</h3>
+<p class="text-[11px] text-blue-600">Manage access control and security policies.</p>
+</div>
+</div>
+<!-- Form & Toggle items -->
+<div class="space-y-3">
+<!-- 2FA Toggle -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Two-Factor Authentication (2FA)</h4>
+<p class="text-[10.5px] text-slate-500">Require 2FA for all admin users</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-two_factor_authentication" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Session Timeout -->
+<div class="flex items-center justify-between gap-3">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-2/5">Session Timeout</label>
+<select id="s-session_timeout_minutes" class="form-input-custom text-xs">
+<option>30 Minutes</option>
+<option>15 Minutes</option>
+<option>1 Hour</option>
+<option>4 Hours</option>
+</select>
+</div>
+<!-- Password Policy -->
+<div class="flex items-center justify-between gap-3">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-2/5">Password Policy</label>
+<select id="s-password_policy" class="form-input-custom text-xs">
+<option>Strong (Min 8 characters)</option>
+<option>Very Strong (Min 12 characters + special)</option>
+<option>Standard (Min 6 characters)</option>
+</select>
+</div>
+<!-- IP Whitelist -->
+<div>
+<div class="flex items-center justify-between gap-3">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-2/5">IP Whitelist</label>
+<input id="s-ip_whitelist" class="form-input-custom text-xs placeholder:text-slate-400" placeholder="Enter IP addresses (comma separated)" type="text"/>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 pl-[40%] text-right sm:text-left">Example: 192.168.1.0/24, 10.0.0.5</p>
+</div>
+<!-- Login Attempts Limit -->
+<div class="flex items-center justify-between gap-3">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-2/5">Login Attempts Limit</label>
+<input id="s-login_attempts_limit" class="form-input-custom text-xs" type="number"/>
+</div>
+<!-- Account Lockout Duration -->
+<div class="flex items-center justify-between gap-3">
+<label class="text-xs text-slate-600 font-medium whitespace-nowrap w-2/5">Account Lockout Duration</label>
+<select id="s-account_lockout_minutes" class="form-input-custom text-xs">
+<option>15 Minutes</option>
+<option>30 Minutes</option>
+<option>1 Hour</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+<button id="save-btn-security" data-section="security" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Save Changes
+              </button>
+</div>
+</section>
+<!-- Card 3.2: Appearance -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between" data-purpose="appearance-settings-card">
+<div>
+<div class="flex items-start gap-3 mb-4">
+<div class="p-2 rounded-lg bg-blue-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-800">Appearance</h3>
+<p class="text-[11px] text-blue-600">Customize the look and feel.</p>
+</div>
+</div>
+<!-- Theme Segmented Control -->
+<div class="space-y-3">
+<span class="text-xs text-slate-600 font-medium block">Theme</span>
+<div class="grid grid-cols-3 gap-2">
+<!-- Light (Selected) -->
+<button id="theme-light" data-theme="light" class="flex flex-col items-center justify-center py-2.5 px-2 rounded-lg border-2 border-blue-500 bg-blue-50/30 text-blue-600 shadow-sm" type="button">
+<svg class="w-4 h-4 mb-1 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-[11px] font-semibold">Light</span>
+</button>
+<!-- Dark -->
+<button id="theme-dark" data-theme="dark" class="flex flex-col items-center justify-center py-2.5 px-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700" type="button">
+<svg class="w-4 h-4 mb-1 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-[11px] font-medium">Dark</span>
+</button>
+<!-- System -->
+<button id="theme-system" data-theme="system" class="flex flex-col items-center justify-center py-2.5 px-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700" type="button">
+<svg class="w-4 h-4 mb-1 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-[11px] font-medium">System</span>
+</button>
+</div>
+<!-- Primary Color Selection -->
+<div class="pt-1">
+<span class="text-xs text-slate-600 font-medium block mb-2">Primary Color</span>
+<div class="flex items-center gap-3">
+<!-- Blue (Active) -->
+<button id="color-blue" data-color="blue" class="w-5 h-5 rounded-full bg-blue-600 ring-2 ring-offset-2 ring-blue-500 focus:outline-none"></button>
+<!-- Green -->
+<button id="color-emerald" data-color="emerald" class="w-5 h-5 rounded-full bg-emerald-500 hover:scale-105 transition focus:outline-none"></button>
+<!-- Orange -->
+<button id="color-amber" data-color="amber" class="w-5 h-5 rounded-full bg-amber-500 hover:scale-105 transition focus:outline-none"></button>
+<!-- Red -->
+<button id="color-rose" data-color="rose" class="w-5 h-5 rounded-full bg-rose-600 hover:scale-105 transition focus:outline-none"></button>
+<!-- Magenta -->
+<button id="color-pink" data-color="pink" class="w-5 h-5 rounded-full bg-pink-600 hover:scale-105 transition focus:outline-none"></button>
+<!-- Navy -->
+<button id="color-slate" data-color="slate" class="w-5 h-5 rounded-full bg-slate-900 hover:scale-105 transition focus:outline-none"></button>
+</div>
+</div>
+<!-- Compact Mode Toggle (OFF) -->
+<div class="flex items-center justify-between pt-1">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Compact Mode</h4>
+<p class="text-[10.5px] text-slate-500">Use compact layout for tables and lists</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-compact_mode" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Show Animations Toggle (ON) -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-xs font-semibold text-slate-800">Show Animations</h4>
+<p class="text-[10.5px] text-slate-500">Enable smooth animations</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input id="s-show_animations" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="mt-5 pt-3 border-t border-slate-100 flex justify-end">
+<button id="save-btn-appearance" data-section="appearance" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Save Changes
+              </button>
+</div>
+</section>
+</div>
+</div>
+<!-- END: 3ColumnSettingsGrid -->
+</main>
+</div>
+<!-- END: MainContentArea -->
+
+<script>
+// Shared navigation fix
+(function() {
+    const map = {
+        "Dashboard": "../arc_01_dashboard/code.html",
+        "Log Ingestion": "../arc_02_log_ingestion/code.html",
+        "Source Management": "../arc_03_source_management/code.html",
+        "Format Detection": "../arc_04_format_detection/code.html",
+        "Parser Registry": "../arc_05_parser_registry/code.html",
+        "Normalization / Schema": "../arc_06_normalization_schema/code.html",
+        "Event Viewer": "../arc_07_event_viewer/code.html",
+        "AI Assistant": "../arc_08_ai_assistant/code.html",
+        "Quarantine": "../arc_09_quarantine/code.html",
+        "Analytics": "../arc_10_analytics/code.html",
+        "Audit Logs": "../arc_11_audit_logs/code.html",
+        "Alerts": "../arc_12_alerts/code.html",
+        "Settings": "../arc_13_settings/code.html",
+        "Documentation": "../arc_14_documentation/code.html"
+    };
+    document.querySelectorAll('a[href="#"], a[href=""]').forEach(a => {
+        const txt = (a.querySelector('span')?.textContent || a.textContent).trim();
+        if (map[txt]) a.href = map[txt];
+    });
+})();
+</script>
+
+<!-- ================================================================
+     ARC Settings API Integration  (Step 2)
+     GET /api/v1/settings on load → populate all controls
+     Per-section Save buttons → PUT /api/v1/settings (partial)
+     ================================================================ -->
+<style>
+  /* Loading overlay on card while fetching */
+  .arc-loading { opacity: 0.45; pointer-events: none; transition: opacity 0.2s; }
+
+  /* Toast notification */
+  #arc-toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    display: none; align-items: center; gap: 10px;
+    padding: 10px 16px; border-radius: 10px;
+    font-size: 12px; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: opacity 0.3s;
+  }
+  #arc-toast.success { background:#f0fdf4; border:1px solid #86efac; color:#15803d; }
+  #arc-toast.error   { background:#fef2f2; border:1px solid #fca5a5; color:#dc2626; }
+
+  /* API unavailable banner */
+  #arc-api-banner {
+    display: none; background:#fef9ec; border:1px solid #fcd34d;
+    border-radius: 10px; padding: 10px 16px; margin-bottom: 12px;
+    font-size: 12px; color: #92400e; font-weight: 500;
+  }
+
+  /* Theme button active state (driven by JS) */
+  .theme-btn-active {
+    border-width: 2px !important;
+    border-color: #3b82f6 !important;
+    background-color: rgba(239,246,255,0.3) !important;
+    color: #2563eb !important;
+  }
+  /* Color swatch active state */
+  .color-btn-active {
+    ring: 2px; outline: 3px solid #93c5fd; outline-offset: 2px;
+  }
+</style>
+
+<div id="arc-toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  const API = ((typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1") + "/settings";
+
+  // ── toast ─────────────────────────────────────────────────
+  function toast(msg, type = "success") {
+    const el = document.getElementById("arc-toast");
+    if (!el) return;
+    el.className = type;
+    el.style.display = "flex";
+    el.innerHTML = type === "success"
+      ? `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> ${msg}`
+      : `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> ${msg}`;
+    clearTimeout(el._tid);
+    el._tid = setTimeout(() => { el.style.display = "none"; }, type === "success" ? 3000 : 6000);
+  }
+
+  // ── helper: set select value, adding option if absent ─────
+  function setSelect(el, value) {
+    if (!el) return;
+    for (let opt of el.options) {
+      if (opt.value === value || opt.textContent.trim() === value ||
+          opt.textContent.trim().startsWith(value)) {
+        el.value = opt.value;
+        return;
+      }
+    }
+    // value not present — add it
+    const opt = document.createElement("option");
+    opt.value = value;
+    opt.textContent = value;
+    el.appendChild(opt);
+    el.value = value;
+  }
+
+  // ── helper: set checkbox ───────────────────────────────────
+  function setCheck(el, value) {
+    if (!el) return;
+    el.checked = (value === true || value === "true" || value === 1);
+  }
+
+  // ── theme buttons ──────────────────────────────────────────
+  function applyTheme(val) {
+    ["light", "dark", "system"].forEach(t => {
+      const btn = document.getElementById("theme-" + t);
+      if (!btn) return;
+      if (t === val) {
+        btn.classList.add("theme-btn-active");
+        btn.style.borderWidth = "2px";
+        btn.style.borderColor = "var(--arc-primary-600, #3b82f6)";
+      } else {
+        btn.classList.remove("theme-btn-active");
+        btn.style.borderWidth = "1px";
+        btn.style.borderColor = "#e2e8f0";
+        btn.style.backgroundColor = "";
+        btn.style.color = "#374151";
+      }
+    });
+    if (window.ARC && window.ARC.applyAppearance) {
+      const cur = collectSection("appearance");
+      cur.theme = val;
+      window.ARC.applyAppearance(cur);
+    }
+  }
+
+  // color map: backend key → button id suffix
+  const COLOR_MAP = {
+    blue: "blue", emerald: "emerald", amber: "amber",
+    rose: "rose", pink: "pink", slate: "slate"
+  };
+
+  function applyColor(val) {
+    Object.keys(COLOR_MAP).forEach(c => {
+      const btn = document.getElementById("color-" + COLOR_MAP[c]);
+      if (!btn) return;
+      if (c === val) {
+        btn.style.outline = "3px solid var(--arc-primary-500, #93c5fd)";
+        btn.style.outlineOffset = "2px";
+      } else {
+        btn.style.outline = "";
+        btn.style.outlineOffset = "";
+      }
+    });
+    if (window.ARC && window.ARC.applyAppearance) {
+      const cur = collectSection("appearance");
+      cur.primary_color = val;
+      window.ARC.applyAppearance(cur);
+    }
+  }
+
+  // ── retention helpers ──────────────────────────────────────
+  const RETENTION_MAP = {
+    30: "30 Days", 60: "60 Days", 90: "90 Days", 365: "365 Days"
+  };
+
+  // ── session timeout map ────────────────────────────────────
+  const SESSION_MAP = {
+    15: "15 Minutes", 30: "30 Minutes", 60: "1 Hour", 240: "4 Hours"
+  };
+
+  // ── lockout map ────────────────────────────────────────────
+  const LOCKOUT_MAP = {
+    15: "15 Minutes", 30: "30 Minutes", 60: "1 Hour"
+  };
+
+  // password policy map
+  const PWPOL_MAP = {
+    "Strong":      "Strong (Min 8 characters)",
+    "Very Strong": "Very Strong (Min 12 characters + special)",
+    "Standard":    "Standard (Min 6 characters)"
+  };
+
+  // ── populate all controls ──────────────────────────────────
+  function populate(s) {
+    const g = s.general || {};
+    const sys = s.system || {};
+    const sec = s.security || {};
+    const intg = s.integrations || {};
+    const notif = s.notifications || {};
+    const app = s.appearance || {};
+
+    // General
+    const appName = document.getElementById("s-application_name");
+    if (appName) appName.value = g.application_name || "";
+    const org = document.getElementById("s-organization");
+    if (org) org.value = g.organization || "";
+    setSelect(document.getElementById("s-timezone"), g.timezone || "Asia/Kolkata");
+    setSelect(document.getElementById("s-date_format"), g.date_format || "DD MMM YYYY");
+    setSelect(document.getElementById("s-time_format"), g.time_format || "24-hour");
+    setSelect(document.getElementById("s-language"), g.language || "English");
+
+    // System
+    setCheck(document.getElementById("s-realtime_processing"), sys.realtime_processing);
+    setCheck(document.getElementById("s-auto_detect_formats"), sys.auto_detect_formats);
+    setCheck(document.getElementById("s-ai_suggestions"), sys.ai_suggestions);
+    setCheck(document.getElementById("s-store_raw_logs"), sys.store_raw_logs);
+    setCheck(document.getElementById("s-metrics_collection"), sys.metrics_collection);
+    const retDays = sys.retention_period_days;
+    if (retDays != null) {
+      setSelect(document.getElementById("s-retention_period_days"),
+        RETENTION_MAP[retDays] || String(retDays) + " Days");
+    }
+
+    // Security
+    setCheck(document.getElementById("s-two_factor_authentication"), sec.two_factor_authentication);
+    if (sec.session_timeout_minutes != null) {
+      setSelect(document.getElementById("s-session_timeout_minutes"),
+        SESSION_MAP[sec.session_timeout_minutes] || String(sec.session_timeout_minutes) + " Minutes");
+    }
+    if (sec.password_policy) {
+      setSelect(document.getElementById("s-password_policy"),
+        PWPOL_MAP[sec.password_policy] || sec.password_policy);
+    }
+    const ipWL = document.getElementById("s-ip_whitelist");
+    if (ipWL) ipWL.value = sec.ip_whitelist || "";
+    const attempts = document.getElementById("s-login_attempts_limit");
+    if (attempts) attempts.value = sec.login_attempts_limit != null ? sec.login_attempts_limit : "";
+    if (sec.account_lockout_minutes != null) {
+      setSelect(document.getElementById("s-account_lockout_minutes"),
+        LOCKOUT_MAP[sec.account_lockout_minutes] || String(sec.account_lockout_minutes) + " Minutes");
+    }
+
+    // Integrations
+    setSelect(document.getElementById("s-siem_integration"), intg.siem_integration || "None");
+    setSelect(document.getElementById("s-email_notifications"), intg.email_notifications || "Enabled");
+    setSelect(document.getElementById("s-slack_integration"), intg.slack_integration || "Disabled");
+    const wh = document.getElementById("s-webhook_endpoint");
+    if (wh) wh.value = intg.webhook_endpoint || "";
+    setSelect(document.getElementById("s-api_access"), intg.api_access || "Enabled");
+
+    // Notifications
+    setCheck(document.getElementById("s-critical_alerts"), notif.critical_alerts);
+    setCheck(document.getElementById("s-system_errors"), notif.system_errors);
+    setCheck(document.getElementById("s-daily_summary"), notif.daily_summary);
+    setCheck(document.getElementById("s-weekly_report"), notif.weekly_report);
+    const email = document.getElementById("s-notification_email");
+    if (email) email.value = notif.notification_email || "";
+
+    // Appearance
+    applyTheme(app.theme || "light");
+    applyColor(app.primary_color || "blue");
+    setCheck(document.getElementById("s-compact_mode"), app.compact_mode);
+    setCheck(document.getElementById("s-show_animations"), app.show_animations);
+  }
+
+  // ── load settings ──────────────────────────────────────────
+  async function loadSettings() {
+    const main = document.querySelector("main");
+    if (main) main.classList.add("arc-loading");
+    try {
+      const r = await fetch(API);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const data = await r.json();
+      populate(data.settings || data.data || {});
+    } catch (err) {
+      // Show banner — keep UI visible
+      let banner = document.getElementById("arc-api-banner");
+      if (!banner) {
+        banner = document.createElement("div");
+        banner.id = "arc-api-banner";
+        const main2 = document.querySelector("main");
+        if (main2) main2.prepend(banner);
+      }
+      banner.style.display = "block";
+      banner.innerHTML = "⚠ <strong>Settings API unavailable</strong> — controls show defaults only. " + err.message;
+    } finally {
+      if (main) main.classList.remove("arc-loading");
+    }
+  }
+
+  // ── collect section payload ────────────────────────────────
+  function collectSection(section) {
+    const g = () => ({
+      application_name: document.getElementById("s-application_name")?.value?.trim(),
+      organization: document.getElementById("s-organization")?.value?.trim(),
+      timezone: (() => {
+        const sel = document.getElementById("s-timezone");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        // extract "Asia/Kolkata" from "(GMT+05:30) Asia/Kolkata"
+        const m = txt.match(/\)\s*(.+)$/);
+        return m ? m[1].trim() : txt;
+      })(),
+      date_format: (() => {
+        const sel = document.getElementById("s-date_format");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        // "DD MMM YYYY (22 Sep 2026)" → "DD MMM YYYY"
+        return txt.split(" (")[0].trim();
+      })(),
+      time_format: (() => {
+        const sel = document.getElementById("s-time_format");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        // "24-hour (18:24)" → "24-hour"
+        return txt.split(" (")[0].trim();
+      })(),
+      language: document.getElementById("s-language")?.value?.trim()
+    });
+
+    const sys = () => ({
+      realtime_processing: document.getElementById("s-realtime_processing")?.checked,
+      auto_detect_formats: document.getElementById("s-auto_detect_formats")?.checked,
+      ai_suggestions: document.getElementById("s-ai_suggestions")?.checked,
+      store_raw_logs: document.getElementById("s-store_raw_logs")?.checked,
+      metrics_collection: document.getElementById("s-metrics_collection")?.checked,
+      retention_period_days: (() => {
+        const sel = document.getElementById("s-retention_period_days");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        const m = txt.match(/^(\d+)/);
+        return m ? parseInt(m[1]) : null;
+      })()
+    });
+
+    const sec = () => ({
+      two_factor_authentication: document.getElementById("s-two_factor_authentication")?.checked,
+      session_timeout_minutes: (() => {
+        const sel = document.getElementById("s-session_timeout_minutes");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        if (txt.includes("15")) return 15;
+        if (txt.includes("1 Hour")) return 60;
+        if (txt.includes("4")) return 240;
+        return 30; // default 30 minutes
+      })(),
+      password_policy: (() => {
+        const sel = document.getElementById("s-password_policy");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        if (txt.startsWith("Strong (")) return "Strong";
+        if (txt.startsWith("Very Strong")) return "Very Strong";
+        if (txt.startsWith("Standard")) return "Standard";
+        return txt.split(" (")[0].trim();
+      })(),
+      ip_whitelist: document.getElementById("s-ip_whitelist")?.value?.trim() || "",
+      login_attempts_limit: (() => {
+        const v = parseInt(document.getElementById("s-login_attempts_limit")?.value || "5", 10);
+        return isNaN(v) ? 5 : v;
+      })(),
+      account_lockout_minutes: (() => {
+        const sel = document.getElementById("s-account_lockout_minutes");
+        if (!sel) return null;
+        const txt = sel.options[sel.selectedIndex]?.textContent?.trim() || "";
+        if (txt.includes("30")) return 30;
+        if (txt.includes("1 Hour")) return 60;
+        return 15;
+      })()
+    });
+
+    const intg = () => ({
+      siem_integration: (() => {
+        const sel = document.getElementById("s-siem_integration");
+        return sel ? sel.options[sel.selectedIndex]?.textContent?.trim() : "None";
+      })(),
+      email_notifications: (() => {
+        const sel = document.getElementById("s-email_notifications");
+        return sel ? sel.options[sel.selectedIndex]?.textContent?.trim() : "Enabled";
+      })(),
+      slack_integration: (() => {
+        const sel = document.getElementById("s-slack_integration");
+        return sel ? sel.options[sel.selectedIndex]?.textContent?.trim() : "Disabled";
+      })(),
+      webhook_endpoint: document.getElementById("s-webhook_endpoint")?.value?.trim() || "",
+      api_access: (() => {
+        const sel = document.getElementById("s-api_access");
+        return sel ? sel.options[sel.selectedIndex]?.textContent?.trim() : "Enabled";
+      })()
+    });
+
+    const notif = () => ({
+      critical_alerts: document.getElementById("s-critical_alerts")?.checked,
+      system_errors: document.getElementById("s-system_errors")?.checked,
+      daily_summary: document.getElementById("s-daily_summary")?.checked,
+      weekly_report: document.getElementById("s-weekly_report")?.checked,
+      notification_email: document.getElementById("s-notification_email")?.value?.trim()
+    });
+
+    const app = () => {
+      // find active theme
+      let theme = "light";
+      ["light", "dark", "system"].forEach(t => {
+        const btn = document.getElementById("theme-" + t);
+        if (btn && btn.classList.contains("theme-btn-active")) theme = t;
+      });
+      // find active color
+      let color = "blue";
+      ["blue","emerald","amber","rose","pink","slate"].forEach(c => {
+        const btn = document.getElementById("color-" + c);
+        if (btn && btn.style.outline && btn.style.outline.includes("93c5fd")) color = c;
+      });
+      return {
+        theme,
+        primary_color: color,
+        compact_mode: document.getElementById("s-compact_mode")?.checked,
+        show_animations: document.getElementById("s-show_animations")?.checked
+      };
+    };
+
+    const map = {
+      general: g, system: sys, security: sec,
+      integrations: intg, notifications: notif, appearance: app
+    };
+    return (map[section] || (() => ({})))();
+  }
+
+  // ── save section ───────────────────────────────────────────
+  async function saveSection(btn) {
+    const section = btn.dataset.section;
+    if (!section) return;
+
+    const payload = collectSection(section);
+    // Strip null values
+    Object.keys(payload).forEach(k => { if (payload[k] == null) delete payload[k]; });
+
+    // Client-side validations
+    if (section === "security" && payload.ip_whitelist) {
+      const entries = payload.ip_whitelist.replace(/;/g, ",").split(",").map(s => s.trim()).filter(Boolean);
+      const ipCidrRegex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\/([0-9]|[12][0-9]|3[0-2]))?$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}(\/([0-9]|[1-9][0-9]|1[01][0-9]|12[0-8]))?$/;
+      for (const entry of entries) {
+        if (!ipCidrRegex.test(entry)) {
+          toast("Invalid IP address or CIDR in IP Whitelist: " + entry, "error");
+          return;
+        }
+      }
+    }
+
+    if (section === "notifications" && payload.notification_email) {
+      const emailRegex = /^[\w\.\+\-]+@[\w\-]+(\.[\w\-]+)+$/;
+      if (!emailRegex.test(payload.notification_email)) {
+        toast("Invalid notification email format: " + payload.notification_email, "error");
+        return;
+      }
+    }
+
+    btn.disabled = true;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Saving…';
+
+    try {
+      const r = await fetch(API, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json();
+      if (!r.ok) {
+        throw new Error(data.detail || "Save failed (HTTP " + r.status + ")");
+      }
+      let msg = "✓ " + section.charAt(0).toUpperCase() + section.slice(1) + " settings saved";
+      if (section === "notifications" && (payload.daily_summary || payload.weekly_report)) {
+        msg += " (Scheduler inactive: scheduled reports are saved but not running)";
+      }
+      toast(msg, "success");
+      if (section === "appearance" && window.ARC && window.ARC.applyAppearance) {
+        window.ARC.applyAppearance(payload);
+      }
+      // re-populate from returned settings to confirm persisted values
+      if (data.settings) populate(data.settings);
+    } catch (err) {
+      toast(err.message, "error");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = orig;
+    }
+  }
+
+  // ── wire theme buttons ─────────────────────────────────────
+  function wireThemeButtons() {
+    ["light", "dark", "system"].forEach(t => {
+      const btn = document.getElementById("theme-" + t);
+      if (!btn) return;
+      btn.addEventListener("click", () => applyTheme(t));
+    });
+  }
+
+  // ── wire color buttons ─────────────────────────────────────
+  function wireColorButtons() {
+    ["blue","emerald","amber","rose","pink","slate"].forEach(c => {
+      const btn = document.getElementById("color-" + c);
+      if (!btn) return;
+      btn.addEventListener("click", () => applyColor(c));
+    });
+  }
+
+  // ── wire Save buttons ──────────────────────────────────────
+  function wireSaveButtons() {
+    document.querySelectorAll("button[data-section]").forEach(btn => {
+      btn.addEventListener("click", () => saveSection(btn));
+    });
+  }
+
+  // ── wire Test Connection ─────────────────────────────────
+  function wireTestConnection() {
+    const link = document.getElementById("btn-test-connection");
+    if (!link) return;
+    link.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const webhook = document.getElementById("s-webhook_endpoint")?.value?.trim() || "";
+      const siem = document.getElementById("s-siem_integration")?.value?.trim() || "None";
+      const slack = document.getElementById("s-slack_integration")?.value?.trim() || "Disabled";
+      const statusEl = document.getElementById("connection-test-result");
+
+      if (webhook) {
+        try {
+          const u = new URL(webhook);
+          if (u.protocol !== "http:" && u.protocol !== "https:") throw new Error("Protocol must be http: or https:");
+        } catch (err) {
+          if (statusEl) {
+            statusEl.textContent = "✖ Invalid Webhook URL";
+            statusEl.className = "text-xs font-medium ml-2 text-rose-600";
+          }
+          toast("Invalid Webhook URL: " + err.message, "error");
+          return;
+        }
+
+        if (statusEl) {
+          statusEl.textContent = "Testing...";
+          statusEl.className = "text-xs font-medium ml-2 text-blue-600";
+        }
+
+        try {
+          const t0 = performance.now();
+          await fetch(webhook, { method: "HEAD", mode: "no-cors" });
+          const elapsed = Math.round(performance.now() - t0);
+          if (statusEl) {
+            statusEl.textContent = "✓ Webhook reachable (" + elapsed + "ms)";
+            statusEl.className = "text-xs font-medium ml-2 text-emerald-600";
+          }
+          toast("✓ Webhook endpoint is reachable (" + elapsed + "ms)", "success");
+        } catch (err) {
+          if (statusEl) {
+            statusEl.textContent = "✖ Endpoint unreachable";
+            statusEl.className = "text-xs font-medium ml-2 text-rose-600";
+          }
+          toast("Webhook endpoint unreachable: " + err.message, "error");
+        }
+        return;
+      }
+
+      // Truthful reporting if no webhook is configured
+      if (siem !== "None") {
+        if (statusEl) {
+          statusEl.textContent = "ℹ " + siem + " credentials not configured";
+          statusEl.className = "text-xs font-medium ml-2 text-amber-600";
+        }
+        toast("SIEM (" + siem + ") selected, but server host/credentials are not configured.", "error");
+      } else if (slack === "Enabled") {
+        if (statusEl) {
+          statusEl.textContent = "ℹ Slack webhook URL not configured";
+          statusEl.className = "text-xs font-medium ml-2 text-amber-600";
+        }
+        toast("Slack integration enabled, but no Slack webhook URL is configured.", "error");
+      } else {
+        if (statusEl) {
+          statusEl.textContent = "ℹ No integration endpoints configured";
+          statusEl.className = "text-xs font-medium ml-2 text-slate-500";
+        }
+        toast("No active webhook or external SIEM configured to test.", "error");
+      }
+    });
+  }
+
+  // ── wire Appearance Toggles ────────────────────────────────
+  function wireAppearanceToggles() {
+    const compactEl = document.getElementById("s-compact_mode");
+    if (compactEl) {
+      compactEl.addEventListener("change", () => {
+        if (window.ARC && window.ARC.applyAppearance) {
+          window.ARC.applyAppearance(collectSection("appearance"));
+        }
+      });
+    }
+    const animEl = document.getElementById("s-show_animations");
+    if (animEl) {
+      animEl.addEventListener("change", () => {
+        if (window.ARC && window.ARC.applyAppearance) {
+          window.ARC.applyAppearance(collectSection("appearance"));
+        }
+      });
+    }
+  }
+
+  // ── init ───────────────────────────────────────────────────
+  document.addEventListener("DOMContentLoaded", () => {
+    wireThemeButtons();
+    wireColorButtons();
+    wireAppearanceToggles();
+    wireTestConnection();
+    wireSaveButtons();
+    loadSettings();
+  });
+})();
+</script>
+
+</body></html>

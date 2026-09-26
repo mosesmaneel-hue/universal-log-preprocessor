@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>ARC - Event Viewer</title>
+  <!-- Tailwind CSS v3 with forms & container queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Font Awesome Icons for high-fidelity UI icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sidebar: '#081325',
+            'sidebar-hover': '#0f213d',
+            'brand-orange': '#f97316',
+            'brand-orange-hover': '#ea580c',
+            'panel-bg': '#f8fafc',
+            'border-subtle': '#e2e8f0',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+  <script src="/stitch_arc_universal_log_pre_processor/api.js"></script>
+</head>
+<body class="bg-[#f0f4f9] text-slate-800 font-sans text-xs antialiased overflow-x-hidden">
+<div class="flex min-h-screen w-full">
+  <!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-white"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+
+  <!-- BEGIN: MainContentWrapper -->
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen bg-[#f0f4f9]">
+    <!-- BEGIN: GlobalHeader -->
+    <header class="h-14 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)]" data-purpose="top-navigation-bar">
+      <!-- Title & Subtitle -->
+      <div>
+        <h1 class="text-sm font-bold text-slate-900 leading-tight">Universal Log Pre-Processing Framework</h1>
+        <p class="text-[11px] text-[#2563eb] font-medium leading-none">Learn Once. Process Forever.</p>
+      </div>
+
+      <!-- Center Search Field -->
+      <div class="relative w-80 max-w-md hidden md:block">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+        <input id="header-search-input" class="w-full bg-slate-50 border border-slate-200 pl-8 pr-3 py-1.5 rounded-lg text-xs placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white" placeholder="Search events in database..." type="text"/>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="flex items-center gap-4">
+        <!-- System Healthy badge -->
+        <div class="flex items-center gap-2 px-2.5 py-1 bg-emerald-50 border border-emerald-200 rounded-lg">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <div class="text-left">
+            <p class="text-[10px] font-bold text-emerald-800 leading-tight">System Healthy</p>
+            <p class="text-[8px] text-emerald-600 leading-none">FastAPI 8000 Connected</p>
+          </div>
+        </div>
+
+        <!-- Notification Bell -->
+        <button class="relative p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100">
+          <i class="fa-regular fa-bell text-sm"></i>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full border border-white"></span>
+        </button>
+
+        <!-- User Profile -->
+        <div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer">
+          <div class="w-7 h-7 rounded-full bg-[#071324] text-white flex items-center justify-center text-[10px] font-bold">
+            SK
+          </div>
+          <span class="text-xs font-medium text-slate-700">Administrator</span>
+          <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+        </div>
+      </div>
+    </header>
+    <!-- END: GlobalHeader -->
+
+    <!-- Page Body Area -->
+    <main class="p-6 space-y-4 max-w-[1600px] w-full mx-auto">
+      <!-- BEGIN: PageTitleRow -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">Event Viewer</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Browse, search and inspect processed events directly from SQLite logs.db.</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <!-- Breadcrumb -->
+          <div class="text-xs text-slate-400 hidden lg:flex items-center gap-1.5">
+            <span>Dashboard</span>
+            <i class="fa-solid fa-chevron-right text-[9px]"></i>
+            <span class="text-slate-600 font-medium">Event Viewer</span>
+          </div>
+          <!-- Live Data Connected Badge -->
+          <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <div class="text-left">
+              <p class="text-[10px] font-bold text-emerald-900 leading-tight">SQLite logs.db</p>
+              <p class="text-[8px] text-emerald-600 leading-none">/api/v1/processed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END: PageTitleRow -->
+
+      <!-- BEGIN: MetricCards (5 cards with real database counts) -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5" data-purpose="metrics-summary-cards">
+        <!-- 1. Total Events -->
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-start gap-3">
+          <div class="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fa-regular fa-file-lines text-base"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-medium leading-none">Total Events</p>
+            <h3 class="text-base font-bold text-slate-900 mt-1 leading-tight tracking-tight"><span id="ev-total">—</span></h3>
+            <div class="flex items-center gap-1 text-[10px] text-emerald-600 font-semibold mt-1">
+              <i class="fa-solid fa-database text-[9px]"></i>
+              <span class="text-slate-500 font-normal">Real Records</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Info Events -->
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-start gap-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fa-solid fa-check text-base"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-medium leading-none">Info Events</p>
+            <h3 class="text-base font-bold text-slate-900 mt-1 leading-tight tracking-tight"><span id="ev-info">—</span></h3>
+            <p class="text-[10px] text-slate-500 font-semibold mt-1" id="ev-info-pct">—</p>
+          </div>
+        </div>
+
+        <!-- 3. Warning Events -->
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-start gap-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fa-solid fa-triangle-exclamation text-base"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-medium leading-none">Warning Events</p>
+            <h3 class="text-base font-bold text-slate-900 mt-1 leading-tight tracking-tight"><span id="ev-warning">—</span></h3>
+            <p class="text-[10px] text-slate-500 font-semibold mt-1" id="ev-warning-pct">—</p>
+          </div>
+        </div>
+
+        <!-- 4. Error Events -->
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-start gap-3">
+          <div class="w-10 h-10 rounded-lg bg-rose-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fa-solid fa-circle-exclamation text-base"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-medium leading-none">Error Events</p>
+            <h3 class="text-base font-bold text-slate-900 mt-1 leading-tight tracking-tight"><span id="ev-error">—</span></h3>
+            <p class="text-[10px] text-slate-500 font-semibold mt-1" id="ev-error-pct">—</p>
+          </div>
+        </div>
+
+        <!-- 5. Active Sources -->
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-start gap-3">
+          <div class="w-10 h-10 rounded-lg bg-purple-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+            <i class="fa-solid fa-layer-group text-base"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-500 font-medium leading-none">Active Sources</p>
+            <h3 class="text-base font-bold text-slate-900 mt-1 leading-tight tracking-tight"><span id="ev-sources">—</span></h3>
+            <p class="text-[10px] text-slate-500 font-semibold mt-1">discovered</p>
+          </div>
+        </div>
+      </div>
+      <!-- END: MetricCards -->
+
+      <!-- BEGIN: FilterBar -->
+      <div class="bg-white p-3 rounded-xl border border-slate-200/90 shadow-sm flex flex-wrap items-center justify-between gap-3" data-purpose="event-filtering-toolbar">
+        <!-- Filter dropdowns & Search input -->
+        <div class="flex flex-wrap items-center gap-2.5 flex-1 min-w-0">
+          <!-- Time range button -->
+          <div class="flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-700 bg-white">
+            <i class="fa-regular fa-clock text-slate-400 text-[11px]"></i>
+            <span class="font-medium">All History</span>
+          </div>
+
+          <!-- Source select -->
+          <div class="relative">
+            <select id="filter-source" class="pl-3 pr-7 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-700 bg-white hover:bg-slate-50 focus:ring-1 focus:ring-blue-500 focus:outline-none appearance-none cursor-pointer">
+              <option value="All Sources">All Sources</option>
+            </select>
+            <i class="fa-solid fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 pointer-events-none"></i>
+          </div>
+
+          <!-- Levels select -->
+          <div class="relative">
+            <select id="filter-level" class="pl-3 pr-7 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-700 bg-white hover:bg-slate-50 focus:ring-1 focus:ring-blue-500 focus:outline-none appearance-none cursor-pointer">
+              <option value="All Levels">All Severities</option>
+              <option value="CRITICAL">Critical</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+              <option value="CLEAN">Clean / Normal</option>
+            </select>
+            <i class="fa-solid fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 pointer-events-none"></i>
+          </div>
+
+          <!-- Formats select -->
+          <div class="relative">
+            <select id="filter-format" class="pl-3 pr-7 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-700 bg-white hover:bg-slate-50 focus:ring-1 focus:ring-blue-500 focus:outline-none appearance-none cursor-pointer">
+              <option value="All Formats">All Formats</option>
+              <option value="SYSLOG">Syslog</option>
+              <option value="JSON">JSON</option>
+              <option value="CEF">CEF</option>
+              <option value="LEEF">LEEF</option>
+              <option value="CSV">CSV</option>
+              <option value="XML">XML</option>
+              <option value="CUSTOM">Custom</option>
+            </select>
+            <i class="fa-solid fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 pointer-events-none"></i>
+          </div>
+
+          <!-- Search Query Input -->
+          <div class="relative flex-1 min-w-[200px]">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input id="filter-search" class="w-full pl-8 pr-3 py-1.5 border border-slate-200 rounded-lg text-xs placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Search event ID (e.g. 976d81df), message, IP, user..." type="text"/>
+          </div>
+
+          <!-- Apply Button -->
+          <button id="filter-apply-btn" class="px-4 py-1.5 bg-[#1e88e5] text-white rounded-lg font-semibold text-xs hover:bg-blue-600 transition-colors shadow-sm">
+            Apply
+          </button>
+          <!-- Reset Button -->
+          <button id="filter-reset-btn" class="px-4 py-1.5 border border-slate-200 text-slate-600 bg-white rounded-lg font-semibold text-xs hover:bg-slate-50 transition-colors">
+            Reset
+          </button>
+        </div>
+
+        <!-- Live View Button with Green Pulse -->
+        <button id="live-refresh-btn" class="flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-2xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+          <span>Refresh</span>
+        </button>
+      </div>
+      <!-- END: FilterBar -->
+
+      <!-- BEGIN: MiddleChartsRow -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
+        <!-- Event Trend Chart (7 cols) -->
+        <div class="lg:col-span-7 min-w-0 bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="event-trend-chart-card">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold text-slate-800">Event Severity Trend</h3>
+            <!-- Chart Legend -->
+            <div class="flex items-center gap-3 text-[11px] text-slate-500 font-medium">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Info
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span> Warning
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Error
+              </span>
+            </div>
+          </div>
+          <!-- Dynamic SVG Area Line Chart -->
+          <div class="w-full h-44 relative mt-2" id="trend-chart-container">
+            <svg id="trend-svg" class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 540 160">
+              <defs>
+                <linearGradient id="infoGrad" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.25"></stop>
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"></stop>
+                </linearGradient>
+                <linearGradient id="warnGrad" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.2"></stop>
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"></stop>
+                </linearGradient>
+              </defs>
+              <!-- Grid horizontal lines -->
+              <line stroke="#f1f5f9" stroke-width="1" x1="30" x2="540" y1="20" y2="20"></line>
+              <line stroke="#f1f5f9" stroke-width="1" x1="30" x2="540" y1="60" y2="60"></line>
+              <line stroke="#f1f5f9" stroke-width="1" x1="30" x2="540" y1="100" y2="100"></line>
+              <line stroke="#e2e8f0" stroke-width="1" x1="30" x2="540" y1="140" y2="140"></line>
+              <!-- Y-axis labels -->
+              <text id="trend-y-max" fill="#94a3b8" font-family="sans-serif" font-size="9" x="5" y="24">50</text>
+              <text id="trend-y-mid" fill="#94a3b8" font-family="sans-serif" font-size="9" x="5" y="80">25</text>
+              <text fill="#94a3b8" font-family="sans-serif" font-size="9" x="18" y="144">0</text>
+              <!-- Dynamic Paths -->
+              <path id="trend-path-warn-area" d="M 40 140 L 530 140 Z" fill="url(#warnGrad)"></path>
+              <path id="trend-path-warn" d="M 40 140 L 530 140" fill="none" stroke="#f59e0b" stroke-width="1.8"></path>
+              <path id="trend-path-err" d="M 40 140 L 530 140" fill="none" stroke="#ef4444" stroke-width="1.8"></path>
+              <path id="trend-path-info-area" d="M 40 140 L 530 140 Z" fill="url(#infoGrad)"></path>
+              <path id="trend-path-info" d="M 40 140 L 530 140" fill="none" stroke="#10b981" stroke-width="2"></path>
+            </svg>
+            <!-- X-axis timestamps -->
+            <div class="flex justify-between pl-8 pr-2 pt-1 text-[10px] text-slate-400 font-medium" id="trend-x-labels">
+              <span>Past Events</span>
+              <span>Recent Stream</span>
+              <span>Latest</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events by Source Donut (5 cols) -->
+        <div class="lg:col-span-5 min-w-0 bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="events-by-source-card">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold text-slate-900">Events by Source</h3>
+          </div>
+          <div id="source-chart-body" class="flex items-center justify-between pt-1">
+            <div class="text-xs text-slate-400 text-center py-6 w-full">Loading source distribution…</div>
+          </div>
+        </div>
+      </div>
+      <!-- END: MiddleChartsRow -->
+
+      <!-- BEGIN: MainDataAndInspectorSection -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start">
+        <!-- Log Events Table (8 Cols) -->
+        <div class="lg:col-span-8 min-w-0 bg-white rounded-xl border border-slate-200/90 shadow-sm overflow-hidden flex flex-col" data-purpose="log-events-table-panel">
+          <!-- Table Header / Title -->
+          <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-xs font-bold text-slate-900">Log Events <span class="font-normal text-slate-500" id="table-record-count"></span></h3>
+            <button id="export-btn" class="flex items-center gap-1.5 px-3 py-1.5 border border-blue-500 text-blue-600 hover:bg-blue-50 rounded-lg text-xs font-semibold transition-colors">
+              <i class="fa-solid fa-download text-[11px]"></i>
+              <span>Export JSON</span>
+            </button>
+          </div>
+
+          <!-- Table Content (Responsive, Clean Layout) -->
+          <div class="overflow-x-auto w-full">
+            <table class="w-full text-left text-[11px] whitespace-nowrap">
+              <thead class="bg-slate-50/80 border-b border-slate-100 text-slate-500 font-semibold uppercase text-[10px]">
+                <tr>
+                  <th class="py-2.5 px-3 w-8">#</th>
+                  <th class="py-2.5 px-3 w-24">Time</th>
+                  <th class="py-2.5 px-3 w-28">Source</th>
+                  <th class="py-2.5 px-3 w-20">Level</th>
+                  <th class="py-2.5 px-3 w-24">Event Type</th>
+                  <th class="py-2.5 px-3">Message</th>
+                  <th class="py-2.5 px-3 w-20">Format</th>
+                </tr>
+              </thead>
+              <tbody id="log-table-body" class="divide-y divide-slate-100 text-slate-700">
+                <tr><td colspan="7" class="py-10 text-center text-slate-400 text-xs">Loading processed events…</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination Footer -->
+          <div class="p-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-500">
+            <div>
+              Showing <span id="ev-showing-start">—</span>–<span id="ev-showing-end">—</span> of <span id="ev-showing-total">—</span> events
+            </div>
+
+            <!-- Page Selector buttons -->
+            <div class="flex items-center gap-1" id="pagination-controls">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Rows per page selector -->
+            <div class="flex items-center gap-2">
+              <span>Rows per page:</span>
+              <div class="relative">
+                <select id="rows-per-page" class="border border-slate-200 rounded px-2 py-0.5 text-xs text-slate-700 bg-white focus:outline-none cursor-pointer">
+                  <option value="10" selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="99999">All</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Details Right Panel (4 Cols) -->
+        <div class="lg:col-span-4 min-w-0 bg-white rounded-xl border border-slate-200/90 shadow-sm overflow-hidden flex flex-col" data-purpose="event-details-inspector-panel">
+          <!-- Header with Navigation -->
+          <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-xs font-bold text-slate-900">Event Details</h3>
+            <div class="flex items-center gap-3 text-[11px] text-blue-600 font-medium">
+              <button id="det-prev-btn" class="flex items-center gap-1 text-slate-400 hover:text-blue-600 transition-colors">
+                <i class="fa-solid fa-chevron-left text-[9px]"></i>
+                <span>Previous</span>
+              </button>
+              <button id="det-next-btn" class="flex items-center gap-1 hover:text-blue-800 transition-colors">
+                <span>Next</span>
+                <i class="fa-solid fa-chevron-right text-[9px]"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="p-3.5 space-y-4">
+            <!-- Basic Information Table (All STEP 4 Real Fields) -->
+            <div>
+              <h4 class="text-[11px] font-bold text-slate-800 mb-2">Basic Information</h4>
+              <div class="space-y-1.5 text-[11px]">
+                <div class="flex justify-between py-0.5 border-b border-slate-50 gap-2">
+                  <span class="text-slate-500 flex-shrink-0">Event ID</span>
+                  <span class="font-mono text-[9px] text-slate-700 break-all select-all font-semibold text-right" id="det-event-id">—</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Timestamp</span>
+                  <span class="font-medium text-slate-800 font-mono text-[10px]" id="det-time">—</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Source Format</span>
+                  <span class="font-medium text-slate-800" id="det-format">—</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Parser</span>
+                  <span class="font-medium text-slate-800 font-mono text-[10px]" id="det-parser">—</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Source IP</span>
+                  <span class="font-mono text-[10px] text-slate-800" id="det-src-ip">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Destination IP</span>
+                  <span class="font-mono text-[10px] text-slate-800" id="det-dst-ip">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">User</span>
+                  <span class="font-medium text-slate-800" id="det-user">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Action</span>
+                  <span class="font-medium text-slate-800" id="det-action">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50 items-center">
+                  <span class="text-slate-500">Severity</span>
+                  <span id="det-severity">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50 items-center">
+                  <span class="text-slate-500">Severity Score</span>
+                  <span class="font-mono text-xs font-semibold text-slate-800" id="det-severity-score">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50 items-start">
+                  <span class="text-slate-500 shrink-0">Reason</span>
+                  <span class="text-right text-[11px] text-slate-700 max-w-[170px] break-words" id="det-severity-reason">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Source / Host</span>
+                  <span class="font-medium text-slate-800" id="det-source">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 border-b border-slate-50">
+                  <span class="text-slate-500">Ingestion Time</span>
+                  <span class="font-mono text-[10px] text-slate-800" id="det-ingestion-time">-</span>
+                </div>
+                <div class="flex justify-between py-0.5 items-center">
+                  <span class="text-slate-500">Status</span>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-semibold border border-emerald-200">
+                    Processed
+                  </span>
+                </div>
+              </div>
+
+              <!-- Message Field -->
+              <div class="mt-2.5 pt-2 border-t border-slate-100">
+                <span class="text-[10px] font-semibold text-slate-500 block mb-1">Message</span>
+                <p class="text-[10.5px] text-slate-800 bg-slate-50 rounded p-2 border border-slate-200/80 font-mono break-all leading-relaxed" id="det-message">-</p>
+              </div>
+            </div>
+
+            <!-- Tabs (Normalized Event, Raw Log, Metadata) -->
+            <div>
+              <div class="flex border-b border-slate-200 gap-1 text-[11px]">
+                <button id="tab-btn-norm" class="tab-trigger px-3 py-1.5 font-bold text-orange-600 border-b-2 border-orange-500 bg-orange-50/50 rounded-t">
+                  Normalized Event
+                </button>
+                <button id="tab-btn-raw" class="tab-trigger px-3 py-1.5 font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent">
+                  Raw Log
+                </button>
+                <button id="tab-btn-meta" class="tab-trigger px-3 py-1.5 font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent">
+                  Metadata
+                </button>
+              </div>
+
+              <!-- Tab Pane 1: Normalized JSON -->
+              <div id="tab-pane-norm" class="tab-pane mt-2">
+                <div class="bg-[#0b1220] rounded-lg p-3 text-[9.5px] font-mono leading-relaxed relative border border-slate-800">
+                  <button class="absolute top-2.5 right-2.5 text-slate-400 hover:text-white transition-colors" id="copy-json-btn" title="Copy JSON" onclick="copyJson()">
+                    <i class="fa-regular fa-copy text-xs"></i>
+                  </button>
+                  <pre id="det-normalized-json" class="text-slate-200 whitespace-pre-wrap max-h-64 overflow-y-auto">Select an event to view details.</pre>
+                </div>
+              </div>
+
+              <!-- Tab Pane 2: Raw Log -->
+              <div id="tab-pane-raw" class="tab-pane mt-2 hidden">
+                <div class="bg-[#0c1322] rounded-lg p-2.5 text-[9.5px] font-mono text-slate-300 relative border border-slate-800">
+                  <button class="absolute top-2 right-2 text-slate-400 hover:text-white transition-colors" id="copy-raw-btn" title="Copy raw log" onclick="copyRaw()">
+                    <i class="fa-regular fa-copy text-xs"></i>
+                  </button>
+                  <pre id="det-raw-log" class="whitespace-pre-wrap break-all text-slate-300 text-[9.5px] max-h-64 overflow-y-auto">Select an event to view details.</pre>
+                </div>
+              </div>
+
+              <!-- Tab Pane 3: Metadata -->
+              <div id="tab-pane-meta" class="tab-pane mt-2 hidden">
+                <div class="bg-slate-50 rounded-lg p-3 text-[10px] border border-slate-200 max-h-64 overflow-y-auto" id="det-metadata">
+                  Select an event to view details.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END: MainDataAndInspectorSection -->
+    </main>
+
+    <script>
+    // ============================================================
+    // EVENT VIEWER — Production Integration with FastAPI logs.db
+    // ============================================================
+    (function () {
+      "use strict";
+      const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+      let allLogs     = [];   // Real API records only (no fake demo events)
+      let filtered    = [];   // Filtered records
+      let pageSize    = 10;
+      let currentPage = 0;
+      let selectedIdx = 0;
+      let rawLogCache = "";
+      let activeTab   = "norm"; // "norm" | "raw" | "meta"
+
+      // ── Safe DOM Helpers ──────────────────────────────────────
+      function setTxt(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = (val !== null && val !== undefined && val !== "") ? String(val) : "-";
+      }
+
+      function setHtml(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = (val !== null && val !== undefined) ? String(val) : "-";
+      }
+
+      // ── Clean Field Extraction (No Object Leaks) ─────────────
+      function extractSource(log) {
+        if (!log) return "—";
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+
+        if (norm.host && typeof norm.host === "object" && norm.host.name) return String(norm.host.name);
+        if (typeof norm.host === "string" && norm.host) return norm.host;
+        if (pData.host && typeof pData.host === "string") return pData.host;
+        if (norm.source && typeof norm.source === "object" && norm.source.ip) return String(norm.source.ip);
+        if (typeof norm.source === "string" && norm.source) return norm.source;
+        if (pData.src && typeof pData.src === "string") return pData.src;
+        if (log.source_format && typeof log.source_format === "string") return log.source_format;
+        return "—";
+      }
+
+      function extractSrcIp(log) {
+        if (!log) return "-";
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+        const raw = log.raw_log || "";
+
+        if (norm.source && norm.source.ip) return norm.source.ip;
+        if (pData.src) return pData.src;
+        if (pData.source_ip) return pData.source_ip;
+        const m = raw.match(/src=([^\s,;]+)/i) || raw.match(/from\s+([0-9.]+)/i);
+        if (m) return m[1];
+        return "-";
+      }
+
+      function extractDstIp(log) {
+        if (!log) return "-";
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+        const raw = log.raw_log || "";
+
+        if (norm.destination && norm.destination.ip) return norm.destination.ip;
+        if (pData.dst) return pData.dst;
+        if (pData.destination_ip) return pData.destination_ip;
+        const m = raw.match(/dst=([^\s,;]+)/i) || raw.match(/to\s+([0-9.]+)/i);
+        if (m) return m[1];
+        return "-";
+      }
+
+      function extractUser(log) {
+        if (!log) return "-";
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+        const raw = log.raw_log || "";
+
+        if (norm.user && norm.user.name) return norm.user.name;
+        if (typeof norm.user === "string" && norm.user) return norm.user;
+        if (pData.user) return pData.user;
+        const m = raw.match(/user(?:name)?=([^\s,;]+)/i) || raw.match(/user\s+([a-zA-Z0-9_.-]+)/i);
+        if (m) return m[1];
+        return "-";
+      }
+
+      function extractAction(log) {
+        if (!log) return "-";
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+        const raw = log.raw_log || "";
+
+        if (norm.event && norm.event.action) return norm.event.action;
+        if (pData.action) return pData.action;
+        const m = raw.match(/action=([^\s,;]+)/i);
+        if (m) return m[1];
+        if (norm.event && norm.event.type) return norm.event.type;
+        return "-";
+      }
+
+      function extractSeverity(log) {
+        if (!log) return "CLEAN";
+        const norm = log.normalized_data || {};
+        if (norm.severity_level) return norm.severity_level;
+        if (log.severity_level) return log.severity_level;
+        if (norm.event && norm.event.severity_level) return norm.event.severity_level;
+
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+        if (norm.event && norm.event.severity) {
+          const num = parseInt(norm.event.severity, 10);
+          if (!isNaN(num)) {
+            if (num >= 9) return "CRITICAL";
+            if (num >= 7) return "HIGH";
+            if (num >= 4) return "MEDIUM";
+            if (num >= 1) return "LOW";
+          }
+        }
+        return "CLEAN";
+      }
+
+      function extractMessage(log) {
+        if (!log) return "-";
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+
+        if (norm.message) return norm.message;
+        if (pData.message) return pData.message;
+        if (log.raw_log) return log.raw_log.trim();
+        return "-";
+      }
+
+      // ── Badges ────────────────────────────────────────────────
+      function formatBadge(fmt) {
+        const f = String(fmt || "UNKNOWN").toUpperCase();
+        const colors = {
+          JSON:   "bg-sky-50 text-sky-700 border-sky-200",
+          SYSLOG: "bg-blue-50 text-blue-700 border-blue-200",
+          CEF:    "bg-purple-50 text-purple-700 border-purple-200",
+          LEEF:   "bg-cyan-50 text-cyan-700 border-cyan-200",
+          XML:    "bg-rose-50 text-rose-700 border-rose-200",
+          CSV:    "bg-amber-50 text-amber-700 border-amber-200",
+          CUSTOM: "bg-emerald-50 text-emerald-700 border-emerald-200"
+        };
+        const c = colors[f] || "bg-slate-100 text-slate-700 border-slate-200";
+        return `<span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${c}">${f}</span>`;
+      }
+
+      function levelBadge(lvl) {
+        const l = String(lvl || "CLEAN").toUpperCase();
+        if (l === "CRITICAL") {
+          return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 text-[10px] font-bold"><span class="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse"></span>CRITICAL</span>`;
+        }
+        if (["HIGH", "ERROR", "FATAL", "EMERGENCY", "ALERT"].includes(l)) {
+          return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 text-[10px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>${l}</span>`;
+        }
+        if (["MEDIUM", "WARN", "WARNING"].includes(l)) {
+          return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-medium"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>${l}</span>`;
+        }
+        if (["LOW", "NOTICE"].includes(l)) {
+          return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-medium"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>${l}</span>`;
+        }
+        return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-medium"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>${l}</span>`;
+      }
+
+      // ── Table Rendering ───────────────────────────────────────
+      function renderTable() {
+        const tbody = document.getElementById("log-table-body");
+        if (!tbody) return;
+
+        const start = currentPage * pageSize;
+        const end   = Math.min(start + pageSize, filtered.length);
+        const slice = filtered.slice(start, end);
+
+        setTxt("ev-showing-start", filtered.length ? start + 1 : 0);
+        setTxt("ev-showing-end",   end);
+        setTxt("ev-showing-total", filtered.length);
+
+        const countEl = document.getElementById("table-record-count");
+        if (countEl) countEl.textContent = `(${filtered.length} total)`;
+
+        if (!filtered.length) {
+          tbody.innerHTML = `<tr><td colspan="7" class="py-12 text-center text-slate-400 text-xs">
+            ${allLogs.length === 0 ? "No processed events available." : "No events match the current filter criteria."}
+          </td></tr>`;
+          renderPagination();
+          return;
+        }
+
+        tbody.innerHTML = slice.map((log, i) => {
+          const globalIdx = start + i;
+          const timeStr = log.display_timestamp || log.created_at || "-";
+          const src = extractSource(log);
+          const lvl = extractSeverity(log);
+          const act = extractAction(log);
+          const msg = extractMessage(log);
+          const isSelected = globalIdx === selectedIdx;
+
+          return `<tr class="cursor-pointer border-b border-slate-50 transition-colors ${isSelected ? "bg-blue-50/80 font-medium" : "hover:bg-slate-50/70"}"
+                      onclick="arcSelectEvent(${globalIdx})" data-gidx="${globalIdx}">
+            <td class="py-2.5 px-3 text-slate-400 font-medium text-[10px]">${globalIdx + 1}</td>
+            <td class="py-2.5 px-3 font-mono text-[10px] text-slate-500 whitespace-nowrap">${timeStr}</td>
+            <td class="py-2.5 px-3 font-semibold text-[11px] text-slate-800">${src}</td>
+            <td class="py-2.5 px-3">${levelBadge(lvl)}</td>
+            <td class="py-2.5 px-3 text-[11px] text-slate-600">${act}</td>
+            <td class="py-2.5 px-3 text-[10px] text-slate-500 max-w-[280px] truncate" title="${msg}">${msg}</td>
+            <td class="py-2.5 px-3">${formatBadge(log.source_format)}</td>
+          </tr>`;
+        }).join("");
+
+        renderPagination();
+      }
+
+      // ── Dynamic Pagination Controls ───────────────────────────
+      function renderPagination() {
+        const container = document.getElementById("pagination-controls");
+        if (!container) return;
+
+        const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+        let html = "";
+
+        // Prev Button
+        html += `<button class="w-6 h-6 rounded border border-slate-200 flex items-center justify-center ${currentPage === 0 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-50'}"
+                         onclick="arcChangePage(${currentPage - 1})" ${currentPage === 0 ? 'disabled' : ''}>
+          <i class="fa-solid fa-chevron-left text-[9px]"></i>
+        </button>`;
+
+        // Page Numbers
+        for (let p = 0; p < totalPages; p++) {
+          if (totalPages > 7 && Math.abs(p - currentPage) > 2 && p !== 0 && p !== totalPages - 1) {
+            if (p === 1 || p === totalPages - 2) {
+              html += `<span class="px-1 text-slate-400">…</span>`;
+            }
+            continue;
+          }
+          if (p === currentPage) {
+            html += `<button class="w-6 h-6 rounded bg-blue-600 text-white font-semibold flex items-center justify-center">${p + 1}</button>`;
+          } else {
+            html += `<button class="w-6 h-6 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-700"
+                             onclick="arcChangePage(${p})">${p + 1}</button>`;
+          }
+        }
+
+        // Next Button
+        html += `<button class="w-6 h-6 rounded border border-slate-200 flex items-center justify-center ${currentPage >= totalPages - 1 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:bg-slate-50'}"
+                         onclick="arcChangePage(${currentPage + 1})" ${currentPage >= totalPages - 1 ? 'disabled' : ''}>
+          <i class="fa-solid fa-chevron-right text-[9px]"></i>
+        </button>`;
+
+        container.innerHTML = html;
+      }
+
+      window.arcChangePage = function(page) {
+        const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+        if (page < 0 || page >= totalPages) return;
+        currentPage = page;
+        renderTable();
+      };
+
+      // ── Event Details Panel ───────────────────────────────────
+      function renderDetail(log) {
+        if (!log) {
+          setTxt("det-event-id",       "—");
+          setTxt("det-time",           "Select an event to view details.");
+          setTxt("det-format",         "—");
+          setTxt("det-parser",         "—");
+          setTxt("det-src-ip",         "-");
+          setTxt("det-dst-ip",         "-");
+          setTxt("det-user",           "-");
+          setTxt("det-action",         "-");
+          setHtml("det-severity",      levelBadge("CLEAN"));
+          setTxt("det-severity-score", "-");
+          setTxt("det-severity-reason", "-");
+          setTxt("det-source",         "-");
+          setTxt("det-ingestion-time", "-");
+          setTxt("det-message",        "-");
+          setHtml("det-raw-log",       "Select an event to view details.");
+          setHtml("det-normalized-json","Select an event to view details.");
+          setHtml("det-metadata",      "Select an event to view details.");
+          return;
+        }
+
+        const norm = log.normalized_data || {};
+        const parsed = log.parsed_data || {};
+        const pData = (parsed && typeof parsed.data === "object") ? parsed.data : {};
+        const displayTs = log.display_timestamp || log.created_at || "-";
+        const src  = extractSource(log);
+        const act  = extractAction(log);
+        const lvl  = extractSeverity(log);
+        const srcIp = extractSrcIp(log);
+        const dstIp = extractDstIp(log);
+        const user = extractUser(log);
+        const msg  = extractMessage(log);
+
+        setTxt("det-event-id",       log.event_id || norm.event_id || "-");
+        setTxt("det-time",           displayTs);
+        setTxt("det-format",         log.source_format || norm.source_format || "SYSLOG");
+        setTxt("det-parser",         log.parser || norm.parser || (log.source_format ? log.source_format.toLowerCase() + "_parser" : "syslog_v1"));
+        setTxt("det-src-ip",         srcIp);
+        setTxt("det-dst-ip",         dstIp);
+        setTxt("det-user",           user);
+        const sScore = (norm.severity_score !== undefined && norm.severity_score !== null)
+            ? norm.severity_score
+            : ((log.severity_score !== undefined && log.severity_score !== null) ? log.severity_score : null);
+        const sReason = norm.severity_reason || log.severity_reason || "-";
+
+        setTxt("det-action",         act);
+        setHtml("det-severity",      levelBadge(lvl));
+        setTxt("det-severity-score", (sScore !== null && sScore !== undefined) ? `${sScore} / 100` : "-");
+        setTxt("det-severity-reason", sReason);
+        setTxt("det-source",         src);
+        setTxt("det-ingestion-time", displayTs);
+        setTxt("det-message",        msg);
+
+        // Raw log
+        rawLogCache = log.raw_log || "";
+        const rawEl = document.getElementById("det-raw-log");
+        if (rawEl) {
+          rawEl.textContent = log.raw_log || "(No raw log content)";
+        }
+
+        // Normalized JSON
+        const jsonEl = document.getElementById("det-normalized-json");
+        if (jsonEl) {
+          const displayObj = (norm && Object.keys(norm).length > 0) ? norm : (log.parsed_data || log);
+          jsonEl.textContent = JSON.stringify(displayObj, null, 2);
+        }
+
+        // Metadata Key-Value view
+        const metaEl = document.getElementById("det-metadata");
+        if (metaEl) {
+          let metaHtml = '<div class="space-y-1 font-mono text-[10px]">';
+          metaHtml += `<div><span class="font-bold text-slate-600">event_id:</span> <span class="text-blue-700">${log.event_id || "-"}</span></div>`;
+          metaHtml += `<div><span class="font-bold text-slate-600">created_at:</span> <span>${log.created_at || "-"}</span></div>`;
+          metaHtml += `<div><span class="font-bold text-slate-600">source_format:</span> <span>${log.source_format || "-"}</span></div>`;
+          metaHtml += `<div><span class="font-bold text-slate-600">parser:</span> <span>${log.parser || "-"}</span></div>`;
+          if (parsed.data) {
+            metaHtml += '<div class="pt-1 mt-1 border-t border-slate-200 font-bold text-slate-700">Parsed Data Attributes:</div>';
+            for (const [k, v] of Object.entries(parsed.data)) {
+              metaHtml += `<div class="pl-2"><span class="text-slate-500">${k}:</span> <span>${typeof v === "object" ? JSON.stringify(v) : v}</span></div>`;
+            }
+          }
+          metaHtml += '</div>';
+          metaEl.innerHTML = metaHtml;
+        }
+      }
+
+      // ── Tab Switching in Event Details ────────────────────────
+      function setupTabs() {
+        const btnNorm = document.getElementById("tab-btn-norm");
+        const btnRaw  = document.getElementById("tab-btn-raw");
+        const btnMeta = document.getElementById("tab-btn-meta");
+
+        const paneNorm = document.getElementById("tab-pane-norm");
+        const paneRaw  = document.getElementById("tab-pane-raw");
+        const paneMeta = document.getElementById("tab-pane-meta");
+
+        function activateTab(tab) {
+          [btnNorm, btnRaw, btnMeta].forEach(b => {
+            b.className = "tab-trigger px-3 py-1.5 font-medium text-slate-500 hover:text-slate-800 border-b-2 border-transparent";
+          });
+          [paneNorm, paneRaw, paneMeta].forEach(p => p.classList.add("hidden"));
+
+          if (tab === "norm") {
+            btnNorm.className = "tab-trigger px-3 py-1.5 font-bold text-orange-600 border-b-2 border-orange-500 bg-orange-50/50 rounded-t";
+            paneNorm.classList.remove("hidden");
+          } else if (tab === "raw") {
+            btnRaw.className = "tab-trigger px-3 py-1.5 font-bold text-orange-600 border-b-2 border-orange-500 bg-orange-50/50 rounded-t";
+            paneRaw.classList.remove("hidden");
+          } else if (tab === "meta") {
+            btnMeta.className = "tab-trigger px-3 py-1.5 font-bold text-orange-600 border-b-2 border-orange-500 bg-orange-50/50 rounded-t";
+            paneMeta.classList.remove("hidden");
+          }
+        }
+
+        if (btnNorm) btnNorm.addEventListener("click", () => activateTab("norm"));
+        if (btnRaw)  btnRaw.addEventListener("click",  () => activateTab("raw"));
+        if (btnMeta) btnMeta.addEventListener("click", () => activateTab("meta"));
+      }
+
+      // ── Global Event Selection ────────────────────────────────
+      window.arcSelectEvent = function(idx) {
+        selectedIdx = idx;
+        const log = filtered[idx] || allLogs[idx];
+        renderDetail(log);
+        renderTable();
+      };
+
+      // ── Events by Source Donut Chart (Real Data) ──────────────
+      function renderSourceDonutChart() {
+        const chartBody = document.getElementById("source-chart-body");
+        if (!chartBody) return;
+        if (!allLogs.length) {
+          chartBody.innerHTML = '<div class="text-xs text-slate-400 text-center py-6 w-full">No source data available</div>';
+          return;
+        }
+
+        const counts = {};
+        allLogs.forEach(l => {
+          const s = extractSource(l);
+          counts[s] = (counts[s] || 0) + 1;
+        });
+
+        const total = allLogs.length;
+        const palette = [
+          "#2563eb", "#10b981", "#f97316", "#8b5cf6", "#06b6d4",
+          "#f59e0b", "#ec4899", "#ef4444", "#64748b"
+        ];
+
+        let entries = Object.keys(counts)
+          .map(src => ({ name: src, count: counts[src], pct: (counts[src] / total) * 100 }))
+          .sort((a, b) => b.count - a.count);
+
+        if (entries.length > 5) {
+          const top = entries.slice(0, 4);
+          const othersCount = entries.slice(4).reduce((sum, e) => sum + e.count, 0);
+          entries = [...top, { name: "Others", count: othersCount, pct: (othersCount / total) * 100 }];
+        }
+
+        const C = 238.761; // 2 * PI * 38
+        let cumPct = 0;
+        const circlesSvg = entries.map((e, idx) => {
+          const color = palette[idx % palette.length];
+          const dash = (e.pct / 100) * C;
+          const offset = (cumPct / 100) * C;
+          cumPct += e.pct;
+          return `<circle cx="50" cy="50" r="38" fill="transparent"
+                 stroke="${color}" stroke-width="16"
+                 stroke-dasharray="${dash.toFixed(2)} ${(C - dash).toFixed(2)}"
+                 stroke-dashoffset="-${offset.toFixed(2)}"
+                 class="transition-all duration-300"></circle>`;
+        }).join("");
+
+        const legendHtml = entries.map((e, idx) => {
+          const color = palette[idx % palette.length];
+          return `<div class="flex items-center justify-between text-[11px] gap-2 py-0.5">
+            <span class="flex items-center gap-1.5 truncate max-w-[130px]" title="${e.name}">
+              <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${color}"></span>
+              <span class="text-slate-600 truncate font-medium">${e.name}</span>
+            </span>
+            <span class="font-bold text-slate-800 text-[10px] ml-auto">${Math.round(e.pct)}% (${e.count})</span>
+          </div>`;
+        }).join("");
+
+        chartBody.innerHTML = `
+          <div class="relative w-36 h-36 flex items-center justify-center flex-shrink-0">
+            <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
+              ${circlesSvg}
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span class="text-base font-bold text-slate-900 leading-tight">${total}</span>
+              <span class="text-[9px] text-slate-500 font-medium">Events</span>
+            </div>
+          </div>
+          <div class="flex-1 pl-4 space-y-1">
+            ${legendHtml}
+          </div>
+        `;
+      }
+
+      // ── Event Severity Trend Chart (Real Data) ────────────────
+      function renderTrendChart() {
+        const total = allLogs.length;
+        const yMaxEl = document.getElementById("trend-y-max");
+        const yMidEl = document.getElementById("trend-y-mid");
+        if (yMaxEl) yMaxEl.textContent = total ? String(total) : "10";
+        if (yMidEl) yMidEl.textContent = total ? String(Math.round(total / 2)) : "5";
+
+        let infoCount = 0, warnCount = 0, errCount = 0;
+        allLogs.forEach(l => {
+          const s = extractSeverity(l);
+          if (["ERROR", "CRITICAL", "FATAL"].includes(s)) errCount++;
+          else if (["WARN", "WARNING", "NOTICE"].includes(s)) warnCount++;
+          else infoCount++;
+        });
+
+        // Compute relative Y heights in 160px viewBox (baseline is y=140, top is y=20)
+        const scale = total ? 110 / total : 1;
+        const yInfo = Math.max(25, 140 - (infoCount * scale));
+        const yWarn = Math.max(25, 140 - (warnCount * scale));
+        const yErr  = Math.max(25, 140 - (errCount * scale));
+
+        const infoArea = document.getElementById("trend-path-info-area");
+        const infoLine = document.getElementById("trend-path-info");
+        const warnArea = document.getElementById("trend-path-warn-area");
+        const warnLine = document.getElementById("trend-path-warn");
+        const errLine  = document.getElementById("trend-path-err");
+
+        if (infoArea && infoLine) {
+          infoArea.setAttribute("d", `M 40 140 C 150 ${yInfo + 10}, 300 ${yInfo - 5}, 530 ${yInfo} L 530 140 Z`);
+          infoLine.setAttribute("d", `M 40 140 C 150 ${yInfo + 10}, 300 ${yInfo - 5}, 530 ${yInfo}`);
+        }
+        if (warnArea && warnLine) {
+          warnArea.setAttribute("d", `M 40 140 C 180 ${yWarn + 5}, 360 ${yWarn - 5}, 530 ${yWarn} L 530 140 Z`);
+          warnLine.setAttribute("d", `M 40 140 C 180 ${yWarn + 5}, 360 ${yWarn - 5}, 530 ${yWarn}`);
+        }
+        if (errLine) {
+          errLine.setAttribute("d", `M 40 140 C 200 ${yErr + 2}, 380 ${yErr - 2}, 530 ${yErr}`);
+        }
+      }
+
+      // ── Metric Cards ──────────────────────────────────────────
+      function updateMetricCards() {
+        const total = allLogs.length;
+        let info = 0, warn = 0, err = 0;
+        const sources = new Set();
+
+        allLogs.forEach(l => {
+          const lvl = extractSeverity(l);
+          if (["ERROR", "CRITICAL", "FATAL"].includes(lvl)) err++;
+          else if (["WARN", "WARNING", "NOTICE"].includes(lvl)) warn++;
+          else info++;
+
+          const s = extractSource(l);
+          if (s && s !== "—" && s !== "-") sources.add(s);
+        });
+
+        setTxt("ev-total", total.toLocaleString());
+        setTxt("ev-info",  info.toLocaleString());
+        setTxt("ev-info-pct", total ? ((info / total) * 100).toFixed(1) + "%" : "0.0%");
+        setTxt("ev-warning", warn.toLocaleString());
+        setTxt("ev-warning-pct", total ? ((warn / total) * 100).toFixed(1) + "%" : "0.0%");
+        setTxt("ev-error", err.toLocaleString());
+        setTxt("ev-error-pct", total ? ((err / total) * 100).toFixed(1) + "%" : "0.0%");
+        setTxt("ev-sources", sources.size || (total > 0 ? 1 : 0));
+      }
+
+      // ── Populate Source Dropdown ──────────────────────────────
+      function populateSourceFilter() {
+        const srcSelect = document.getElementById("filter-source");
+        if (!srcSelect) return;
+        const currentVal = srcSelect.value;
+        const sources = [...new Set(allLogs.map(l => extractSource(l)).filter(s => s && s !== "—" && s !== "-"))].sort();
+
+        srcSelect.innerHTML = `<option value="All Sources">All Sources</option>` +
+          sources.map(s => `<option value="${s}" ${s === currentVal ? "selected" : ""}>${s}</option>`).join("");
+      }
+
+      // ── Filter Logic (STEP 8) ─────────────────────────────────
+      function applyFilters() {
+        const searchVal = (document.getElementById("filter-search")?.value || "").toLowerCase().trim();
+        const srcVal    = document.getElementById("filter-source")?.value || "All Sources";
+        const lvlVal    = document.getElementById("filter-level")?.value || "All Levels";
+        const fmtVal    = document.getElementById("filter-format")?.value || "All Formats";
+
+        filtered = allLogs.filter(log => {
+          const raw = (log.raw_log || "").toLowerCase();
+          const fmt = (log.source_format || "").toUpperCase();
+          const lvl = extractSeverity(log);
+          const src = extractSource(log).toLowerCase();
+          const msg = extractMessage(log).toLowerCase();
+          const eid = (log.event_id || "").toLowerCase();
+          const sip = extractSrcIp(log).toLowerCase();
+          const dip = extractDstIp(log).toLowerCase();
+          const usr = extractUser(log).toLowerCase();
+          const prs = (log.parser || "").toLowerCase();
+
+          // Search matches across any meaningful field
+          const matchSearch = !searchVal ||
+            raw.includes(searchVal) ||
+            src.includes(searchVal) ||
+            msg.includes(searchVal) ||
+            eid.includes(searchVal) ||
+            sip.includes(searchVal) ||
+            dip.includes(searchVal) ||
+            usr.includes(searchVal) ||
+            prs.includes(searchVal);
+
+          // Source matches
+          const matchSrc = srcVal === "All Sources" || src === srcVal.toLowerCase();
+          // Level matches
+          const matchLvl = lvlVal === "All Levels" || lvl === lvlVal.toUpperCase();
+          // Format matches
+          const matchFmt = fmtVal === "All Formats" || fmt === fmtVal.toUpperCase();
+
+          return matchSearch && matchSrc && matchLvl && matchFmt;
+        });
+
+        currentPage = 0;
+        selectedIdx = 0;
+        renderTable();
+        if (filtered.length > 0) {
+          renderDetail(filtered[0]);
+        } else {
+          renderDetail(null);
+        }
+      }
+
+      // ── Wire Filter & Action Buttons ──────────────────────────
+      function wireControls() {
+        const applyBtn = document.getElementById("filter-apply-btn");
+        if (applyBtn) applyBtn.addEventListener("click", applyFilters);
+
+        const resetBtn = document.getElementById("filter-reset-btn");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", () => {
+            const searchEl = document.getElementById("filter-search");
+            if (searchEl) searchEl.value = "";
+            const srcEl = document.getElementById("filter-source");
+            if (srcEl) srcEl.value = "All Sources";
+            const lvlEl = document.getElementById("filter-level");
+            if (lvlEl) lvlEl.value = "All Levels";
+            const fmtEl = document.getElementById("filter-format");
+            if (fmtEl) fmtEl.value = "All Formats";
+            filtered = [...allLogs];
+            currentPage = 0;
+            selectedIdx = 0;
+            renderTable();
+            if (filtered.length > 0) renderDetail(filtered[0]);
+          });
+        }
+
+        const searchInput = document.getElementById("filter-search");
+        if (searchInput) {
+          searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") applyFilters();
+          });
+        }
+
+        const headerSearch = document.getElementById("header-search-input");
+        if (headerSearch) {
+          headerSearch.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              const val = headerSearch.value.trim();
+              const mainSearch = document.getElementById("filter-search");
+              if (mainSearch) mainSearch.value = val;
+              applyFilters();
+            }
+          });
+        }
+
+        const rowsPerPageSelect = document.getElementById("rows-per-page");
+        if (rowsPerPageSelect) {
+          rowsPerPageSelect.addEventListener("change", (e) => {
+            pageSize = parseInt(e.target.value, 10);
+            currentPage = 0;
+            renderTable();
+          });
+        }
+
+        const exportBtn = document.getElementById("export-btn");
+        if (exportBtn) {
+          exportBtn.addEventListener("click", () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(filtered, null, 2));
+            const dlAnchor = document.createElement("a");
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `arc_events_${Date.now()}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+          });
+        }
+
+        const liveBtn = document.getElementById("live-refresh-btn");
+        if (liveBtn) liveBtn.addEventListener("click", loadEvents);
+
+        // Previous / Next buttons in Event Details panel
+        const prevBtn = document.getElementById("det-prev-btn");
+        const nextBtn = document.getElementById("det-next-btn");
+        if (prevBtn) {
+          prevBtn.addEventListener("click", () => {
+            if (selectedIdx > 0) arcSelectEvent(selectedIdx - 1);
+          });
+        }
+        if (nextBtn) {
+          nextBtn.addEventListener("click", () => {
+            if (selectedIdx < filtered.length - 1) arcSelectEvent(selectedIdx + 1);
+          });
+        }
+      }
+
+      // ── Main Load Function (STEP 1 & 2) ───────────────────────
+      async function loadEvents() {
+        try {
+          const res = await fetch(`${API}/processed`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+          allLogs = Array.isArray(data) ? data : (data.logs || data.items || data.events || []);
+
+          filtered = [...allLogs];
+          selectedIdx = 0;
+
+          updateMetricCards();
+          populateSourceFilter();
+          renderSourceDonutChart();
+          renderTrendChart();
+          renderTable();
+
+          if (filtered.length > 0) {
+            renderDetail(filtered[0]);
+          } else {
+            renderDetail(null);
+          }
+        } catch (err) {
+          console.error("Failed to load events from backend:", err);
+          const tbody = document.getElementById("log-table-body");
+          if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="7" class="py-10 text-center text-rose-500 text-xs">
+              Failed to connect to ARC backend at ${API}/processed: ${err.message}
+            </td></tr>`;
+          }
+        }
+      }
+
+      // ── Clipboard Helpers ─────────────────────────────────────
+      window.copyRaw = function() {
+        if (!rawLogCache) return;
+        navigator.clipboard.writeText(rawLogCache).then(() => {
+          const btn = document.getElementById("copy-raw-btn");
+          if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
+            setTimeout(() => btn.innerHTML = orig, 1500);
+          }
+        });
+      };
+
+      window.copyJson = function() {
+        const jsonEl = document.getElementById("det-normalized-json");
+        if (!jsonEl) return;
+        navigator.clipboard.writeText(jsonEl.textContent).then(() => {
+          const btn = document.getElementById("copy-json-btn");
+          if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
+            setTimeout(() => btn.innerHTML = orig, 1500);
+          }
+        });
+      };
+
+      // ── Boot ──────────────────────────────────────────────────
+      document.addEventListener("DOMContentLoaded", () => {
+        setupTabs();
+        wireControls();
+        loadEvents();
+      });
+
+      // Expose for external calls
+      window.arcEvtRefresh = loadEvents;
+    })();
+    </script>
+  </div>
+  <!-- END: MainContentWrapper -->
+</div>
+</body>
+</html>

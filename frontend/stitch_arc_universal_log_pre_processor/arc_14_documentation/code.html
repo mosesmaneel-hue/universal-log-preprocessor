@@ -1,0 +1,606 @@
+﻿<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Documentation - Universal Log Pre-Processing Framework</title>
+<!-- External Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind CSS Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            arc: {
+              navy: '#050c18',
+              sidebar: '#08101e',
+              sidebarHover: '#131e33',
+              sidebarActive: '#ea580c',
+              border: '#e2e8f0',
+              accent: '#2563eb',
+              accentHover: '#1d4ed8',
+              darkCode: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Lucide Icons Library for exact dashboard iconography -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Custom Styles data-purpose="base-styling" -->
+<style data-purpose="base-styling">
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-[#f8fafc] text-slate-800 font-sans antialiased min-h-screen flex">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-cyan-400"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation (Active) -->
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-white"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-80 text-white"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- BEGIN: TopGlobalHeader -->
+<header class="bg-white border-b border-slate-200 h-16 px-8 flex items-center justify-between sticky top-0 z-10">
+<!-- Title & Tagline -->
+<div>
+<h1 class="text-base font-bold text-slate-900 leading-tight">Universal Log Pre-Processing Framework</h1>
+<p class="text-xs text-blue-600 font-medium">Learn Once. Process Forever.</p>
+</div>
+<!-- Search & Status & Profile Actions -->
+<div class="flex items-center gap-5">
+<!-- Global Search Input -->
+<div class="relative w-80">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+<input class="w-full text-xs pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="Search documentation (e.g., parsers, API, deployment...)" type="text">
+</div>
+<!-- System Health Pill -->
+<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg text-xs">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<div>
+<span class="font-semibold text-emerald-900 block leading-tight text-[11px]">System Healthy</span>
+<span class="text-[9px] text-emerald-700 block leading-none">All services operational</span>
+</div>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bell" aria-hidden="true" class="lucide lucide-bell w-4 h-4"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<!-- User Profile Pill -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-slate-200 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-[#0a1931] text-white flex items-center justify-center font-bold text-xs">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-800">Administrator</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down w-3.5 h-3.5 text-slate-500"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+</header>
+<!-- END: TopGlobalHeader -->
+<!-- BEGIN: MainScrollContainer -->
+<main class="flex-1 p-8 overflow-y-auto">
+<div class="max-w-[1360px] mx-auto flex gap-8">
+<!-- Left 8-Col Main Content Area -->
+<div class="flex-1 min-w-0 space-y-6">
+<!-- Page Header & Breadcrumbs -->
+<div class="flex items-center justify-between pb-1">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Documentation</h2>
+<p class="text-xs text-slate-500 mt-1">Everything you need to learn, configure, and expand the Universal Log Pre-Processing Framework.</p>
+</div>
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+<a class="hover:text-blue-600 transition-colors" href="#">Dashboard</a>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400"><path d="m9 18 6-6-6-6"></path></svg>
+<span class="text-slate-800 font-semibold">Documentation</span>
+</nav>
+</div>
+<!-- BEGIN: HeroCard -->
+<section class="bg-gradient-to-r from-[#eef5ff] via-[#f0f6ff] to-[#e8f1ff] border border-blue-100 rounded-2xl p-7 relative overflow-hidden shadow-[0_2px_12px_rgba(37,99,235,0.06)] flex items-center justify-between" data-purpose="hero-banner">
+<div class="max-w-xl z-10">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/30 shrink-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="book-open" aria-hidden="true" class="lucide lucide-book-open w-7 h-7"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+</div>
+<div>
+<h3 class="text-xl font-bold text-slate-900 tracking-tight">Welcome to the Documentation</h3>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                    Learn how to ingest, parse, normalize, analyze, and secure your logs with step-by-step guides, examples, and API references.
+                  </p>
+</div>
+</div>
+<!-- Inner Search Box -->
+<div class="mt-5 relative max-w-lg">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+<input class="w-full text-xs pl-10 pr-4 py-2.5 bg-white border border-blue-200/80 rounded-xl text-slate-800 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="Search docs... (e.g., installation, parser, API)" type="text">
+</div>
+</div>
+<!-- Husky / Wolf Cyber Mascot Illustration and Quote -->
+<div class="flex items-center gap-5 shrink-0 pr-2 z-10">
+<!-- Mascots SVG -->
+<div class="w-32 h-36 flex items-center justify-center p-3 rounded-2xl bg-white/80 border border-blue-200/80 shadow-sm relative"><img src="https://lh3.googleusercontent.com/aida/AEtjO1VAaFjbxLAewGfx3eqCslKeYHqHyvEFBN8z_m4nOobCyhxL4YmVM4qb1cZ3WDXlaVoETiqk_TXLBpA3PAVbUv2NAuiCoQVfGz5MffLw2g4ic8VOuiBqB652TNj2cGvrZRRSuUhW6ntmYMvZGaDdVJ7s1irgxIV8TR3CDk8ymG1WRivZUpl66MGTKFSLGudgrw6HbVgE5-U9rcAnIpAJfv8JQ2qub0ZJzXoczxOgKxh46T4Mh3KY5N0aaOE" alt="ARC Logo" class="w-full h-full object-contain filter invert drop-shadow-sm"></div>
+<!-- Quote -->
+<div class="text-right">
+<blockquote class="text-lg font-extrabold text-blue-950 leading-snug tracking-tight">
+                  â€œLogs today.<br>Better security<br>tomorrow.â€
+                </blockquote>
+<p class="text-xs text-blue-700 font-semibold mt-1.5">â€” Team ARC</p>
+</div>
+</div>
+</section>
+<!-- END: HeroCard -->
+<!-- BEGIN: QuickLinksSection -->
+<section data-purpose="quick-links">
+<h4 class="text-base font-bold text-slate-900 mb-0.5">Quick Links</h4>
+<p class="text-xs text-slate-500 mb-3.5">Jump to the most important resources.</p>
+<div class="grid grid-cols-6 gap-3.5">
+<!-- Link 1: Getting Started -->
+<a class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm hover:shadow hover:border-emerald-300 transition-all flex flex-col items-center text-center group" href="#">
+<div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rocket" aria-hidden="true" class="lucide lucide-rocket w-5 h-5"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"></path><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"></path></svg>
+</div>
+<h5 class="text-xs font-bold text-slate-800">Getting Started</h5>
+<p class="text-[10px] text-slate-500 mt-0.5">Set up in minutes</p>
+</a>
+<!-- Link 2: User Guides -->
+<a class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm hover:shadow hover:border-purple-300 transition-all flex flex-col items-center text-center group" href="#">
+<div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text w-5 h-5"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+</div>
+<h5 class="text-xs font-bold text-slate-800">User Guides</h5>
+<p class="text-[10px] text-slate-500 mt-0.5">Step-by-step tutorials</p>
+</a>
+<!-- Link 3: Parser Development -->
+<a class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm hover:shadow hover:border-amber-300 transition-all flex flex-col items-center text-center group" href="#">
+<div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="code" aria-hidden="true" class="lucide lucide-code w-5 h-5"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+</div>
+<h5 class="text-xs font-bold text-slate-800">Parser Development</h5>
+<p class="text-[10px] text-slate-500 mt-0.5">Build custom parsers</p>
+</a>
+<!-- Link 4: Normalization -->
+<a class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm hover:shadow hover:border-blue-300 transition-all flex flex-col items-center text-center group" href="#">
+<div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="database" aria-hidden="true" class="lucide lucide-database w-5 h-5"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
+</div>
+<h5 class="text-xs font-bold text-slate-800">Normalization</h5>
+<p class="text-[10px] text-slate-500 mt-0.5">Schema &amp; field mapping</p>
+</a>
+<!-- Link 5: API Reference -->
+<a class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm hover:shadow hover:border-red-300 transition-all flex flex-col items-center text-center group" href="#">
+<div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cog" aria-hidden="true" class="lucide lucide-cog w-5 h-5"><path d="M11 10.27 7 3.34"></path><path d="m11 13.73-4 6.93"></path><path d="M12 22v-2"></path><path d="M12 2v2"></path><path d="M14 12h8"></path><path d="m17 20.66-1-1.73"></path><path d="m17 3.34-1 1.73"></path><path d="M2 12h2"></path><path d="m20.66 17-1.73-1"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m3.34 7 1.73 1"></path><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="12" r="8"></circle></svg>
+</div>
+<h5 class="text-xs font-bold text-slate-800">API Reference</h5>
+<p class="text-[10px] text-slate-500 mt-0.5">Integrate with our APIs</p>
+</a>
+<!-- Link 6: Deployment -->
+<a class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm hover:shadow hover:border-teal-300 transition-all flex flex-col items-center text-center group" href="#">
+<div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="cloud" aria-hidden="true" class="lucide lucide-cloud w-5 h-5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+</div>
+<h5 class="text-xs font-bold text-slate-800">Deployment</h5>
+<p class="text-[10px] text-slate-500 mt-0.5">Production setup</p>
+</a>
+</div>
+</section>
+<!-- END: QuickLinksSection -->
+<!-- BEGIN: DocumentationGrid2x2 -->
+<section class="grid grid-cols-2 gap-5" data-purpose="documentation-cards-grid">
+<!-- Card 1: Getting Started -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-5 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                    1
+                  </div>
+<div>
+<h5 class="text-sm font-bold text-slate-900 leading-tight">Getting Started</h5>
+<p class="text-[11px] text-slate-500">Set up the framework and process your first log file.</p>
+</div>
+</div>
+<!-- Numbered Steps -->
+<ol class="space-y-2.5 text-xs text-slate-700 pl-1">
+<li class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-semibold flex items-center justify-center shrink-0">1</span>
+<span class="">Install the framework</span>
+</li>
+<li class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-semibold flex items-center justify-center shrink-0">2</span>
+<span class="">Configure a data source</span>
+</li>
+<li class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-semibold flex items-center justify-center shrink-0">3</span>
+<span class="">Ingest and parse a sample log</span>
+</li>
+<li class="flex items-center gap-2.5">
+<span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-semibold flex items-center justify-center shrink-0">4</span>
+<span class="">View results in the dashboard</span>
+</li>
+</ol>
+</div>
+<div class="mt-5">
+<a class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg transition-colors shadow-sm" href="#">
+<span class="">View Full Guide</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3.5 h-3.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- Card 2: Example: Ingest a Log File (CLI terminal syntax) -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-5 shadow-sm flex flex-col justify-between">
+<div>
+<div class="mb-3">
+<h5 class="text-sm font-bold text-slate-900 leading-tight">Example: Ingest a Log File</h5>
+<p class="text-[11px] text-slate-500 mt-0.5">Process a sample log file using the CLI.</p>
+</div>
+<!-- Code Terminal Box -->
+<div class="rounded-lg bg-[#0e1726] border border-slate-800 text-slate-200 text-xs font-mono overflow-hidden shadow-inner">
+<div class="flex items-center justify-between px-3 py-1.5 bg-[#0a101d] border-b border-slate-800/80 text-[11px] text-slate-400">
+<span class="text-slate-400 font-sans">bash</span>
+<button class="flex items-center gap-1 hover:text-slate-200 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy w-3 h-3"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+<span class="text-[10px]">Copy</span>
+</button>
+</div>
+<div class="p-3.5 space-y-1.5 text-[11px] leading-relaxed select-text overflow-x-auto">
+<div class="flex gap-3">
+<span class="text-slate-600 select-none w-3 text-right">1</span>
+<span class="text-slate-400"># Ingest a sample log file</span>
+</div>
+<div class="flex gap-3">
+<span class="text-slate-600 select-none w-3 text-right">2</span>
+<div class=""><span class="text-blue-400 font-semibold">arc</span> <span class="text-amber-400">ingest</span> <span class="text-teal-400">--source</span> syslog <span class="text-teal-400">--file</span> /path/to/sample.log</div>
+</div>
+<div class="flex gap-3">
+<span class="text-slate-600 select-none w-3 text-right">3</span>
+<span></span>
+</div>
+<div class="flex gap-3">
+<span class="text-slate-600 select-none w-3 text-right">4</span>
+<span class="text-slate-400"># View parsing results</span>
+</div>
+<div class="flex gap-3">
+<span class="text-slate-600 select-none w-3 text-right">5</span>
+<div><span class="text-blue-400 font-semibold">arc</span> <span class="text-amber-400">events</span> <span class="text-teal-400">--last</span> <span class="text-emerald-400">100</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Parser Development -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-5 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="code" aria-hidden="true" class="lucide lucide-code w-4 h-4"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg>
+</div>
+<div>
+<h5 class="text-sm font-bold text-slate-900 leading-tight">Parser Development</h5>
+<p class="text-[11px] text-slate-500">Create and register custom parsers for new log formats.</p>
+</div>
+</div>
+<!-- Feature Checkmarks List -->
+<ul class="space-y-2.5 text-xs text-slate-700 pl-1">
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Understand the parser structure</span>
+</li>
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Use built-in templates</span>
+</li>
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Test parsers with sample logs</span>
+</li>
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Register in the parser registry</span>
+</li>
+</ul>
+</div>
+<div class="mt-5">
+<a class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg transition-colors shadow-sm" href="#">
+<span class="">Learn More</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3.5 h-3.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- Card 4: Normalization -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-5 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="database" aria-hidden="true" class="lucide lucide-database w-4 h-4"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
+</div>
+<div>
+<h5 class="text-sm font-bold text-slate-900 leading-tight">Normalization</h5>
+<p class="text-[11px] text-slate-500">Map parsed fields to a common schema for consistent analysis.</p>
+</div>
+</div>
+<!-- Feature Checkmarks List -->
+<ul class="space-y-2.5 text-xs text-slate-700 pl-1">
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Field mapping and transformation</span>
+</li>
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Use of ECS-like schema</span>
+</li>
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Handle missing or optional fields</span>
+</li>
+<li class="flex items-center gap-2.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check w-4 h-4 text-blue-600 shrink-0 stroke-[2.5]"><path d="M20 6 9 17l-5-5"></path></svg>
+<span class="">Validate normalized output</span>
+</li>
+</ul>
+</div>
+<div class="mt-5">
+<a class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg transition-colors shadow-sm" href="#">
+<span class="">View Schema Docs</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right" aria-hidden="true" class="lucide lucide-arrow-right w-3.5 h-3.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</section>
+<!-- END: DocumentationGrid2x2 -->
+</div>
+<!-- END: Left 8-Col Main Content Area -->
+<!-- BEGIN: RightStickySidebar -->
+<aside class="w-64 shrink-0 space-y-6">
+<!-- On This Page Widget -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-4 shadow-sm">
+<h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">On This Page</h4>
+<div class="space-y-2 border-l border-slate-200 pl-3 text-xs">
+<a class="block font-medium text-blue-600 border-l-2 -ml-[14px] pl-3 border-blue-600" href="#">Getting Started</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">User Guides</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">Parser Development</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">Normalization &amp; Schema</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">API Reference</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">Deployment</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">Troubleshooting</a>
+<a class="block text-slate-600 hover:text-blue-600 transition-colors" href="#">FAQs</a>
+</div>
+</div>
+<!-- Popular Topics Widget -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-4 shadow-sm">
+<div class="flex items-center gap-2 mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-4 h-4 text-blue-600 fill-blue-600"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+<h4 class="text-xs font-bold text-slate-900 tracking-tight">Popular Topics</h4>
+</div>
+<div class="divide-y divide-slate-100 text-xs">
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">Installation Guide</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">Supported Log Formats</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">Writing a Custom Parser</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">Normalization Schema (ECS)</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">REST API Reference</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">Docker Deployment</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">Troubleshooting</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="py-2 flex items-center justify-between text-slate-700 hover:text-blue-600 transition-colors group" href="#">
+<span class="">FAQs</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" class="lucide lucide-chevron-right w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+</div>
+</div>
+<!-- Need Help? Widget -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-4 shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[11px] font-bold">
+                ?
+              </div>
+<h4 class="text-xs font-bold text-slate-900 tracking-tight">Need Help?</h4>
+</div>
+<p class="text-[11px] text-slate-500 mb-3 ml-7">Can't find what you're looking for?</p>
+<div class="space-y-2.5 text-xs">
+<a class="flex items-center gap-2.5 text-slate-700 hover:text-blue-600 transition-colors" href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="mail" aria-hidden="true" class="lucide lucide-mail w-3.5 h-3.5 text-blue-600 shrink-0"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+<span class="font-medium underline decoration-slate-300 underline-offset-2 hover:decoration-blue-600">Contact Support</span>
+</a>
+<a class="flex items-center gap-2.5 text-slate-700 hover:text-blue-600 transition-colors" href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square w-3.5 h-3.5 text-blue-600 shrink-0"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path></svg>
+<span class="font-medium underline decoration-slate-300 underline-offset-2 hover:decoration-blue-600">Ask AI Assistant</span>
+</a>
+<a class="flex items-center gap-2.5 text-slate-700 hover:text-blue-600 transition-colors" href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-circle" aria-hidden="true" class="lucide lucide-message-circle w-3.5 h-3.5 text-blue-600 shrink-0"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path></svg>
+<span class="font-medium underline decoration-slate-300 underline-offset-2 hover:decoration-blue-600">Join Community</span>
+</a>
+<a class="flex items-center gap-2.5 text-slate-700 hover:text-blue-600 transition-colors" href="#">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bug" aria-hidden="true" class="lucide lucide-bug w-3.5 h-3.5 text-blue-600 shrink-0"><path d="M12 20v-9"></path><path d="M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z"></path><path d="M14.12 3.88 16 2"></path><path d="M21 21a4 4 0 0 0-3.81-4"></path><path d="M21 5a4 4 0 0 1-3.55 3.97"></path><path d="M22 13h-4"></path><path d="M3 21a4 4 0 0 1 3.81-4"></path><path d="M3 5a4 4 0 0 0 3.55 3.97"></path><path d="M6 13H2"></path><path d="m8 2 1.88 1.88"></path><path d="M9 7.13V6a3 3 0 1 1 6 0v1.13"></path></svg>
+<span class="font-medium underline decoration-slate-300 underline-offset-2 hover:decoration-blue-600">Report an Issue</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- END: RightStickySidebar -->
+</div>
+</main>
+<!-- END: MainScrollContainer -->
+</div>
+<!-- END: MainContentArea -->
+<!-- BEGIN: Scripts -->
+<script data-purpose="icon-initialization">
+    // Initialize Lucide icons on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+  </script>
+<!-- END: Scripts -->
+
+
+
+<script>
+// Shared navigation fix
+(function() {
+    const map = {
+        "Dashboard": "../arc_01_dashboard/code.html",
+        "Log Ingestion": "../arc_02_log_ingestion/code.html",
+        "Source Management": "../arc_03_source_management/code.html",
+        "Format Detection": "../arc_04_format_detection/code.html",
+        "Parser Registry": "../arc_05_parser_registry/code.html",
+        "Normalization / Schema": "../arc_06_normalization_schema/code.html",
+        "Event Viewer": "../arc_07_event_viewer/code.html",
+        "AI Assistant": "../arc_08_ai_assistant/code.html",
+        "Quarantine": "../arc_09_quarantine/code.html",
+        "Analytics": "../arc_10_analytics/code.html",
+        "Audit Logs": "../arc_11_audit_logs/code.html",
+        "Alerts": "../arc_12_alerts/code.html",
+        "Settings": "../arc_13_settings/code.html",
+        "Documentation": "../arc_14_documentation/code.html"
+    };
+    document.querySelectorAll('a[href="#"], a[href=""]').forEach(a => {
+        const txt = (a.querySelector('span')?.textContent || a.textContent).trim();
+        if (map[txt]) a.href = map[txt];
+    });
+})();
+</script>
+</body></html>

@@ -1,0 +1,992 @@
+﻿<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ARC - AI Assistant</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sidebar: '#030816',
+            navHover: '#0b162c',
+            surfaceBg: '#f8fafc',
+            primaryOrange: '#f97316',
+            brandBlue: '#0284c7',
+            codeBg: '#090d16',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            serif: ['Cinzel', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars">
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<script src="/stitch_arc_universal_log_pre_processor/api.js"></script></head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans flex h-screen overflow-hidden select-none">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0 bg-[#071228] text-slate-300 flex flex-col justify-between sidebar-glow min-h-screen border-r border-[#15233e] z-30 select-none sticky top-0 h-screen overflow-y-auto" data-purpose="main-sidebar">
+  <!-- Top Branding & Navigation -->
+  <div class="flex flex-col">
+        <!-- Logo Container -->
+    <div class="px-6 pt-6 pb-4 flex flex-col items-center border-b border-slate-800/60">
+      <div class="w-16 h-20 flex items-center justify-center mb-1">
+        <svg class="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="22">
+            <path d="M 250 50 L 80 155 L 80 300 L 250 405 L 250 255 L 140 185 L 250 115 Z" fill="none"></path>
+            <path d="M 250 50 L 420 155 L 420 300 L 250 405 L 250 255 L 360 185 L 250 115 Z" fill="none"></path>
+            <line stroke-width="22" x1="250" x2="250" y1="50" y2="115"></line>
+            <line stroke-width="12" x1="100" x2="100" y1="280" y2="340"></line>
+            <path d="M 90 380 C 85 365 92 345 100 345 C 108 345 115 365 110 380 L 115 400 L 85 400 Z" fill="#ffffff" stroke="none"></path>
+            <path d="M 145 365 L 145 490 L 250 555 L 355 490 L 355 365" fill="none" stroke-width="22"></path>
+            <path d="M 200 415 L 200 460 L 250 490 L 300 460 L 300 415" fill="none" stroke-width="20"></path>
+          </g>
+          <text fill="#ffffff" font-family="'Times New Roman', 'Cinzel', 'Baskerville', serif" font-size="105" font-weight="500" letter-spacing="12" text-anchor="middle" x="250" y="660">ARC</text>
+        </svg>
+      </div>
+      <span class="text-[10px] tracking-[0.22em] text-cyan-400 font-semibold uppercase mt-0.5">Universal Pre-Processor</span>
+    </div>
+    <!-- Main Navigation Menu -->
+    <nav class="px-3.5 py-4 space-y-1 text-sm font-medium">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_01_dashboard/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home w-4 h-4 text-slate-400"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+  <span>Dashboard</span>
+</a>
+<!-- 2. Log Ingestion -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_02_log_ingestion/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-bracket w-4 h-4 text-slate-400"><path d="M12 2v14"></path><path d="m19 9-7 7-7-7"></path><rect width="20" height="4" x="2" y="18" rx="1"></rect></svg>
+  <span>Log Ingestion</span>
+</a>
+<!-- 3. Source Management -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_03_source_management/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-4 h-4 text-slate-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>
+  <span>Source Management</span>
+</a>
+<!-- 4. Format Detection -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_04_format_detection/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-line w-4 h-4 text-slate-400"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M7 12h10"></path></svg>
+  <span>Format Detection</span>
+</a>
+<!-- 5. Parser Registry -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_05_parser_registry/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-binary w-4 h-4 text-slate-400"><rect x="14" y="14" width="4" height="6" rx="2"></rect><rect x="6" y="4" width="4" height="6" rx="2"></rect><path d="M6 20h4"></path><path d="M14 10h4"></path><path d="M6 14h2v6"></path><path d="M14 4h2v6"></path></svg>
+  <span>Parser Registry</span>
+</a>
+<!-- 6. Normalization / Schema -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_06_normalization_schema/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-merge w-4 h-4 text-slate-400"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+  <span>Normalization / Schema</span>
+</a>
+<!-- 7. Event Viewer -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_07_event_viewer/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 text-slate-400"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+  <span>Event Viewer</span>
+</a>
+<!-- 8. AI Assistant (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white shadow-md shadow-orange-950/30 transition-all font-semibold" href="/stitch_arc_universal_log_pre_processor/arc_08_ai_assistant/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-4 h-4 text-white"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+  <span>AI Assistant</span>
+</a>
+<!-- 9. Quarantine -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_09_quarantine/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-4 h-4 text-slate-400"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+  <span>Quarantine</span>
+</a>
+<!-- 10. Analytics -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_10_analytics/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-2 w-4 h-4 text-slate-400"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+  <span>Analytics</span>
+</a>
+<!-- 11. Audit Logs -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_11_audit_logs/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-clock w-4 h-4 text-slate-400"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 14v2.2l1.6 1"></path><circle cx="8" cy="16" r="6"></circle></svg>
+  <span>Audit Logs</span>
+</a>
+<!-- 12. Alerts -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_12_alerts/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 text-slate-400"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+  <span>Alerts</span>
+</a>
+<!-- 13. Settings -->
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_13_settings/code.html">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-slate-400"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+  <span>Settings</span>
+</a>
+<!-- Divider -->
+<div class="pt-2 pb-1">
+  <div class="h-px bg-slate-800/70 w-full"></div>
+</div>
+<!-- 14. Documentation -->
+<a class="flex items-center justify-between px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="/stitch_arc_universal_log_pre_processor/arc_14_documentation/code.html">
+  <div class="flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4 text-slate-400"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg>
+    <span>Documentation</span>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5 opacity-60"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+</a>
+    </nav>
+  </div>
+  <!-- Bottom Sidebar Tagline -->
+  <div class="px-5 py-5 border-t border-slate-800/60 flex items-center gap-3">
+    <div class="w-1 h-7 bg-orange-500 rounded-full"></div>
+    <div class="text-[11px] font-bold tracking-wider leading-tight text-slate-300 uppercase">
+      Learn Once.<br><span class="text-slate-400">Process Forever.</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: Main Viewport -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-[#f4f7fb]">
+<!-- BEGIN: Global Header -->
+<header class="h-16 bg-white border-b border-slate-200 px-7 flex items-center justify-between shrink-0 shadow-xs">
+<!-- Title & Subtitle in Left Header -->
+<div class="flex flex-col">
+<h1 class="text-lg font-bold text-slate-900 tracking-tight leading-none">Universal Log Pre-Processing Framework</h1>
+<p class="text-xs text-slate-500 font-medium mt-1">Learn Once. Process Forever.</p>
+</div>
+<!-- Right Header Actions -->
+<div class="flex items-center gap-4">
+<!-- Search Bar -->
+<div class="relative w-80">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</span>
+<input class="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Search logs, sources, formats, parsers..." type="text"/>
+</div>
+<!-- System Health Pill -->
+<div class="flex items-center gap-2.5 px-3 py-1 bg-emerald-50 border border-emerald-200/80 rounded-full">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<div class="flex flex-col text-left leading-none">
+<span class="text-[11px] font-semibold text-emerald-800">System Healthy</span>
+<span class="text-[9px] text-emerald-600">All services operational</span>
+</div>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-full transition" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- User Profile Avatar & Dropdown -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-slate-200">
+<div class="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center shadow-inner">
+            SK
+          </div>
+<span class="text-xs font-semibold text-slate-800">Administrator</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+</header>
+<!-- END: Global Header -->
+<!-- BEGIN: Scrollable Content View -->
+<main class="flex-1 overflow-y-auto p-6 space-y-4">
+<!-- Subheader & Breadcrumbs Bar -->
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-center gap-3">
+<h2 class="text-2xl font-black text-slate-900 tracking-tight">AI Assistant</h2>
+</div>
+<p class="text-xs text-slate-500 font-medium mt-0.5">
+            Get intelligent help for unknown log formats, parser creation, and log analysis using local Qwen3 (Ollama).
+          </p>
+</div>
+<div class="flex items-center gap-3">
+<!-- Breadcrumb Navigation -->
+<div class="text-xs font-medium text-slate-400 flex items-center gap-1.5">
+<a class="hover:text-slate-600 text-blue-600" href="#">Dashboard</a>
+<span>&gt;</span>
+<span class="text-blue-600 font-semibold">AI Assistant</span>
+</div>
+<!-- Live Data Notice Pill -->
+<div class="px-3 py-1 bg-orange-50 border border-orange-200 rounded-md text-right">
+<div class="text-[11px] font-bold text-orange-700 leading-tight">Live Data</div>
+<div class="text-[9px] text-orange-600 leading-tight">Connected to FastAPI backend.</div>
+</div>
+</div>
+</div>
+<!-- BEGIN: 5 Metrics Overview Cards -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-3.5">
+<!-- 1: AI Suggestions -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-purple-600 flex items-center justify-center text-white shrink-0 shadow-sm shadow-purple-600/20">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2M7.5 13A2.5 2.5 0 005 15.5a2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 007.5 13m9 0a2.5 2.5 0 00-2.5 2.5 2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 0016.5 13z"></path>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="text-[11px] font-semibold text-slate-500 leading-tight">AI Suggestions</div>
+<div id="aiMetricSuggestions" class="text-xl font-black text-slate-900 leading-tight mt-0.5">0</div>
+<div class="text-[10px] text-slate-400 font-normal mt-0.5">Service not configured</div>
+</div>
+</div>
+<!-- 2: Approved Mappings -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-sm shadow-emerald-600/20">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="text-[11px] font-semibold text-slate-500 leading-tight">Approved Mappings</div>
+<div id="aiMetricApproved" class="text-xl font-black text-slate-900 leading-tight mt-0.5">0</div>
+<div class="text-[10px] text-slate-400 font-normal mt-0.5">Service not configured</div>
+</div>
+</div>
+<!-- 3: Pending Reviews -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-orange-500 flex items-center justify-center text-white shrink-0 shadow-sm shadow-orange-500/20">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="text-[11px] font-semibold text-slate-500 leading-tight">Pending Reviews</div>
+<div id="aiMetricPending" class="text-xl font-black text-slate-900 leading-tight mt-0.5">0</div>
+<div class="text-[10px] text-slate-400 font-normal mt-0.5">Service not configured</div>
+</div>
+</div>
+<!-- 4: Auto-Generated Parsers -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-sky-600 flex items-center justify-center text-white shrink-0 shadow-sm shadow-sky-600/20">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7M4 7c0-2 1.5-3 3.5-3h9c2 0 3.5 1 3.5 3M4 7h16m-16 5h16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="text-[11px] font-semibold text-slate-500 leading-tight">Auto-Generated Parsers</div>
+<div id="aiMetricParsers" class="text-xl font-black text-slate-900 leading-tight mt-0.5">7</div>
+<div class="text-[10px] text-slate-400 font-normal mt-0.5">Active built-in parsers</div>
+</div>
+</div>
+<!-- 5: AI Model Card -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-purple-700 flex items-center justify-center text-white shrink-0 shadow-sm shadow-purple-700/20">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold text-slate-500">AI Model</span>
+<span id="aiModelBadge" class="px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 text-[9px] font-bold rounded-full">Not Configured</span>
+</div>
+<div class="text-sm font-bold text-slate-900 leading-tight mt-0.5 truncate">Qwen3 (Local Ollama)</div>
+<div id="aiModelSubtext" class="text-[10px] text-slate-400 font-medium mt-0.5 truncate">Ollama offline • Port 11434</div>
+</div>
+</div>
+</div>
+<!-- END: Metrics Overview Cards -->
+<!-- BEGIN: Main Workspace 2-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+<!-- BEGIN: Left Chat & Analysis Area (8 Columns) -->
+<div class="lg:col-span-8 bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
+<!-- Assistant Action Tabs Header -->
+<div class="flex items-center justify-between border-b border-slate-200 px-5 pt-3 pb-0 bg-slate-50/50">
+<div class="flex items-center gap-6">
+<!-- Chat Assistant (Active Tab) -->
+<button class="flex items-center gap-2 pb-3 border-b-2 border-orange-500 text-xs font-bold text-orange-600 transition" type="button">
+<svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Chat Assistant</span>
+</button>
+<!-- Format Analysis -->
+<button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-xs font-medium text-slate-600 hover:text-slate-900 transition" type="button">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Format Analysis</span>
+</button>
+<!-- Mapping Suggestions -->
+<button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-xs font-medium text-slate-600 hover:text-slate-900 transition" type="button">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Mapping Suggestions</span>
+</button>
+<!-- Parser Generation -->
+<button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-xs font-medium text-slate-600 hover:text-slate-900 transition" type="button">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Parser Generation</span>
+</button>
+<!-- Knowledge Base -->
+<button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-xs font-medium text-slate-600 hover:text-slate-900 transition" type="button">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Knowledge Base</span>
+</button>
+</div>
+<!-- Clear Chat Button -->
+<button class="mb-3 px-3 py-1 text-xs font-medium text-red-600 border border-red-200 hover:bg-red-50 rounded-md flex items-center gap-1.5 transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Clear Chat</span>
+</button>
+</div>
+<!-- Chat Conversation Container -->
+<div id="aiChatThread" class="p-6 space-y-6 min-h-[360px] max-h-[520px] overflow-y-auto">
+<div id="aiEmptyState" class="py-12 flex flex-col items-center justify-center text-center select-none">
+<div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3 shadow-xs border border-purple-100">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2M7.5 13A2.5 2.5 0 005 15.5a2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 007.5 13m9 0a2.5 2.5 0 00-2.5 2.5 2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 0016.5 13z"></path></svg>
+</div>
+<div class="text-sm font-semibold text-slate-800">ARC AI Telemetry Assistant</div>
+<p class="text-xs text-slate-500 mt-1 max-w-md leading-relaxed">
+Connected to local Qwen3 with real database context. Ask questions about your ingested logs, detected formats, quarantine causes, or parser schemas.
+</p>
+</div>
+</div>
+<!-- Bottom Prompt Input Bar -->
+<div class="p-4 border-t border-slate-200 bg-white">
+<div class="relative flex items-center bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 shadow-inner">
+<span class="text-slate-400 mr-2">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</span>
+<input id="aiChatInput" class="w-full bg-transparent border-none p-0 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-0" placeholder="Ask anything about your logs, formats, or parsers..." type="text"/>
+<div class="flex items-center gap-2">
+<!-- Model Selector Dropdown -->
+<div class="relative">
+<button class="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-[11px] font-medium text-slate-700 hover:bg-slate-50 shadow-xs" type="button">
+<span>Qwen3 (Local)</span>
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+</div>
+<!-- Send Button -->
+<button id="aiSendBtn" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm transition cursor-pointer" type="button">
+<svg class="w-3.5 h-3.5 rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span>Send</span>
+</button>
+</div>
+</div>
+<!-- Suggestion Examples Hint -->
+<div class="mt-2 text-[10px] text-slate-400">
+              Examples: <span class="text-slate-500">"Analyze this log format"</span>, <span class="text-slate-500">"Suggest a parser"</span>, <span class="text-slate-500">"Explain this error"</span>, <span class="text-slate-500">"Help with field mapping"</span>
+</div>
+</div>
+</div>
+<!-- END: Left Chat Area -->
+<!-- BEGIN: Right Sidebar Area (4 Columns) -->
+<div class="lg:col-span-4 space-y-4">
+<!-- AI Provider & Access Settings -->
+<div class="bg-white rounded-xl border border-slate-200/90 shadow-xs p-4" id="aiProviderCard">
+  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+    <div>
+      <div class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">AI Provider</div>
+      <div id="aiActiveProviderDisplay" class="text-xs font-bold text-slate-900 mt-0.5">Platform AI</div>
+    </div>
+    <span id="aiActiveStatusBadge" class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold rounded-full flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Connected
+    </span>
+  </div>
+
+  <div class="mt-3">
+    <!-- BYOK Option Toggle -->
+    <div class="flex items-center justify-between">
+      <label for="byokToggle" class="flex items-center gap-2 cursor-pointer select-none text-xs text-slate-700 font-medium">
+        <input type="checkbox" id="byokToggle" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-3.5 w-3.5" />
+        <span>Use my own API key</span>
+      </label>
+      <span id="byokConnectedBadge" class="hidden px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-bold rounded-full">
+        Connected ✓
+      </span>
+    </div>
+
+    <!-- Collapsible BYOK Form -->
+    <div id="byokPanel" class="hidden mt-3 pt-3 border-t border-slate-100 space-y-2.5">
+      <div id="byokInputsGroup" class="space-y-2.5">
+        <div>
+          <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Provider</label>
+          <select id="byokProvider" class="w-full text-xs rounded-lg border-slate-200 py-1.5 px-2 bg-slate-50/50 focus:bg-white focus:border-blue-500">
+            <option value="api">OpenAI Compatible</option>
+            <option value="azure">Azure OpenAI</option>
+            <option value="anthropic">Anthropic</option>
+            <option value="custom">Custom Provider</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">API Endpoint</label>
+          <input type="url" id="byokEndpoint" placeholder="https://api.openai.com/v1/chat/completions" class="w-full text-xs rounded-lg border-slate-200 py-1.5 px-2 bg-slate-50/50 focus:bg-white focus:border-blue-500 font-mono text-[11px]" />
+        </div>
+        <div>
+          <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Model</label>
+          <input type="text" id="byokModel" placeholder="gpt-4o-mini" class="w-full text-xs rounded-lg border-slate-200 py-1.5 px-2 bg-slate-50/50 focus:bg-white focus:border-blue-500 font-mono text-[11px]" />
+        </div>
+        <div id="byokKeyGroup">
+          <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">API Key</label>
+          <input type="password" id="byokKey" autocomplete="off" placeholder="sk-..." class="w-full text-xs rounded-lg border-slate-200 py-1.5 px-2 bg-slate-50/50 focus:bg-white focus:border-blue-500 font-mono text-[11px]" />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-1">
+        <button type="button" id="byokConnectBtn" class="flex-1 py-1.5 px-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition shadow-xs">
+          Connect
+        </button>
+        <button type="button" id="byokRemoveBtn" class="hidden py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition">
+          Remove key
+        </button>
+      </div>
+      <div id="byokFeedback" class="hidden text-[11px] mt-1 font-medium"></div>
+    </div>
+  </div>
+</div>
+<!-- 1: Recent AI Conversations -->
+<div class="bg-white rounded-xl border border-slate-200/90 shadow-xs p-4">
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<h3 class="text-xs font-bold text-slate-900">Recent AI Conversations</h3>
+<a class="text-[11px] font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-0.5" href="#">
+<span>View All</span>
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+<div class="divide-y divide-slate-100">
+<!-- Item 1 -->
+<div class="py-3 flex items-start justify-between group cursor-pointer">
+<div class="flex items-start gap-2.5">
+<svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div>
+<div class="text-xs font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">Analyze firewall log format</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Detected syslog format with custom fields...</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-semibold rounded">Resolved</span>
+<div class="text-[9px] text-slate-400 mt-1">5 mins ago</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="py-3 flex items-start justify-between group cursor-pointer">
+<div class="flex items-start gap-2.5">
+<svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div>
+<div class="text-xs font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">Suggest parser for IoT logs</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Generated grok pattern for sensor data...</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-semibold rounded">Resolved</span>
+<div class="text-[9px] text-slate-400 mt-1">28 mins ago</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="py-3 flex items-start justify-between group cursor-pointer">
+<div class="flex items-start gap-2.5">
+<svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div>
+<div class="text-xs font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">Mapping for web server logs</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Suggested field mapping for nginx logs...</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="px-2 py-0.5 bg-orange-50 text-orange-700 border border-orange-200 text-[9px] font-semibold rounded">Pending</span>
+<div class="text-[9px] text-slate-400 mt-1">1 hour ago</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="py-3 flex items-start justify-between group cursor-pointer">
+<div class="flex items-start gap-2.5">
+<svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div>
+<div class="text-xs font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">Explain parsing error</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Identified missing timestamp field...</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-semibold rounded">Resolved</span>
+<div class="text-[9px] text-slate-400 mt-1">3 hours ago</div>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="py-3 flex items-start justify-between group cursor-pointer">
+<div class="flex items-start gap-2.5">
+<svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<div>
+<div class="text-xs font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">Create parser for CSV format</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Generated parser for custom CSV logs...</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-semibold rounded">Resolved</span>
+<div class="text-[9px] text-slate-400 mt-1">5 hours ago</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 2: Quick Actions Grid -->
+<div class="bg-white rounded-xl border border-slate-200/90 shadow-xs p-4">
+<h3 class="text-xs font-bold text-slate-900 pb-3 border-b border-slate-100">Quick Actions</h3>
+<div class="grid grid-cols-2 gap-2.5 mt-3">
+<!-- Action 1 -->
+<button class="p-2.5 border border-slate-200 rounded-lg bg-slate-50/50 hover:bg-slate-100/80 transition flex items-center gap-2 text-left" type="button">
+<svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="text-[11px] font-semibold text-slate-800 leading-tight">Analyze Unknown Format</span>
+</button>
+<!-- Action 2 -->
+<button class="p-2.5 border border-slate-200 rounded-lg bg-slate-50/50 hover:bg-slate-100/80 transition flex items-center gap-2 text-left" type="button">
+<svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="text-[11px] font-semibold text-slate-800 leading-tight">Suggest Field Mapping</span>
+</button>
+<!-- Action 3 -->
+<button class="p-2.5 border border-slate-200 rounded-lg bg-slate-50/50 hover:bg-slate-100/80 transition flex items-center gap-2 text-left" type="button">
+<svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="text-[11px] font-semibold text-slate-800 leading-tight">Generate Parser</span>
+</button>
+<!-- Action 4 -->
+<button class="p-2.5 border border-slate-200 rounded-lg bg-slate-50/50 hover:bg-slate-100/80 transition flex items-center gap-2 text-left" type="button">
+<svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="text-[11px] font-semibold text-slate-800 leading-tight">Explain Error</span>
+</button>
+</div>
+</div>
+<!-- 3: Tips Card -->
+<div class="bg-amber-50/60 border border-amber-200/70 rounded-xl p-4">
+<div class="flex items-center gap-2 text-amber-800 pb-2">
+<svg class="w-4 h-4 fill-amber-500 text-amber-500" viewbox="0 0 20 20">
+<path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859A4 4 0 104 10c0 .907.302 1.745.811 2.42.277.217.472.528.489.873A2 2 0 008 15h4a2 2 0 002-2z"></path>
+</svg>
+<span class="text-xs font-bold">Tips</span>
+</div>
+<ul class="space-y-1.5 text-[11px] text-slate-700 list-disc list-inside">
+<li>Provide sample log lines for better analysis</li>
+<li>Be specific about the fields you need</li>
+<li>Review and validate AI suggestions before approval</li>
+<li>The AI assistant uses local Qwen3 for privacy and security</li>
+</ul>
+</div>
+</div>
+<!-- END: Right Sidebar Area -->
+</div>
+<!-- END: Main Workspace Grid -->
+</main>
+<!-- END: Scrollable Content View -->
+</div>
+<!-- END: Main Viewport -->
+
+<script>
+// Shared navigation fix
+(function() {
+    const map = {
+        "Dashboard": "../arc_01_dashboard/code.html",
+        "Log Ingestion": "../arc_02_log_ingestion/code.html",
+        "Source Management": "../arc_03_source_management/code.html",
+        "Format Detection": "../arc_04_format_detection/code.html",
+        "Parser Registry": "../arc_05_parser_registry/code.html",
+        "Normalization / Schema": "../arc_06_normalization_schema/code.html",
+        "Event Viewer": "../arc_07_event_viewer/code.html",
+        "AI Assistant": "../arc_08_ai_assistant/code.html",
+        "Quarantine": "../arc_09_quarantine/code.html",
+        "Analytics": "../arc_10_analytics/code.html",
+        "Audit Logs": "../arc_11_audit_logs/code.html",
+        "Alerts": "../arc_12_alerts/code.html",
+        "Settings": "../arc_13_settings/code.html",
+        "Documentation": "../arc_14_documentation/code.html"
+    };
+    document.querySelectorAll('a[href="#"], a[href=""]').forEach(a => {
+        const txt = (a.querySelector('span')?.textContent || a.textContent).trim();
+        if (map[txt]) a.href = map[txt];
+    });
+})();
+</script>
+
+
+
+<script>
+// ============================================================
+// AI ASSISTANT — Live Multi-Mode Telemetry Integration (Platform, Ollama, BYOK)
+(function() {
+  "use strict";
+  const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+
+  // Elements
+  const aiChatInput        = document.getElementById("aiChatInput");
+  const aiSendBtn          = document.getElementById("aiSendBtn");
+  const aiChatThread       = document.getElementById("aiChatThread");
+  const aiModelBadge       = document.getElementById("aiModelBadge");
+  const aiModelSubtext     = document.getElementById("aiModelSubtext");
+  const aiProviderTitle    = document.getElementById("aiActiveProviderDisplay");
+  const aiProviderBadge    = document.getElementById("aiActiveStatusBadge");
+  const clearChatBtn       = Array.from(document.querySelectorAll("button")).find(b => b.textContent.includes("Clear Chat")) || document.querySelector("button.text-red-600");
+
+  // BYOK Elements
+  const byokToggle         = document.getElementById("byokToggle");
+  const byokPanel          = document.getElementById("byokPanel");
+  const byokInputsGroup    = document.getElementById("byokInputsGroup");
+  const byokProvider       = document.getElementById("byokProvider");
+  const byokEndpoint       = document.getElementById("byokEndpoint");
+  const byokModel          = document.getElementById("byokModel");
+  const byokKey            = document.getElementById("byokKey");
+  const byokConnectBtn     = document.getElementById("byokConnectBtn");
+  const byokRemoveBtn      = document.getElementById("byokRemoveBtn");
+  const byokConnectedBadge = document.getElementById("byokConnectedBadge");
+  const byokFeedback       = document.getElementById("byokFeedback");
+
+  // Ephemeral in-memory BYOK state (strictly session-only, never persisted to localStorage or SQLite)
+  let sessionBYOK = null;
+  let systemStatus = null;
+
+  async function checkAIStatus() {
+    try {
+      const res = await fetch(`${API_BASE}/ai/status`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      systemStatus = data;
+
+      updateUIStatus();
+
+      // Sync active parsers count
+      try {
+        const parsersRes = await fetch(`${API_BASE}/parsers`);
+        if (parsersRes.ok) {
+          const parsersData = await parsersRes.json();
+          const parsersEl = document.getElementById("aiMetricParsers");
+          if (parsersEl && typeof parsersData.count === "number") {
+            parsersEl.textContent = parsersData.count;
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    } catch (e) {
+      console.warn("AI Status check failed:", e);
+      if (aiModelBadge) {
+        aiModelBadge.className = "px-2 py-0.5 bg-red-50 text-red-700 border border-red-200 text-[9px] font-bold rounded-full";
+        aiModelBadge.textContent = "Backend Offline";
+      }
+      if (aiProviderBadge) {
+        aiProviderBadge.className = "px-2 py-0.5 bg-red-50 text-red-700 border border-red-200 text-[10px] font-bold rounded-full flex items-center gap-1.5";
+        aiProviderBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Offline';
+      }
+    }
+  }
+
+  function updateUIStatus() {
+    if (!systemStatus) return;
+
+    if (sessionBYOK && sessionBYOK.api_key) {
+      // User BYOK Active Mode
+      if (aiProviderTitle) aiProviderTitle.textContent = "Custom AI (BYOK)";
+      if (aiProviderBadge) {
+        aiProviderBadge.className = "px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold rounded-full flex items-center gap-1.5";
+        aiProviderBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Connected ✓';
+      }
+      if (aiModelBadge) {
+        aiModelBadge.className = "px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-bold rounded-full";
+        aiModelBadge.textContent = "Connected ✓";
+      }
+      if (aiModelSubtext) {
+        aiModelSubtext.textContent = `${sessionBYOK.model || "Custom Model"} • User Credential (Session)`;
+      }
+      removeNoticeBanner();
+      return;
+    }
+
+    // System-wide Provider Mode (Platform or Ollama)
+    const isPlatform = (systemStatus.provider === "api" || systemStatus.provider === "platform");
+    const isReady = !!(systemStatus.configured && systemStatus.available);
+
+    if (isPlatform) {
+      if (aiProviderTitle) aiProviderTitle.textContent = "Platform AI";
+      if (aiModelSubtext) {
+        aiModelSubtext.textContent = isReady
+          ? `${systemStatus.model || "Production Model"} • Server-Side API Key`
+          : "Platform AI key not configured on server";
+      }
+    } else {
+      if (aiProviderTitle) aiProviderTitle.textContent = "Qwen3 (Local Ollama)";
+      if (aiModelSubtext) {
+        aiModelSubtext.textContent = isReady
+          ? `Qwen3 Active • Local & Private (${systemStatus.endpoint || "Port 11434"})`
+          : `Ollama offline • ${systemStatus.endpoint || "Port 11434"}`;
+      }
+    }
+
+    if (aiModelBadge) {
+      aiModelBadge.className = isReady
+        ? "px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-bold rounded-full"
+        : "px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 text-[9px] font-bold rounded-full";
+      aiModelBadge.textContent = isReady ? "Connected" : "Not Configured";
+    }
+
+    if (aiProviderBadge) {
+      aiProviderBadge.className = isReady
+        ? "px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold rounded-full flex items-center gap-1.5"
+        : "px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold rounded-full flex items-center gap-1.5";
+      aiProviderBadge.innerHTML = isReady
+        ? '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Connected'
+        : '<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Not Configured';
+    }
+
+    if (!isReady) {
+      renderNoticeBanner(systemStatus.message, isPlatform);
+    } else {
+      removeNoticeBanner();
+    }
+  }
+
+  function renderNoticeBanner(msg, isPlatform) {
+    const existing = document.getElementById("aiNoticeBanner");
+    if (existing) return;
+
+    const banner = document.createElement("div");
+    banner.id = "aiNoticeBanner";
+    banner.className = "mb-4 p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-xl flex items-start gap-3 shadow-xs";
+    banner.innerHTML = `
+      <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <div class="flex-1 text-xs">
+        <div class="font-bold text-amber-900">${isPlatform ? "Platform AI Not Configured" : "AI Service Not Configured"}</div>
+        <p class="text-[11px] text-amber-700 mt-0.5 leading-relaxed">
+          ${escapeHtml(msg || "The AI service is not currently available.")}
+        </p>
+      </div>
+    `;
+    const targetParent = aiChatThread?.parentElement;
+    if (targetParent) {
+      targetParent.insertBefore(banner, aiChatThread);
+    }
+  }
+
+  function removeNoticeBanner() {
+    const existing = document.getElementById("aiNoticeBanner");
+    if (existing) existing.remove();
+  }
+
+  // BYOK Toggle Interaction
+  if (byokToggle) {
+    byokToggle.addEventListener("change", () => {
+      if (byokToggle.checked) {
+        byokPanel.classList.remove("hidden");
+      } else {
+        if (!sessionBYOK) {
+          byokPanel.classList.add("hidden");
+        }
+      }
+    });
+  }
+
+  // BYOK Connect Action
+  if (byokConnectBtn) {
+    byokConnectBtn.addEventListener("click", () => {
+      const key = (byokKey ? byokKey.value.trim() : "");
+      if (!key) {
+        showBYOKFeedback("Please enter an API key.", true);
+        return;
+      }
+
+      const endpoint = byokEndpoint ? byokEndpoint.value.trim() : "";
+      if (endpoint && !endpoint.startsWith("https://")) {
+        showBYOKFeedback("User-supplied endpoints must use HTTPS for credential security.", true);
+        return;
+      }
+
+      sessionBYOK = {
+        api_key: key,
+        endpoint: endpoint || undefined,
+        model: (byokModel ? byokModel.value.trim() : "") || "gpt-4o-mini",
+        provider: (byokProvider ? byokProvider.value : "custom")
+      };
+
+      // Wipe key from DOM input for security
+      if (byokKey) byokKey.value = "";
+
+      // Mask and lock BYOK panel into Connected state
+      if (byokInputsGroup) byokInputsGroup.classList.add("hidden");
+      if (byokConnectBtn) byokConnectBtn.classList.add("hidden");
+      if (byokRemoveBtn) byokRemoveBtn.classList.remove("hidden");
+      if (byokConnectedBadge) byokConnectedBadge.classList.remove("hidden");
+      showBYOKFeedback("Connected with custom key for this session.", false);
+
+      updateUIStatus();
+    });
+  }
+
+  // BYOK Remove Key Action
+  if (byokRemoveBtn) {
+    byokRemoveBtn.addEventListener("click", () => {
+      sessionBYOK = null;
+      if (byokKey) byokKey.value = "";
+      if (byokInputsGroup) byokInputsGroup.classList.remove("hidden");
+      if (byokConnectBtn) byokConnectBtn.classList.remove("hidden");
+      if (byokRemoveBtn) byokRemoveBtn.classList.add("hidden");
+      if (byokConnectedBadge) byokConnectedBadge.classList.add("hidden");
+      if (byokFeedback) byokFeedback.classList.add("hidden");
+
+      if (byokToggle && !byokToggle.checked) {
+        byokPanel.classList.add("hidden");
+      }
+
+      updateUIStatus();
+    });
+  }
+
+  function showBYOKFeedback(msg, isError) {
+    if (!byokFeedback) return;
+    byokFeedback.className = isError
+      ? "text-[11px] text-red-600 mt-1 font-medium"
+      : "text-[11px] text-emerald-700 mt-1 font-medium";
+    byokFeedback.textContent = msg;
+    byokFeedback.classList.remove("hidden");
+  }
+
+  function appendUserBubble(text) {
+    if (!aiChatThread) return;
+    const bubble = document.createElement("div");
+    bubble.className = "flex items-start gap-3";
+    bubble.innerHTML = `
+      <div class="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm">SK</div>
+      <div class="flex-1 bg-blue-50/70 border border-blue-100 rounded-2xl rounded-tl-none p-4 text-xs leading-relaxed text-slate-800">
+        <p class="font-medium whitespace-pre-wrap">${escapeHtml(text)}</p>
+      </div>
+    `;
+    aiChatThread.appendChild(bubble);
+    aiChatThread.scrollTop = aiChatThread.scrollHeight;
+  }
+
+  function appendAIBubble(htmlContent, isError = false) {
+    if (!aiChatThread) return null;
+    const bubble = document.createElement("div");
+    bubble.className = "flex items-start gap-3";
+    const bgCls = isError ? "bg-amber-500 shadow-amber-500/20" : "bg-purple-600 shadow-purple-500/20";
+    bubble.innerHTML = `
+      <div class="w-8 h-8 rounded-full ${bgCls} text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2M7.5 13A2.5 2.5 0 005 15.5a2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 007.5 13m9 0a2.5 2.5 0 00-2.5 2.5 2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 0016.5 13z"/></svg>
+      </div>
+      <div class="flex-1 bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 text-xs leading-relaxed text-slate-800 space-y-2 shadow-xs">
+        ${htmlContent}
+      </div>
+    `;
+    aiChatThread.appendChild(bubble);
+    aiChatThread.scrollTop = aiChatThread.scrollHeight;
+    return bubble;
+  }
+
+  function escapeHtml(str) {
+    return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function formatMarkdown(text) {
+    if (!text) return "";
+    let formatted = escapeHtml(text);
+    formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    formatted = formatted.replace(/`([^`]+)`/g, '<code class="bg-slate-100 text-slate-800 px-1 py-0.5 rounded font-mono text-[10.5px]">$1</code>');
+    formatted = formatted.replace(/^\* (.+)$/gm, '<li class="ml-4 list-disc">$1</li>');
+    formatted = formatted.replace(/\n/g, '<br/>');
+    return formatted;
+  }
+
+  async function handleSend(promptText) {
+    const text = promptText || (aiChatInput ? aiChatInput.value.trim() : "");
+    if (!text) return;
+
+    if (aiChatInput) aiChatInput.value = "";
+    const emptyState = document.getElementById("aiEmptyState");
+    if (emptyState) emptyState.remove();
+    appendUserBubble(text);
+
+    const loadingMsg = (sessionBYOK && sessionBYOK.api_key)
+      ? "Querying AI via custom BYOK with operational database context..."
+      : "Querying AI assistant with operational database context...";
+
+    const loadingBubble = appendAIBubble(`
+      <div class="flex items-center gap-2 text-slate-500 py-1">
+        <svg class="w-4 h-4 animate-spin text-purple-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+        <span class="text-xs">${loadingMsg}</span>
+      </div>
+    `);
+
+    try {
+      const payload = { prompt: text };
+      if (sessionBYOK && sessionBYOK.api_key) {
+        payload.byok = sessionBYOK;
+      }
+
+      const res = await fetch(`${API_BASE}/ai/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (loadingBubble) loadingBubble.remove();
+
+      if (data.status === "success") {
+        appendAIBubble(formatMarkdown(data.response));
+      } else {
+        appendAIBubble(formatMarkdown(data.response || data.message || "Failed to process AI query"), true);
+      }
+    } catch (err) {
+      if (loadingBubble) loadingBubble.remove();
+      appendAIBubble(`<div class="text-red-600 font-semibold">Error communicating with backend: ${escapeHtml(err.message)}</div>`, true);
+    }
+  }
+
+  // Bind input listeners
+  if (aiSendBtn) {
+    aiSendBtn.addEventListener("click", () => handleSend());
+  }
+
+  if (aiChatInput) {
+    aiChatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    });
+  }
+
+  // Clear chat action
+  if (clearChatBtn) {
+    clearChatBtn.addEventListener("click", () => {
+      if (aiChatThread) {
+        aiChatThread.innerHTML = `
+          <div id="aiEmptyState" class="py-12 flex flex-col items-center justify-center text-center select-none">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3 shadow-xs border border-purple-100">
+              <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2M7.5 13A2.5 2.5 0 005 15.5a2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 007.5 13m9 0a2.5 2.5 0 00-2.5 2.5 2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5A2.5 2.5 0 0016.5 13z"></path></svg>
+            </div>
+            <div class="text-sm font-semibold text-slate-800">ARC AI Telemetry Assistant</div>
+            <p class="text-xs text-slate-500 mt-1 max-w-md leading-relaxed">
+              Conversation cleared. Ask questions about your ingested logs, detected formats, quarantine causes, or parser schemas below.
+            </p>
+          </div>
+        `;
+      }
+    });
+  }
+
+  // Quick Action Buttons click delegation
+  Array.from(document.querySelectorAll("button")).forEach(btn => {
+    const text = btn.textContent.trim();
+    btn.addEventListener("click", () => {
+      if (text.includes("Analyze Unknown Format")) {
+        handleSend("What log formats are currently being processed in the system?");
+      } else if (text.includes("Suggest Field Mapping")) {
+        handleSend("Explain the normalized event schema and available fields.");
+      } else if (text.includes("Generate Parser")) {
+        handleSend("What parsers are currently registered in the Parser Registry?");
+      } else if (text.includes("Explain Error")) {
+        handleSend("How many logs are quarantined and why were they quarantined?");
+      }
+    });
+  });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", checkAIStatus);
+  } else {
+    checkAIStatus();
+  }
+})();
+</script>
+
+</body></html>

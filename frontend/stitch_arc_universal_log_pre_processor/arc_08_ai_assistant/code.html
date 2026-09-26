@@ -606,7 +606,7 @@ Connected to local Qwen3 with real database context. Ask questions about your in
 // AI ASSISTANT — Live Multi-Mode Telemetry Integration (Platform, Ollama, BYOK)
 (function() {
   "use strict";
-  const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+  const API_BASE = (typeof window !== "undefined" && window.API_BASE) || ((typeof window !== "undefined" && window.location && !["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname)) ? "https://universal-log-preprocessor.onrender.com/api/v1" : "http://127.0.0.1:8000/api/v1");
 
   // Elements
   const aiChatInput        = document.getElementById("aiChatInput");

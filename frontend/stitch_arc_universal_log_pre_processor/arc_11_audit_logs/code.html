@@ -860,7 +860,7 @@
 <!-- END: Main Content Area -->
 
 <script>
-const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+const API_BASE = (typeof window !== "undefined" && window.API_BASE) || ((typeof window !== "undefined" && window.location && !["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname)) ? "https://universal-log-preprocessor.onrender.com/api/v1" : "http://127.0.0.1:8000/api/v1");
 async function loadAuditData() {
     try {
         const res = await fetch(`${API_BASE}/processed`);
@@ -929,7 +929,7 @@ loadAuditData();
 
 <script>
 (function(){
-    const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+    const API = (typeof window !== "undefined" && window.API) || ((typeof window !== "undefined" && window.location && !["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname)) ? "https://universal-log-preprocessor.onrender.com/api/v1" : "http://127.0.0.1:8000/api/v1");
     async function load(){
         const tbody=document.querySelector("main tbody, section tbody");
         if(tbody) tbody.innerHTML=`<tr><td colspan="6" class="py-4 text-center text-slate-400 text-xs">Loading…</td></tr>`;

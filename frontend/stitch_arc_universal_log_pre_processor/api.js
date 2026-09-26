@@ -9,20 +9,61 @@
 // 2. localStorage.getItem("arc_api_base_url") (runtime override)
 // 3. Fallback: "http://127.0.0.1:8000" (local development default)
 // =============================================================
-const ARC_RESOLVED_ROOT = (
-    (typeof window !== "undefined" && window.API_BASE_URL) ||
-    (typeof localStorage !== "undefined" && localStorage.getItem("arc_api_base_url")) ||
-    "http://127.0.0.1:8000"
-).replace(/\/+$/, "");
+function resolveArcApiRoot() {
+    // 1. Explicit window.API_BASE_URL (configured or injected via Vercel)
+    if (typeof window !== "undefined" && window.API_BASE_URL && typeof window.API_BASE_URL === "string" && window.API_BASE_URL.trim()) {
+        return window.API_BASE_URL.trim().replace(/\/+$/, "");
+    }
+    // 2. localStorage runtime override
+    if (typeof localStorage !== "undefined") {
+        try {
+            const stored = localStorage.getItem("arc_api_base_url");
+            if (stored && stored.trim()) return stored.trim().replace(/\/+$/, "");
+        } catch (e) {}
+    }
+    // 3. Environment detection: if running on Vercel/production host (!localhost)
+    if (typeof window !== "undefined" && window.location && window.location.hostname) {
+        const host = window.location.hostname.toLowerCase();
+        const isLocal = host === "localhost" ||
+                        host === "127.0.0.1" ||
+                        host === "0.0.0.0" ||
+                        host.startsWith("192.168.") ||
+                        host.startsWith("10.") ||
+                        host.endsWith(".local");
+        if (!isLocal) {
+            return "https://universal-log-preprocessor.onrender.com";
+        }
+    }
+    // 4. Default for local development
+    return "http://127.0.0.1:8000";
+}
 
+const ARC_RESOLVED_ROOT = resolveArcApiRoot();
 const ARC_RESOLVED_BASE = ARC_RESOLVED_ROOT + "/api/v1";
 
 if (typeof window !== "undefined") {
-    window.API_BASE_URL = window.API_BASE_URL || ARC_RESOLVED_ROOT;
+    window.API_BASE_URL = ARC_RESOLVED_ROOT;
     window.ARC_API_ROOT = ARC_RESOLVED_ROOT;
     window.ARC_API_BASE = ARC_RESOLVED_BASE;
     window.API_BASE = ARC_RESOLVED_BASE;
     window.API = ARC_RESOLVED_BASE;
+
+    // Asynchronously probe Vercel serverless /api/config to dynamically respect Vercel environment variable
+    if (typeof fetch === "function") {
+        fetch("/api/config")
+            .then(r => r.ok ? r.json() : null)
+            .then(cfg => {
+                if (cfg && cfg.API_BASE_URL && typeof cfg.API_BASE_URL === "string") {
+                    const dynamicRoot = cfg.API_BASE_URL.trim().replace(/\/+$/, "");
+                    window.API_BASE_URL = dynamicRoot;
+                    window.ARC_API_ROOT = dynamicRoot;
+                    window.ARC_API_BASE = dynamicRoot + "/api/v1";
+                    window.API_BASE = dynamicRoot + "/api/v1";
+                    window.API = dynamicRoot + "/api/v1";
+                }
+            })
+            .catch(() => {});
+    }
 }
 
 const ARC = (function () {

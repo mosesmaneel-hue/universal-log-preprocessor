@@ -766,7 +766,7 @@
 // LOG INGESTION — File upload + API integration
 // ============================================================
 (function () {
-    const API_BASE = (typeof window !== "undefined" && window.API_BASE) || "http://127.0.0.1:8000/api/v1";
+    const API_BASE = (typeof window !== "undefined" && window.API_BASE) || ((typeof window !== "undefined" && window.location && !["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname)) ? "https://universal-log-preprocessor.onrender.com/api/v1" : "http://127.0.0.1:8000/api/v1");
     let selectedFile = null;
     let selectedContent = null;
 
@@ -837,7 +837,8 @@
                     showResult("error", "Unexpected response from backend", result);
                 }
             } catch (err) {
-                showResult("error", "Cannot connect to backend (port 8000). Is FastAPI running?", {});
+                const errTarget = (typeof window !== "undefined" && window.API_BASE) || API_BASE;
+                showResult("error", `Cannot connect to backend (${errTarget}). Is FastAPI running? (${err.message || "Network Error"})`, {});
                 console.error(err);
             } finally {
                 startBtn.disabled = false;
@@ -921,7 +922,8 @@
 (function() {
     async function loadStats() {
         try {
-            const res = await fetch(`${API_BASE}/stats`);
+            const statsApi = (typeof window !== "undefined" && (window.API_BASE || window.API)) || API_BASE;
+            const res = await fetch(`${statsApi}/stats`);
             if (!res.ok) return;
             const d = await res.json();
             const p = d.processed_logs || 0;

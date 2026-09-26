@@ -911,7 +911,7 @@
 <script>
 // PARSER REGISTRY — complete rewrite
 (function(){
-    const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+    const API = (typeof window !== "undefined" && window.API) || ((typeof window !== "undefined" && window.location && !["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname)) ? "https://universal-log-preprocessor.onrender.com/api/v1" : "http://127.0.0.1:8000/api/v1");
     const COLORS={JSON:"background:#e0f2fe;color:#0369a1;",SYSLOG:"background:#dbeafe;color:#1d4ed8;",CEF:"background:#f3e8ff;color:#7e22ce;",LEEF:"background:#cffafe;color:#0e7490;",XML:"background:#ffe4e6;color:#be123c;",CSV:"background:#ffedd5;color:#c2410c;",CUSTOM:"background:#d1fae5;color:#065f46;"};
     const DESC={JSON:"Parses standard JSON-formatted log events",SYSLOG:"Parses RFC 3164 and RFC 5424 Syslog messages",CEF:"Parses ArcSight Common Event Format (CEF)",LEEF:"Parses IBM QRadar Log Event Extended Format (LEEF)",XML:"Parses XML-formatted log events",CSV:"Parses comma-separated value log files",CUSTOM:"Custom key-value pair parser for unrecognized formats"};
 

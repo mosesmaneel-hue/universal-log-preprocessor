@@ -848,7 +848,7 @@
 
 <script>
 (function(){
-    const API = (typeof window !== "undefined" && window.API) || "http://127.0.0.1:8000/api/v1";
+    const API = (typeof window !== "undefined" && window.API) || ((typeof window !== "undefined" && window.location && !["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname)) ? "https://universal-log-preprocessor.onrender.com/api/v1" : "http://127.0.0.1:8000/api/v1");
     async function load(){
         try{
             // Show a real normalized event as example
